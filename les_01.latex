@@ -1,0 +1,167 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+\begin{document}
+  One can think of linear algebra as an algebraic way to think about geometric concepts.
+
+  \begin{definition}[vector]
+    A \( \textbf{vector}  \) in \( \mathbb{R}^N \) is a point \( \textbf{x} = (x_1,...,x_n) \in \mathbb{R}^N \) or the line segment going from the origin to that point. 
+  \end{definition}
+
+  \begin{definition}[vector magnitude/length]
+    The \( \textbf{magnitude} \)  or \( \textbf{length} \) of a vector \( \textbf{x} = (x_1,...,x_n) \) is \( \sqrt{x_1^2+x_2^2+...x_n^2} \) 
+  \end{definition}
+
+  \begin{definition}[unit vector]
+    A unit vector is a vector \( \textbf{v}  \) s.t.  \( \lVert v \rVert  = 1 \)    
+  \end{definition}
+  
+  insert proof
+
+  \begin{definition}[vector addition]
+    The \( \textbf{sum}  \) of \( \textbf{x}  \) and \( \textbf{y}  \)  in \( \mathbb{R}^N \) is \( \textbf{x} +\textbf{y} = (x_1+y_1,...,x_n+y_n)  \)  
+  \end{definition}
+
+  **Heading operations on vectors **
+
+  \begin{definition}[scalar multiplication]
+    If \( c \in \mathbb{R}, \textbf{v} \in \mathbb{R}^n \), 
+    \begin{equation}
+      c \textbf{v} =(cx_1, cx_2, \ldots, cx_n) 
+    \end{equation}
+    \begin{equation}
+    \lVert c \textbf{v} \rVert  = c\sqrt{x_1^2+x_2^2+\ldots x_n^2} = |c| \cdot \lVert \textbf{v}  \rVert 
+    \end{equation}
+  \end{definition}
+
+  \begin{definition}[vector addition]
+    if \( \textbf{v} =(x_1,\ldots ,x_n), \textbf{w} =(y_1,\ldots y_n) \) 
+    \begin{equation}
+      \textbf{v} +\textbf{w} = (x_1+y_1,x_2+y_2,\ldots x_n+y_n)
+    \end{equation}
+  \end{definition}
+
+  \begin{remark}
+    Parallelogram rule: \( 0, \textbf{v}, \textbf{w}\), and \(\textbf{v+w}  \) form a parallelogram 
+  \end{remark}
+
+  \begin{definition}[vector subtraction]
+    \( \textbf{v-w}  \) is the vector that produces \( \textbf{v}  \) when added to \( \textbf{w}  \). For \( \textbf{v, w} \in \mathbb{R}^n, \)  
+    \begin{equation}
+      \textbf{v-w}  = (x_1-y_1,\ldots ,x_n-y_n)
+    \end{equation}
+  \end{definition}
+
+  \begin{remark}
+    \( \textbf{v-w}  \) starts at \( \textbf{w}  \) and goes toward \( \textbf{v} \) 
+  \end{remark}
+  
+  \begin{definition}[midpoint]
+    The \( \textbf{midpoint}  \) of two points can be found by taking the average of their components. In two dimensions, the midpoint vecotr of points \( \textbf{v} \) and \( \textbf{w}  \) is  
+    \begin{equation}
+     \frac{ \textbf{v+w} }{2}  
+    \end{equation}
+
+    We can also think of this as \( \textbf{w} + \frac{\textbf{v-w} }{2} = \frac{\textbf{v+w} }{2} \). I.e. traveling along \( \textbf{w}  \) then halfway along the vector connecting \( \textbf{v}  \) and \( \textbf{w}  \).
+  \end{definition}
+
+  \begin{theorem}[Diagonals of a parallelogram bisect each other]
+  \end{theorem}
+
+  \begin{proof}
+    We can prove the diagonals bisect each other by showing their midpoints are equal. We showed above that the diagonal formed by \( \textbf{v-w}  \) has midpoint \( \frac{\textbf{v+w} }{2} \). The other diagonal runs from \( \textbf{0}  \) to \( \textbf{v+w}  \). This is the vector \( \textbf{v+w}  \) which also clearly has midpoint \( \frac{ v+w  }{2}  \) 
+    Since the midpoints of the diagonals are equal, they bisect each other.  
+  \end{proof}
+
+  \begin{theorem}[Medians of a triangle intersect at a point 2/3 the way from each vertex to its opposite side]
+  \end{theorem}
+
+  \begin{proof}
+
+    \begin{figure}[ht]
+      \centering
+      \incfig{medians}
+      \caption{medians}
+      \label{fig:medians}
+    \end{figure}
+
+    For each point, we want to calculate the point 2/3 along its corresponding median.\\
+    One median is \( \textbf{w}/2 - \textbf{v} \). 2/3 of that median is \( 2/3(\textbf{w}/2 - \textbf{v}) =\textbf{v}/3+\textbf{w}/3\).\\
+    Another median is \( \textbf{v/2} - \textbf{w} \). 2/3 of that median is \( 2/3(\textbf{v}/2 - \textbf{w}) =\textbf{v}/3+\textbf{w}/3\).\\
+    The final median is \( \textbf{v+w}/2 \). 2/3 of that median is \( 2/3(\textbf{v+w}/2 )=\textbf{v}/3 + \textbf{w}/3 \)
+    The same cooordinate lies 2/3 the way down each median.
+
+    
+  \end{proof}
+    
+\end{document}
