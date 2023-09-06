@@ -5,6 +5,8 @@
 
 \usepackage{url}
 
+\usepackage{geometry}
+\newgeometry{hmargin={12mm,17mm}}
 
 \usepackage{graphicx}
 \usepackage{float}
@@ -81,8 +83,13 @@
 }
 \makeatother
 
+\title{Math 221 HW1}
+\author{Asa Royal (ajr74)}
+\date{September 7, 2023}
 
 \begin{document}
+\maketitle
+\section*{1.1}
 
 \begin{enumerate}
   \skipitems{5}
@@ -94,14 +101,14 @@
         First, we rearrange the Cartesian equation to express \( x_1 \) in terms of \( x_2 \).
         \begin{align*}
           3x_1 + 4x_2 &= 6 \\
-          x_1 &= \frac{-4}{3}x_2 + 6
+          x_1 &= -\frac{4}{3}x_2 + 2
         \end{align*}
 
         In parametric form,
         \begin{align*}
-          \textbf{x} &= (-\frac{4}{3}x_2 + 6, x_2)  \\
-                     &= (6,0) + x_2(-\frac{4}{3}, 1) \\
-                     &= (6,0) + t(-\frac{4}{3}, 1)
+          \textbf{x} &= (-\frac{4}{3}x_2 + 2, x_2)  \\
+                     &= (2,0) + x_2(-\frac{4}{3}, 1) \\
+                     &= (2,0) + t(-\frac{4}{3}, 1)
         \end{align*}
 
       \skipitems{1}
@@ -118,7 +125,8 @@
 
       \skipitems{3}
 
-      \item
+    \item The line through \( A=(1,-2,1) \) and \( B=(2,1,-1) \)\\
+    \\
         To parameterize a line, we find the span of the vector with the same direction running through the origin, then then translate it as appropriate.\\
         \\
         The slope of the line we want to parameterize is \( B-A=(1,3,-2) \), which means its span is \( t(1,3,-2) \). We translate that by (1,-2,1), so
@@ -129,18 +137,34 @@
 
     \end{enumerate}
 
-  \item Suppose %\( \textbf{x} = \textbf{x}_0 +t \textbf{v} \) and \( \textbf{y} = \textbf{y}_0 + s \textbf{w}  \) are two parametric representations of the same line in \( \mathbb{R}^N \).
+  \item Suppose \( \textbf{x} = \textbf{x}_0 +t \textbf{v} \) and \( \textbf{y} = \textbf{y}_0 + s \textbf{w}  \) are two parametric representations of the same line in \( \mathbb{R}^n \).
     \begin{enumerate}
       \item
-      Show that there is a scalar \( t_0 \) so that \( \textbf{y}_0=\textbf{x}_0 + t_0 \textbf{v} \).\\
-        \\
-      Since \( \textbf{x}  \) and \( \textbf{y}  \) represent the same line \( \ell \), they have the same span and contain the same vectors. Thus, since \( \textbf{y}  \) contains the vector \( \textbf{y}_0  \) (when \( s=0 \) ), \( \textbf{x}  \) must also contain \( \textbf{y}_0  \). \\
-        \\
-        Thus there is some parameterization of \( \textbf{x}  \) such that it equals \( \textbf{y}_0  \). That is, for some \( t_0 \), \( \textbf{y}_0 = \textbf{x}_0 + t_0 \textbf{v}  \).
+      Show that there is a scalar \( t_0 \) so that \( \textbf{y}_0=\textbf{x}_0 + t_0 \textbf{v} \).
         
-      \item \textcolor{red}{Show that \( \textbf{v}  \) and \( \textbf{w}  \) are parallel ??????????????????}\\ 
-      \\
-      We want to show that \( \textbf{v}  \) and \( \textbf{w}  \) are scalar multiples of each other (get some equation like \( \textbf{v} = a \textbf{w} \) 
+        \begin{proof}
+      Since \( \textbf{x}  \) and \( \textbf{y}  \) represent the same line \( \ell \), they have the same span and contain the same vectors. Accordingly, since \( \textbf{y}  \) contains the vector \( \textbf{y}_0  \) (when \( s=0 \) ), \( \textbf{x}  \), which represents the same line, must also contain \( \textbf{y}_0  \). \\
+        \\
+        That is, for some \( t_0 \), \( \textbf{y}_0 = \textbf{x}_0 + t_0 \textbf{v}  \) (\( y_0 \) can be expressed in terms of \( \textbf{x} \)).
+        \end{proof}
+        
+      \item Show that \( \textbf{v}  \) and \( \textbf{w}  \) are parallel\
+      \begin{proof}
+        To show that \( \textbf{v} \) and \( \textbf{w} \) are parallel, we must show that \( \textbf{v} = c \textbf{w} \) (or equivalently \( \textbf{w} = c \textbf{v} \)) for some \( c \in \mathbb{R} \). 
+
+        Since \( \textbf{x} \) and \( \textbf{y} \) represent the same line, there are some scalars \( s,t \in \mathbb{R} \) and constant vectors \( \textbf{x}_0, \textbf{y}_0 \) such that \( \textbf{x} = \textbf{y} \). We can express this relationship by setting their parametric expressions equal to each other. 
+        \begin{equation*}
+          x_0+t \textbf{v} = y_0 + s \textbf{w}
+        \end{equation*}
+        We know from 7a that there exists a scalar \( t_0 \) that lets us express \( y_0 = x_0 + t_0 \textbf{v} \). We can plug the RHS of that equation into the equation above. 
+        \begin{align*}
+          x_0+t \textbf{v} &= x_0 + t_0 \textbf{v} + s \textbf{w} \\
+          t \textbf{v} - t_0 \textbf{v} &= s \textbf{w} \\
+          \frac{ t-t_0}{s} \textbf{v} &= \textbf{w} \\
+          \textbf{w} &= c \textbf{v} 
+        \end{align*}
+        We know that \( c \in \mathbb{R} \) since all of the variables in the expression for \( c \) are scalars. Thus, since \( \textbf{w} = c \textbf{v} \), \( \textbf{v} \) and \( \textbf{w} \) are parallel.
+      \end{proof}
 
     \end{enumerate}
 
@@ -201,7 +225,7 @@
       \begin{enumerate}
         \item The plane containing the point \( (-1,0,1) \) and the line \( x=(1,1,1) + t(1,7,-1) \)\\
         \\
-          A plane is defined as the span of two non- scalar multiple vectors. In this case, one of those vectors is (1,1,1). Another can be constructed from the line segment between two points on the plane: \( (1,1,1) - (-1,0,1)=(2,1,0) \). A parametric equation including both is:
+          A plane is defined as the span of two non- scalar multiple vectors. In this case, one of those vectors is (1,7,-1). Another can be constructed from the line segment between two points on the plane: \( (1,1,1) - (-1,0,1)=(2,1,0) \). A parametric equation including both is:
           \begin{equation*}
             (-1,0,1) + s(2,1,0) + t(1,7,-1)
           \end{equation*}
@@ -222,15 +246,15 @@
 
         \item The plane in \( \mathbb{R}^4 \) containing the points \( (1,1,-1,2), (2,3,0,1),  \) and \( (1,2,2,3) \).\\
         \\
-          One vector in the plane is \( (2,3,0,1) - (1,1,-1,2) = (1,2,-1,-1) \). Another vector in the plane is \( (1,2,2,3) - (1,1,-1,2) = (0,1,3,1) \). A parametric equation for the plane is 
+          One vector in the plane is \( (2,3,0,1) - (1,1,-1,2) = (1,2,1,-1) \). Another vector in the plane is \( (1,2,2,3) - (1,1,-1,2) = (0,1,3,1) \). A parametric equation for the plane is 
           \begin{equation*}
-            (1,1,-1,2) + t(1,2,-1,-1) + u(0,1,3,1)
+            (1,1,-1,2) + t(1,2,1,-1) + u(0,1,3,1)
           \end{equation*}
 
       \end{enumerate}
 
     \skipitems{10}
-  \item  Suppose \( \textbf{v, w} \in \mathbb{R}^n \) and \( c \)  is a scala. Prove that \( \text{span}(\textbf{v} + c \textbf{w}, \textbf{w}) \) = \( \text{span}(\textbf{v, w}  \) 
+  \item  Suppose \( \textbf{v, w} \in \mathbb{R}^n \) and \( c \)  is a scalar. Prove that \( \text{span}(\textbf{v} + c \textbf{w}, \textbf{w}) \) = \( \text{span}(\textbf{v, w}) \) 
     \begin{proof}
       \begin{align*}
         \text{span}(\textbf{v} + c \textbf{w}, \textbf{w}) &= d_1(\textbf{v} + c \textbf{w}) + d_2 \textbf{w} && \text{for \( \forall d_1,d_2 \in \mathbb{R} \)} \text{ (by def of span)}\\
@@ -251,15 +275,16 @@
                          &= (cd_1) \textbf{v}_1 + (cd_2) \textbf{v}_2 + \ldots  + (cd_k) \textbf{v}_k \\
                          &= e_1 \textbf{v}_1 + e_2 \textbf{v}_2 + \ldots  + e_k \textbf{v}_k && e \in \mathbb{R} \\
           \end{align*}
-        This is a linear combination of \( \textbf{v}_1,\ldots ,\textbf{v}_k \).
+        This is, by definition, a linear combination of \( \textbf{v}_1,\ldots ,\textbf{v}_k \).
         \end{proof}
 
+  \pagebreak
       \item Prove that \( \textbf{v+w}  \) is a linear combination of \( \textbf{v}_1,\ldots ,\textbf{v}_k \).
         \begin{proof}
 
           % \( \textbf{v}  \) and \( \textbf{w}  \) are both linear combos of \( \textbf{v}_1,\ldots ,\textbf{v}_k \) so 
           \begin{align*}
-            \textbf{v} + \textbf{w} &= (c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  c_k \textbf{v}_k) + (d_1 \textbf{v}_1 + d_2 \textbf{v}_2 + \ldots  d_k && \text{(by def. of linear combo)} \\
+            \textbf{v} + \textbf{w} &= (c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  c_k \textbf{v}_k) + (d_1 \textbf{v}_1 + d_2 \textbf{v}_2 + \ldots  d_k) && \text{(by def. of linear combo)} \\
                                     &= (c_1 + d_1) \textbf{v}_1 + (c_2 + d_2) \textbf{v}_2 + \ldots (c_k + d_k) \textbf{v}_k \\
                                     &= e_1 \textbf{v}_1 + e_2 \textbf{v}_2 + \ldots  + e_k \textbf{v}_k && e \in \mathbb{R} \\
           \end{align*}
@@ -268,20 +293,23 @@
       
     \end{enumerate}
 
-  \item Consider the line \( \ell: \textbf{x} = x_0 + r \textbf{v} (r \in \mathbb{R}) \) and the plane \( P: x = s \textbf{u} + t \textbf{v} (s,t \in \mathbb{R} \). Show that if \( \ell \) and \( P \) intersect, \( x_0 \in P \). 
-    If \( \ell \) and \( P \) intersect, \( \ell = P \) at some point. That is,
-    \begin{equation*}
-      x_0 + r \textbf{v}  = s \textbf{u} + t \textbf{v} 
-    \end{equation*}
+  \item Consider the line \( \ell: \textbf{x} = x_0 + r \textbf{v } (r \in \mathbb{R}) \) and the plane \( P: x = s \textbf{u} + t \textbf{v } (s,t \in \mathbb{R} \)). Show that if \( \ell \) and \( P \) intersect, \( x_0 \in P \). 
+    \begin{proof}
+      If \( \ell \) and \( P \) intersect, \( \ell = P \) for some \( r,s,t \in \mathbb{R} \). That is, at some point,
+      \begin{equation*}
+        x_0 + r \textbf{v}  = s \textbf{u} + t \textbf{v} 
+      \end{equation*}
 
-    We can solve for \( x_0 \) to show that it will lie within \( P \):
-    \begin{align*}
-      x_0 &= s \textbf{u} + t \textbf{v}  = r \textbf{v} \\
-        &= s \textbf{u} + (t-r) \textbf{v} \\
-        &= s \textbf{u} + t_1 \textbf{v} 
-    \end{align*}
+      We can solve for \( x_0 \) to show that it will lie within \( P \):
+      \begin{align*}
+        x_0 &= s \textbf{u} + t \textbf{v}  = r \textbf{v} \\
+          &= s \textbf{u} + (t-r) \textbf{v} \\
+          &= s \textbf{u} + t_1 \textbf{v} 
+      \end{align*}
 
-    This matches the equation of the plane \( P \). We can thus say that if \( \ell \) and \( P \) intersect, \( x_0 \in P \).
+      This matches the equation of the plane \( P \). We can thus say that if \( \ell \) and \( P \) intersect, \( x_0 \in P \).
+        
+    \end{proof}
 
   \item 
     \begin{enumerate}
@@ -297,6 +325,8 @@
             0\textbf{x}        &= 0      && (d)
           \end{align*}
         \end{proof}
+      
+      \pagebreak
 
       \item Using the result of part a, prove that \( (-1) \textbf{x} = - \textbf{x} \). 
         \begin{proof}
@@ -328,7 +358,8 @@
         \item \( \textbf{x}=(2,1), \textbf{y}=(-1,1) \)
           \begin{align*}
             \textbf{x} \cdot \textbf{y} &= -2 + 1 = -1  \\
-            \cos(\theta) &= \frac{\textbf{x} \cdot \textbf{y}}{\lVert \textbf{x} \rVert \lVert \textbf{y} \rVert } = \frac{-1}{\sqrt{4+1}\sqrt{1+1}} = - \frac{1}{\sqrt{10}}
+            \cos(\theta) &= \frac{\textbf{x} \cdot \textbf{y}}{\lVert \textbf{x} \rVert \lVert \textbf{y} \rVert } = \frac{-1}{\sqrt{4+1}\sqrt{1+1}} = - \frac{1}{\sqrt{10}}\\
+            \theta &= \cos^{-1} \left( -\frac{1}{\sqrt{10}} \right) = \approx 108.4 \deg
           \end{align*}
 
 
@@ -336,17 +367,20 @@
         \item \( \textbf{x}=(1,4,-3), \textbf{y}=(5,1,3) \)
           \begin{align*}
             \textbf{x} \cdot \textbf{y} &= 5 + 4 + (-9) = 0 \\
-            \cos \theta &= \frac{0}{\lVert \textbf{x} \rVert \lVert \textbf{y} \rVert } = 0
+            \cos \theta &= \frac{\textbf{x} \cdot \textbf{y}}{\lVert \textbf{x} \rVert \lVert \textbf{y} \rVert } = \frac{0}{\lVert \textbf{x} \rVert \lVert \textbf{y} \rVert } = 0 \\
+            \theta &= \cos^{-1}(0) = \frac{\pi}{2}
           \end{align*}
 
         \skipitems{2}
       \item \( \textbf{x}=(1,1,1,1), \textbf{y}=(1,-3,-1,5) \)
         \begin{align*}
-          \textbf{x} \cdot \textbf{y} &= 1 + (-3) + (-1) + 5 = \\
-          \cos \theta &= \frac{2}{\sqrt{1+1+1+1}\sqrt{1+9+1+25}} = \frac{2}{2*6} = \frac{1}{6}
+          \textbf{x} \cdot \textbf{y} &= 1 + (-3) + (-1) + 5 = 2\\
+          \cos \theta &= \frac{\textbf{x} \cdot \textbf{y}}{\lVert \textbf{x} \rVert \lVert \textbf{y} \rVert } = \frac{2}{\sqrt{1+1+1+1}\sqrt{1+9+1+25}} = \frac{2}{2*6} = \frac{1}{6}\\
+            \theta &= \cos^{-1} \left( \frac{1}{6} \right) = 80.4 \deg
         \end{align*}
       \end{enumerate}
 
+    \pagebreak
     \item For each pair of vectors in exercise 1, calculate \( \text{proj}_\textbf{y} \textbf{x} \) and \( \text{proj}_{\textbf{x}} \textbf{y} \)
       \begin{enumerate}
         \skipitems{1}
@@ -365,12 +399,12 @@
         \item
         \begin{align*}
           \text{proj}_{\textbf{y}} \textbf{x}&=\frac{\textbf{x} \cdot \textbf{y}}{\lVert \textbf{y} \rVert } \frac{\textbf{y}}{\lVert \textbf{y} \rVert }\\
-                                             &= \frac{0}{\lVert \textbf{y} \rVert ^2}\textbf{y}=0
+                                             &= \frac{0}{\lVert \textbf{y} \rVert ^2}\textbf{y}=\textbf{0}
         \end{align*}
 
         \begin{align*}
           \text{proj}_{\textbf{x}} \textbf{y} &= \frac{\textbf{y} \cdot \textbf{x}}{\lVert \textbf{x} \rVert } \frac{\textbf{x}}{\lVert \textbf{x} \rVert } \\
-                                              &= \frac{0}{\lVert \textbf{x} \rVert ^2} \textbf{x} = 0
+                                              &= \frac{0}{\lVert \textbf{x} \rVert ^2} \textbf{x} = \textbf{0} 
         \end{align*}
 
         \skipitems{2}
@@ -391,13 +425,50 @@
 
   \begin{proof}
     \begin{align*}
-      {\lVert \textbf{x+y} \rVert}^2 + {\lVert \textbf{x-y} \rVert}^2 &= (\textbf{x}+\textbf{y}) + \cdot (\textbf{x} + \textbf{y}) + (\textbf{x} - \textbf{y} ) \cdot (\textbf{x} - \textbf{y}) \\
-                                                                      &=\textbf{x} \cdot (\textbf{x+y}) + \textbf{y} \cdot (\textbf{x+y}) + \textbf{x} \cdot (\textbf{x-y}) - \textbf{y} \cdot (\textbf{x-y}) \\
-                                                                      &=(\textbf{x} \cdot \textbf{y}) + (\textbf{x} \cdot \textbf{y}) + (\textbf{x} \cdot \textbf{y}) + (\textbf{y} \cdot \textbf{y}) + (\textbf{x} \cdot \textbf{x}) - (\textbf{y} \cdot \textbf{x}) - (\textbf{x} \cdot \textbf{y}) + (\textbf{y} \cdot \textbf{y})\\
-                                                                      &= 2(\textbf{x} \cdot \textbf{x})  + 2(\textbf{y} \cdot \textbf{y}) \\
-                                                                      &= 2({\lVert \textbf{x} \rVert} + {\lVert \textbf{y} \rVert})
+      {\lVert \textbf{x+y} \rVert}^2 + {\lVert \textbf{x-y} \rVert}^2 &= (\textbf{x}+\textbf{y}) \cdot (\textbf{x} + \textbf{y}) + (\textbf{x} - \textbf{y} ) \cdot (\textbf{x} - \textbf{y})  && (\text{by } \textbf{v} \cdot \textbf{v} = {\lVert \textbf{v} \rVert}^2)\\
+                                                                      &=\textbf{x} \cdot (\textbf{x+y}) + \textbf{y} \cdot (\textbf{x+y}) + \textbf{x} \cdot (\textbf{x-y}) - \textbf{y} \cdot (\textbf{x-y}) && (\text{by distrib. prop. of dot product}) \\
+                                                                      &=(\textbf{x} \cdot \textbf{x}) + (\textbf{x} \cdot \textbf{y}) + (\textbf{y} \cdot \textbf{x}) + (\textbf{y} \cdot \textbf{y}) && (\text{same})\\
+                                                                      &+ (\textbf{x} \cdot \textbf{x}) - (\textbf{x} \cdot \textbf{y}) - (\textbf{y} \cdot \textbf{x}) + (\textbf{y} \cdot \textbf{y}) \\
+                                                                      &= 2(\textbf{x} \cdot \textbf{x})  + 2(\textbf{y} \cdot \textbf{y}) && \text{(cancellation)}\\
+                                                                      &= 2({\lVert \textbf{x} \rVert}^2 + {\lVert \textbf{y} \rVert}^2) && (\text{by } \textbf{v} \cdot \textbf{v} = {\lVert \textbf{v} \rVert}^2)
     \end{align*}
   \end{proof}
+
+  \skipitems{2}
+  \item
+    
+    \begin{enumerate}
+      \item If \( \textbf{x} \cdot \textbf{y} = 0 \) for all \( \textbf{x} \in \mathbb{R}^n \), prove \( \textbf{y} = 0 \).
+      \begin{proof}
+        Assume \( \textbf{x} \cdot \textbf{y} = 0 \) for all \( \textbf{x} \in \mathbb{R}^n \). Let \( \textbf{x} = \textbf{y} \). Then \( \textbf{y} \cdot \textbf{y} = 0 \). Since \( \textbf{y} \cdot \textbf{y} = {\lVert \textbf{y} \rVert}^2 \), this means \( {\lVert \textbf{y} \rVert}^2=0 \) and \( {\lVert \textbf{y} \rVert} = 0\), which is only true if \( \textbf{y} = \textbf{0} \).
+      \end{proof}
+      
+    \item  Suppose \( \textbf{y, z} \in \mathbb{R}^n\) and \( \textbf{x} \cdot \textbf{y} = \textbf{x} \cdot \textbf{z} \) for all \( \textbf{x} \in \mathbb{R}^n \). What can we conclude?\\
+      If \( \textbf{x} \cdot \textbf{y} = \textbf{x} \cdot \textbf{z} \), 
+      \begin{align}
+        (\textbf{x} \cdot \textbf{y}) - (\textbf{x} \cdot \textbf{z)} &= 0\\
+      \textbf{x} \cdot (\textbf{y} - \textbf{z}) &= 0
+      \end{align}
+
+      Since \( \textbf{x} \) can take on any value, \( \textbf{y} - \textbf{z} \) must equal \( \textbf{0} \) to satisfy (2). Therefore, we know \( \textbf{y}=\textbf{z} \).
+    \end{enumerate}
+
+    \skipitems{1}
+  \item Prove the triangle inequality: \( {\lVert \textbf{x} + \textbf{y} \rVert} \leq {\lVert \textbf{x} \rVert} + {\lVert \textbf{y} \rVert}\). \\
+  \\
+  To begin, we can square both sides of the equation, which will allow us to express the LHS as a dot product.
+  \begin{align*}
+    {\lVert \textbf{x} + \textbf{y} \rVert}^2 & \leq {\lVert \textbf{x} \rVert}^2 + 2 {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} + {\lVert \textbf{y} \rVert}^2 \\
+    (\textbf{x} + \textbf{y}) \cdot (\textbf{x} + \textbf{y}) &\leq \text{"  "}  && ({\lVert \textbf{x} \rVert}^2 = \textbf{x} \cdot \textbf{x})\\
+    \textbf{x} \cdot (\textbf{x} + \textbf{y}) + \textbf{y} \cdot (\textbf{x} + \textbf{y}) &\leq \text{"  "} && (\text{distrib. prop. of dot product})\\
+    \textbf{x} \cdot \textbf{x} + \textbf{x} \cdot \textbf{y} + \textbf{y} \cdot \textbf{x} + \textbf{y} \cdot \textbf{y} &\leq \text{"  "} && (\text{distrib. prop. of dot product})\\
+    {\lVert \textbf{x} \rVert}^2 + 2 (\textbf{x} \cdot \textbf{y}) + {\lVert \textbf{y} \rVert}^2 &\leq  {\lVert \textbf{x} \rVert}^2 + 2 {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} + {\lVert \textbf{y} \rVert}^2 && ({\lVert \textbf{x} \rVert}^2 = (\textbf{x} \cdot \textbf{x})\\
+    2(\textbf{x} \cdot \textbf{y}) &\leq 2 {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} && (\text{subtract factors from both sides})\\
+    \textbf{x} \cdot \textbf{y} &\leq {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} && (\text{divide both sides by 2})\\
+    {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} \cos \theta &\leq {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} &&(\textbf{def. } \text{angle between vectors})\\
+    \cos \theta &\leq 1 && (\text{divide both sides by } {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert})
+  \end{align*}
+
   \end{enumerate}
 \end{document}
 
