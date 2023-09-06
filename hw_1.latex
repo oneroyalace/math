@@ -311,6 +311,7 @@
         
     \end{proof}
 
+    \skipitems{5}
   \item 
     \begin{enumerate}
       \item Using only the properties listed in Excercise 28, prove that for any \( \textbf{x} \in \mathbb{R}^n \), we have \( 0 \textbf{x} = \textbf{0}  \).
@@ -420,8 +421,33 @@
         \end{align*}
     \end{enumerate}
 
-    \skipitems{10}
-    \pagebreak
+    \skipitems{6}
+  \item Let \( \textbf{e}_1 = (1,0,0), \textbf{e}_2 = (0,1,0), \textbf{e}_3 = (0,0,1) \) be the so-called standard basis for \( \mathbb{R}^3 \). Let \( \textbf{x} \in \mathbb{R}^3 \) be a nonzero vector. For \( i=1,2,3 \), let \( \theta_i \) denote the angle between \( \textbf{x} \) and \( \textbf{e}_i \). Compute \( \cos^2\theta_1 + \cos^2\theta_2 + \cos^2\theta_3 \).
+\begin{align*}
+  \cos\theta_1 &= \frac{\textbf{x} \cdot \textbf{e}_1}{{\lVert \textbf{e}_1 \rVert} {\lVert \textbf{x} \rVert}} = \frac{\textbf{x}_1}{{\lVert \textbf{x} \rVert}}\\
+               \cos\theta_2 &= \frac{\textbf{x} \cdot \textbf{e}_2}{{\lVert \textbf{e}_2 \rVert} {\lVert \textbf{x} \rVert}} = \frac{\textbf{x}_2}{{\lVert \textbf{x} \rVert}}\\
+               \cos\theta_3 &= \frac{\textbf{x} \cdot \textbf{e}_3}{{\lVert \textbf{e}_3 \rVert} {\lVert \textbf{x} \rVert}} = \frac{\textbf{x}_3}{{\lVert \textbf{x} \rVert}}
+\end{align*}
+
+Combining these, 
+\begin{align*}
+\cos^2\theta_1 + \cos^2\theta_2 + \cos^2\theta_3 &= \frac{{\textbf{x}_1}^2 + {\textbf{x}_2}^2 + {\textbf{x}_3}^2}{{\lVert \textbf{x} \rVert}^2}\\
+                                                 &= \frac{\sqrt{{\textbf{x}_1}^2 + {\textbf{x}_2}^2 + {\textbf{x}_3}^2}^2}{{\lVert \textbf{x} \rVert}^2}\\
+                                                 &= \frac{{\lVert \textbf{x} \rVert}^2}{{\lVert \textbf{x} \rVert}^2}\\
+                                                 &= 1
+\end{align*}
+    \skipitems{1}
+  \item Suppose \( \textbf{x}, \textbf{v}_1,\ldots ,\textbf{v}_k \in \mathbb{R}^n \) and \( \textbf{x} \) is orthogonal to each of the vectors \( \textbf{v}_1,\ldots ,\textbf{v}_k \). Show that \( \textbf{x} \) is orthogonal to any linear combination \( c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  c_k \textbf{v}_k \) 
+    \begin{proof}
+      We wish to show that \( \textbf{x} \cdot (c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  c_k \textbf{v}_k)  = 0\), which is equivalent to saying \( \textbf{x} \) and the linear combination are orthogonal
+      \begin{align*}
+        \textbf{x} \cdot (c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  c_k \textbf{v}_k) &=\textbf{x} \cdot c_1 \textbf{v}_1 + \textbf{x} \cdot c_2 \textbf{v}_2 + \ldots  + \textbf{x} \cdot c_k \textbf{v}_k  && \text{(distrib. prop. of dot product)}\\
+                                                                                          &= c_1(\textbf{x} \cdot \textbf{v}_1) + c_2(\textbf{x} \cdot \textbf{v}_2) + \ldots  + c_k(\textbf{x} \cdot \textbf{v}_k) && (\text{factoring out constants})\\
+                                                                                          &= c_1(0) + c_2(0) + \ldots  + c_k(0)  && (\text{def. of orthogonality})\\
+                                                                                          &= 0
+      \end{align*}
+    \end{proof}
+    \skipitems{1}
 \item Prove \( {\lVert \textbf{x+y} \rVert}^2 + {\lVert \textbf{x-y} \rVert}^2 = 2({\lVert \textbf{x} \rVert}^2 + {\lVert \textbf{y} \rVert}^2 \).
 
   \begin{proof}
@@ -434,6 +460,7 @@
                                                                       &= 2({\lVert \textbf{x} \rVert}^2 + {\lVert \textbf{y} \rVert}^2) && (\text{by } \textbf{v} \cdot \textbf{v} = {\lVert \textbf{v} \rVert}^2)
     \end{align*}
   \end{proof}
+  \pagebreak
 
   \skipitems{2}
   \item
