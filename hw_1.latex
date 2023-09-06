@@ -376,7 +376,7 @@
         \begin{align*}
           \textbf{x} \cdot \textbf{y} &= 1 + (-3) + (-1) + 5 = 2\\
           \cos \theta &= \frac{\textbf{x} \cdot \textbf{y}}{\lVert \textbf{x} \rVert \lVert \textbf{y} \rVert } = \frac{2}{\sqrt{1+1+1+1}\sqrt{1+9+1+25}} = \frac{2}{2*6} = \frac{1}{6}\\
-            \theta &= \cos^{-1} \left( \frac{1}{6} \right) = 80.4 \deg
+            \theta &= \cos^{-1} \left( \frac{1}{6} \right) \approx 80.4 \deg
         \end{align*}
       \end{enumerate}
 
@@ -421,6 +421,7 @@
     \end{enumerate}
 
     \skipitems{10}
+    \pagebreak
 \item Prove \( {\lVert \textbf{x+y} \rVert}^2 + {\lVert \textbf{x-y} \rVert}^2 = 2({\lVert \textbf{x} \rVert}^2 + {\lVert \textbf{y} \rVert}^2 \).
 
   \begin{proof}
@@ -457,17 +458,22 @@
   \item Prove the triangle inequality: \( {\lVert \textbf{x} + \textbf{y} \rVert} \leq {\lVert \textbf{x} \rVert} + {\lVert \textbf{y} \rVert}\). \\
   \\
   To begin, we can square both sides of the equation, which will allow us to express the LHS as a dot product.
-  \begin{align*}
-    {\lVert \textbf{x} + \textbf{y} \rVert}^2 & \leq {\lVert \textbf{x} \rVert}^2 + 2 {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} + {\lVert \textbf{y} \rVert}^2 \\
-    (\textbf{x} + \textbf{y}) \cdot (\textbf{x} + \textbf{y}) &\leq \text{"  "}  && ({\lVert \textbf{x} \rVert}^2 = \textbf{x} \cdot \textbf{x})\\
-    \textbf{x} \cdot (\textbf{x} + \textbf{y}) + \textbf{y} \cdot (\textbf{x} + \textbf{y}) &\leq \text{"  "} && (\text{distrib. prop. of dot product})\\
-    \textbf{x} \cdot \textbf{x} + \textbf{x} \cdot \textbf{y} + \textbf{y} \cdot \textbf{x} + \textbf{y} \cdot \textbf{y} &\leq \text{"  "} && (\text{distrib. prop. of dot product})\\
-    {\lVert \textbf{x} \rVert}^2 + 2 (\textbf{x} \cdot \textbf{y}) + {\lVert \textbf{y} \rVert}^2 &\leq  {\lVert \textbf{x} \rVert}^2 + 2 {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} + {\lVert \textbf{y} \rVert}^2 && ({\lVert \textbf{x} \rVert}^2 = (\textbf{x} \cdot \textbf{x})\\
-    2(\textbf{x} \cdot \textbf{y}) &\leq 2 {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} && (\text{subtract factors from both sides})\\
-    \textbf{x} \cdot \textbf{y} &\leq {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} && (\text{divide both sides by 2})\\
-    {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} \cos \theta &\leq {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} &&(\textbf{def. } \text{angle between vectors})\\
-    \cos \theta &\leq 1 && (\text{divide both sides by } {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert})
-  \end{align*}
+  \begin{proof}
+
+    \begin{align*}
+      {\lVert \textbf{x} + \textbf{y} \rVert}^2 & \leq {\lVert \textbf{x} \rVert}^2 + 2 {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} + {\lVert \textbf{y} \rVert}^2 \\
+      (\textbf{x} + \textbf{y}) \cdot (\textbf{x} + \textbf{y}) &\leq \text{"  "}  && ({\lVert \textbf{x} \rVert}^2 = \textbf{x} \cdot \textbf{x})\\
+      \textbf{x} \cdot (\textbf{x} + \textbf{y}) + \textbf{y} \cdot (\textbf{x} + \textbf{y}) &\leq \text{"  "} && (\text{distrib. prop. of dot product})\\
+      \textbf{x} \cdot \textbf{x} + \textbf{x} \cdot \textbf{y} + \textbf{y} \cdot \textbf{x} + \textbf{y} \cdot \textbf{y} &\leq \text{"  "} && (\text{distrib. prop. of dot product})\\
+      {\lVert \textbf{x} \rVert}^2 + 2 (\textbf{x} \cdot \textbf{y}) + {\lVert \textbf{y} \rVert}^2 &\leq  {\lVert \textbf{x} \rVert}^2 + 2 {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} + {\lVert \textbf{y} \rVert}^2 && ({\lVert \textbf{x} \rVert}^2 = (\textbf{x} \cdot \textbf{x})\\
+      2(\textbf{x} \cdot \textbf{y}) &\leq 2 {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} && (\text{subtract factors from both sides})\\
+      \textbf{x} \cdot \textbf{y} &\leq {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} && (\text{divide both sides by 2})\\
+      {\lVert \textbf{x} \rVert} {\lVert \textbf{y} \rVert} \cos \theta &\leq {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert} &&(\textbf{def. } \text{angle between vectors})\\
+      \cos \theta &\leq 1 && (\text{divide both sides by } {\lVert \textbf{x} \rVert}{\lVert \textbf{y} \rVert})
+    \end{align*}
+    
+  \end{proof}
+
 
   \end{enumerate}
 \end{document}
