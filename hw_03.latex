@@ -1,0 +1,183 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{hmargin={12mm,17mm}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+% augmented matrix
+\newenvironment{amatrix}[1]{%
+  \left[\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right]
+}
+
+%right arrow for row operations
+\newcommand{\ro}[1]{%
+  \xrightarrow{\mathmakebox[\rowidth]{#1}}%
+}
+\newlength{\rowidth}% row operation width
+\AtBeginDocument{\setlength{\rowidth}{3em}}
+
+\title{Math 221 HW3}
+\author{Asa Royal (ajr74)}
+\date{September 21, 2023}
+
+\begin{document}
+\maketitle
+\section*{1.5}
+
+\begin{enumerate}
+  \item By solving a system of equations, find the linear combination of vectors \( \textbf{v}_1 = \begin{bmatrix}
+    1 \\ 0 \\ -1
+  \end{bmatrix} \textbf{v}_2 = \begin{bmatrix}
+    0 \\ 1 \\ 2
+  \end{bmatrix}, \textbf{v}_3 = \begin{bmatrix}
+    2 \\ 1 \\ 1
+  \end{bmatrix} \) that gives \(\textbf{b} = \begin{bmatrix}
+    3 \\ 0 \\ -2
+  \end{bmatrix} \).\\
+  \\
+  We want \( \textbf{x}=(x_1,x_2,x_3) \) s.t. \( x_1 \textbf{v}_1 + x_2 \textbf{v}_2 + x_3 \textbf{v}_3 = \textbf{b} \), so we solve \( A \textbf{x} = \textbf{b} \) where \( A = \begin{bmatrix} \textbf{v1} & \textbf{v2} & \textbf{v3} \end{bmatrix} \).
+  
+  \begin{alignat*}{3}
+    \begin{amatrix}{3}
+      1 & 0 & 2 & 3 \\
+      0 & 1 & 1 & 0 \\
+      -1 & 2 & 1 & -2
+    \end{amatrix}
+    &\ro{A_3=A_3+A_1}
+    \begin{amatrix}{3}
+      1 & 0 & 2 & 3 \\
+      0 & 1 & 1 & 0 \\
+      0 & 2 & 3 & 1
+    \end{amatrix}
+    &&\ro{A_3=A_3-2A_2}
+    \begin{amatrix}{3}
+      1 & 0 & 2 & 3 \\
+      0 & 1 & 1 & 0 \\
+      0 & 0 & 1 & 1
+    \end{amatrix}
+    &&\!\begin{aligned}
+      &&\ro{A_1=A_1-2A_3}\\
+      &&\ro{A_2=A_2-A_3}
+    \end{aligned}
+    \begin{amatrix}{3}
+      1 & 0 & 0 & 1 \\
+      0 & 1 & 0 & -1 \\
+      0 & 0 & 1 & 1
+    \end{amatrix}
+  \end{alignat*}
+
+  We see that \( \textbf{x} = \begin{bmatrix} 1 \\ -1 \\ 1 \end{bmatrix}\), which means the linear combo of columns that gives \( \textbf{b} \) is \( \textbf{v}_1 - \textbf{v}_2 + \textbf{v}_3 \)
+  \item Let \( A \) be an \( m \times n \) matrix with row vectors \( \textbf{A}_1,\ldots ,\textbf{A}_m \in \mathbb{R}^n \). 
+  \begin{enumerate}
+    \item Suppose \( \textbf{A}_1+\ldots +\textbf{A}_m = \textbf{0} \). Deduce that \( \text{rank}(A) < m \).
+      \begin{proof}
+       % If \( \textbf{A}_1+\ldots +\textbf{A}_m = \textbf{0} \), each arbitrary row \( \textbf{A}_j \) must equal \( -1 \) times the sum of the other row vectors. 
+        During Gaussian elimination, scalar multiples of rows \( \textbf{A}_1,\ldots ,\textbf{A}_{m-1} \) are added to \( \textbf{A}_m \) to cancel coefficients below pivot variables. Since \( \textbf{A}_m=-(\textbf{A}_1+\ldots +\textbf{A}_{m-1}) \), the row operations that cancel the coefficients of \( \textbf{A}_m \) are the addition of \( \textbf{A}_1,\ldots ,\textbf{A}_{m-1} \). This yields \( \textbf{A}_m= -(\textbf{A}_1+\ldots +\textbf{A}_{m-1}) + (\textbf{A}_1+\ldots +\textbf{A}_{m-1}) = \textbf{0}\). Since \( \textbf{A}_m= \textbf{0} \), it has no pivot variables, which means there can be at most \textbf{m-1} pivots. Therefore \( \text{rank}(A) < m \).
+        % \[
+        %   \textbf{A}_j = - \sum_{i=1}^{m} \textbf{A}_{i|i \neq j}
+        % \]
+        %   In other words, each \( \textbf{A}_j \) is a linear combination of the other rows. Since \( \textbf{A}_j \) is a linear combination of the other rows, it is a redundant equation. It has no pivot variables, since its consraints are defined in other rows. A row with no pivots is a zero-row in echelon form; when one exists, it means \( \text{rank}(A) < m \). \\
+        %   \\
+        %   Wait... Every row is a linear combination of the others, which means Gaussian elimination for some row will involve adding or subtracting all the others. You'll thus get a zero row during gaussian elimination
+
+      \end{proof}
+    \item More generally, suppose there is some linear combination \( c_1\textbf{A}_1+\ldots +c_m \textbf{A}_m = \textbf{0} \), where some \( c_i \neq 0 \). Show that \( \text{rank}(A) < m \).
+      \begin{proof}
+        Per the equation above, 
+        \[
+          c_m\textbf{A}_m=-(c_1 \textbf{A}_1+\ldots + c_{m-1} \textbf{A}_{m-1})  
+        \]
+        which means 
+        \[
+          \textbf{A}_m = -(c'_1 \textbf{A}_1 + \ldots  + c'_{m-1} \textbf{A}_{m-1})
+        \]
+        During Gaussian elimination, scalar multiples of rows \( \textbf{A}_1,\ldots ,\textbf{A}_{m-1} \) are added to \( \textbf{A}_m \) to cancel coefficients below pivot variables. We can see that when scaled rows \( c'_1 \textbf{A}_1,\ldots ,c'_{m-1}\textbf{A}_{m-1} \) are added to \( \textbf{A}_m \), the modified row will be \( \textbf{0} \). Since \( \textbf{A})_m = \textbf{0} \), it has no pivot variables, which means there can be at most \( m-1 \) pivots. Therefore \( \text{rank}(A) < m\).
+        %Since \( \textbf{A}_m=-(\textbf{A}_1+\ldots +\textbf{A}_{m-1}) \), the row operations that cancel the coefficients of \( \textbf{A}_m \) are the addition of \( \textbf{A}_1,\ldots ,\textbf{A}_{m-1} \). This yields \( \textbf{A}_m= -(\textbf{A}_1+\ldots +\textbf{A}_{m-1}) + (\textbf{A}_1+\ldots +\textbf{A}_{m-1}) = \textbf{0}\). Since \( \textbf{A}_m= \textbf{0} \), it has no pivot variables, which means there can be at most \textbf{m-1} pivots. Therefore \( \text{rank}(A) < m \).
+      \end{proof}
+  \end{enumerate}
+
+  \end{enumerate}
+\end{document}
+
+

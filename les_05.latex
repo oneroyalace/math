@@ -1,0 +1,166 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{hmargin={12mm,17mm}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 221 Lec 5 (1.5) }
+\author{Asa Royal (ajr74)}
+\date{September 14, 2023}
+
+\begin{document}
+\maketitle
+We can interpret \( A \) through a row lens or a column lens. The row lens is covered in the previous section. It states that \( A \textbf{x} = \textbf{b} \) identifies the intersection of the hyperplanes defined by \( A_i \textbf{x} = \textbf{b}_i \). We calculate it by finding \( A_i \cdot \textbf{x} \) for each row \( A_i \). 
+We can interpret \( A \textbf{x} = \textbf{b} \) as a linear combination of the columns of \( \textbf{A} \). This is equivalent to saying: 
+\begin{enumerate}
+  \item \( \textbf{b} \in C(A) \) (\( \textbf{b} \) is in the column space of \( \textbf{A} \). 
+  \item \( \textbf{b} \in \text{span}(\textbf{A}) \) 
+\end{enumerate}
+
+\begin{definition}[rank]
+  The \( \textbf{rank} \) of an \( m \times n \) matrix is the number of pivots it has in echelon form.
+\end{definition}
+
+\begin{theorem}[rank/consistency]
+  \( A\textbf{x} = \textbf{b} \) is consistent iff \(\text{rank}(A) = \text{rank}(A|\textbf{b}) \). 
+\end{theorem}
+
+\begin{corollary}
+  \( A\textbf{x} = \textbf{b} \)  for an \( m \times n \) matrix \( A \) is consistent for all \( \textbf{b} \in \mathbb{R}^m \) iff \( \text{rank}(A) = m \). This ensures that every row has a pivot variable, and that a zero-row isn't set equal to a non-zero \( \textbf{b}_k \). 
+\end{corollary}
+
+\begin{definition}[Inconsistent]
+  A system is \( \textbf{inconsistent} \) precisely when theree is an equation that reads
+  \begin{equation*}
+    0x_1 + 0x_2 + \ldots  + 0x_n = c
+  \end{equation*}
+  for non-zero \( c \). 
+\end{definition}
+
+\section*{Uniqueness and non-uniqueness of solutions}
+
+\begin{definition}[homogeneous/non-homogeneous systems]
+  A system of equations with form \( A \textbf{x} = 0 \) is a \( \textbf{homogeneous linear system} \). \( A \textbf{x} = \textbf{b} \) with a non-zero \( \textbf{b} \) is called \( \textbf{non-homogeneous} \). 
+\end{definition}
+
+\begin{prop}
+0 Let \( \textbf{x}_0 \in \mathbb{R}^n \) be a solution to \( A \textbf{x} = \textbf{b} \) (i.e. \( A \textbf{x}_0 = \textbf{b} \)). Then all solutions to \( A \textbf{x} = \textbf{b} \) are given by \( \textbf{x} = \textbf{x}_0 + \textbf{v} \) where \( \textbf{v} \) is a solution for the homogeneous equation \( A \textbf{x} = \textbf{0} \)
+\end{prop} 
+
+\begin{proof}
+  **** use book proof?
+\end{proof}
+
+\begin{prop}
+  The function \( \mathbb{R}^n \mapsto \mathbb{R}^m \) represented by matrix \( A \) is a linear transformation, and 
+  \begin{equation*}
+    A(\textbf{x} + \textbf{y}) = A \textbf{x} + A\textbf{y} \text{ for } \textbf{x,y} \in \mathbb{R}^n
+  \end{equation*}
+  \begin{equation*}
+    A(c \textbf{x}) = c(A \textbf{x}) \text{ for } \textbf{x} \in \mathbb{R}^n, c \in \mathbb{R}. 
+  \end{equation*}
+\end{prop}
+
+\begin{prop}
+  The homogeneous system \( A \textbf{x} = \textbf{0} \) has only the trivial solution \( \textbf{x=0} \) iff \( r=n \) (rank = num. of variables).
+\end{prop}
+
+\begin{proof}
+  A system of equations has a unique solution iff it has no free vars, which requires that all variable be pivot variables. by definition, this means \( r=n \). 
+\end{proof}
+
+\begin{definition}[singular/nonsingular matrix]
+  An \( n \times n \) matrix of rank \( r = n \) is called \( \textbf{nonsingular} \). An \( n \times n  \) matrix of rank \( r < n \) is called \textbf{singular}.
+\end{definition}
+
+\begin{theorem}[Non-singular matrix theorem]
+  If \( A \) be an \( n \times n \) matrix, the following statements are equivalent. 
+  \begin{enumerate}
+    \item \( A \) is a nonsingular matrix. 
+    \item \( r=n \)
+    \item \( A \textbf{x} = \textbf{b} \) is consistent for all \( \textbf{b} \) and in fact has a unique solution for each \( \textbf{b} \). 
+    \item The reduced echelon form of \( A \) is 
+      \[
+        \begin{bmatrix}
+          1,0,0,0\\
+          0,1,0,0\\
+          0,0,1,0\\
+          0,0,0,1
+        \end{bmatrix}
+      \]
+  \end{enumerate}
+\end{theorem}
+
+\end{document}
