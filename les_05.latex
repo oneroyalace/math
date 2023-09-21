@@ -119,26 +119,16 @@ We can interpret \( A \textbf{x} = \textbf{b} \) as a linear combination of the 
 0 Let \( \textbf{x}_0 \in \mathbb{R}^n \) be a solution to \( A \textbf{x} = \textbf{b} \) (i.e. \( A \textbf{x}_0 = \textbf{b} \)). Then all solutions to \( A \textbf{x} = \textbf{b} \) are given by \( \textbf{x} = \textbf{x}_0 + \textbf{v} \) where \( \textbf{v} \) is a solution for the homogeneous equation \( A \textbf{x} = \textbf{0} \)
 \end{prop} 
 
-\begin{proof}
-  **** use book proof?
-\end{proof}
+\begin{corollary}
+  As proposition 6 indicates, a particular solution  to \( A \textbf{x} = \textbf{b} \) shifts the solution set from the set defined by \( A \textbf{x} = \textbf{0} \) along the particular solution vector \( \textbf{x}_0 \). Thus, \( A \textbf{x} = \textbf{b} \) has a unique solution iff \( A \textbf{x} = \textbf{0} \) has one solution (which must be the trivial solution). 
+\end{corollary}
 
 \begin{prop}
-  The function \( \mathbb{R}^n \mapsto \mathbb{R}^m \) represented by matrix \( A \) is a linear transformation, and 
-  \begin{equation*}
-    A(\textbf{x} + \textbf{y}) = A \textbf{x} + A\textbf{y} \text{ for } \textbf{x,y} \in \mathbb{R}^n
-  \end{equation*}
-  \begin{equation*}
-    A(c \textbf{x}) = c(A \textbf{x}) \text{ for } \textbf{x} \in \mathbb{R}^n, c \in \mathbb{R}. 
-  \end{equation*}
-\end{prop}
-
-\begin{prop}
-  The homogeneous system \( A \textbf{x} = \textbf{0} \) has only the trivial solution \( \textbf{x=0} \) iff \( r=n \) (rank = num. of variables).
+  The homogeneous system \( A \textbf{x} = \textbf{0} \) has only the trivial solution \( \textbf{x=0} \) iff \( r=n \) (i.e. rank = \# variables).
 \end{prop}
 
 \begin{proof}
-  A system of equations has a unique solution iff it has no free vars, which requires that all variable be pivot variables. by definition, this means \( r=n \). 
+  A system of equations has a unique solution iff it has no free vars, which requires that all variable be pivot variables. By definition, this means \( r=n \). 
 \end{proof}
 
 \begin{definition}[singular/nonsingular matrix]
@@ -163,4 +153,14 @@ We can interpret \( A \textbf{x} = \textbf{b} \) as a linear combination of the 
   \end{enumerate}
 \end{theorem}
 
+\begin{prop}
+  *note*: \textbf{This should probably be a part of 2.1/2.2 notes} \\
+  The function \( \mathbb{R}^n \mapsto \mathbb{R}^m \) represented by matrix \( A \) is a linear transformation, and 
+  \begin{equation*}
+    A(\textbf{x} + \textbf{y}) = A \textbf{x} + A\textbf{y} \text{ for } \textbf{x,y} \in \mathbb{R}^n
+  \end{equation*}
+  \begin{equation*}
+    A(c \textbf{x}) = c(A \textbf{x}) \text{ for } \textbf{x} \in \mathbb{R}^n, c \in \mathbb{R}. 
+  \end{equation*}
+\end{prop}
 \end{document}

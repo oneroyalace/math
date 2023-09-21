@@ -148,6 +148,13 @@
   \end{alignat*}
 
   We see that \( \textbf{x} = \begin{bmatrix} 1 \\ -1 \\ 1 \end{bmatrix}\), which means the linear combo of columns that gives \( \textbf{b} \) is \( \textbf{v}_1 - \textbf{v}_2 + \textbf{v}_3 \)
+
+  \skipitems{11}
+\item Suppose \( A \) is an \( m \times n \) matrix with rank \( m \) and \( \textbf{v}_1,\ldots,\textbf{v}_k \in \mathbb{R}^n\) are vectors with \( \text{Span}(\textbf{v}_1,\ldots,\textbf{v}_k) = \mathbb{R}^n \). Prove that \( \text{Span}(A \textbf{v}_1,\ldots, A \textbf{v}_k) = \mathbb{R}^m \)
+  \begin{proof}
+    Since \( A \) has rank \( m \), there is an \( A \textbf{x} = \textbf{b} \) solution for all \( b \in \mathbb{R}^m \). We want to show that \( \text{Span}(\textbf{v}_1,\ldots,\textbf{v}_k) \) can form that vector \( \textbf{x} \) (i.e., any vector in \( \mathbb{R}^n \)). We let \(\textbf{x}= \text{Span}(\textbf{v}_1,\ldots,\textbf{v}_k) = c_1 \textbf{v}_1 + \ldots + c_k \textbf{v}_k \), which can form any vector in \( \mathbb{R}^n \). Then \( A \textbf{x} \) can form any vector in \( \mathbb{R}^m \). \(A \textbf{x} = A (c_1 \textbf{v}_1 + \ldots + c_k \textbf{v}_k) = c_1 A \textbf{v}_1 + \ldots + c_k A \textbf{v}_k = \text{Span}(A \textbf{v}_1,\ldots, A \textbf{v}_k) = \mathbb{R}^m \)
+  \end{proof}
+
   \item Let \( A \) be an \( m \times n \) matrix with row vectors \( \textbf{A}_1,\ldots ,\textbf{A}_m \in \mathbb{R}^n \). 
   \begin{enumerate}
     \item Suppose \( \textbf{A}_1+\ldots +\textbf{A}_m = \textbf{0} \). Deduce that \( \text{rank}(A) < m \).

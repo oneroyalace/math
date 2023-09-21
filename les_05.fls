@@ -337,10 +337,10 @@ INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecsx1000.tfm
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecss1000.tfm
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecrm1440.tfm
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm
-INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecti1000.tfm
 OUTPUT les_05.pdf
 INPUT /usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc
+INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/ecti1000.tfm
 INPUT les_05.aux
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
