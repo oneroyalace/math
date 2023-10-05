@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{hmargin={12mm,17mm}}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 221 Lec 9 (2.3: Inverse Matrices) }
+\author{Asa Royal (ajr74)}
+\date{September 26, 2023}
+
+\begin{document}
+\maketitle
+%Consider the function \( \mathbb{f}: \mathbb{R}^2 \mapsto \mathbb{R}^2 \) and \( \mathbb{g}: \mathbb{R}^2 \mapsto \mathbb{R}^3 \)
+
+\section{Inverse matrices}
+
+\begin{remark}
+  If a matrix \( A \) is invertible, we can find \( A^{-1} \) by performing Gaussian elimination on the augmented matrix \( [A|I] \). This augmented matrix represents multiple sets of simultaneous equations, wherein we solve for multiple \( \textbf{x} \) vectors, s.t. \( A \textbf{x}_1 = i_1\) (the first column of \( I \)), \( A \textbf{x}_2 = i_2 \ldots  \)
+\end{remark}
+
+\begin{eg}
+  Find the inverse of \( A= \begin{bmatrix}
+    1 & 2 \\
+    3 & 4
+  \end{bmatrix} \). 
+  
+Fill out...
+\end{eg}
+\begin{prop}
+  Nonsingular matrices are invertible.
+\end{prop}
+
+Why do singular matrices not have inverses?
+
+\begin{proof}
+  Assume \( A \) is a singular matrix. Then \( A \textbf{x} = \textbf{0} \) has a nontrivial (non-zero) solution. But if \( A^{-1} \) existed, \( A^{-1} A \textbf{x} = A^{-1} \textbf{0} \), which means \( x=\textbf{0} \). This is a contradiction!
+\end{proof}
+
+\begin{proof}
+  Alternatively, given singular matrix \( A \), try solving the multiple systems of equations represented by \( AB=I \), where \( B \) is the hypothetical \( A^{-1} \). \( A \) will row reduce to a matrix with a row of zeros in the bottom, which cannot possibly equal the bottom row of \( I \). 
+\end{proof}
+
+\section{Determinants}
+\begin{definition}[determinant]
+  The \textbf{determinant} of a linear transformation tells us how much a unit of area changes after the transformation is applied.
+\end{definition}
+
+\subsection{Geometric interpretation of the determinant}
+\begin{eg}[geometric interp of determinant in 2 dimensions]
+  If we apply the linear transformation represented by \( A = \begin{bmatrix}
+    3 & 0 \\
+    0 & 2
+  \end{bmatrix} \), \( \hat{i} \) is stretched by \( 3 \) and \( \hat j \) is stretched by \( 2 \). The area covered by \( \begin{bmatrix}
+    \hat i & \hat j
+  \end{bmatrix} \) thus increases from \( 1*1=1 \) to \( 2*3=6 \), so the determinant of the transformation is \( 6 \). 
+\end{eg}
+\begin{remark}
+  In two-dimensional space, a matrix with \( \det(A)=0  \) represents a linear transformation that reduces the \textbf{area} of a unit square to \( 0 \), collapsing space onto a line (or point). \\
+\end{remark}
+\begin{remark}
+  In three-dimensional space, a matrix with \( \det(A) = 0 \) represents a linear transformation that reduces the \textbf{volume} of a unit cube to 0, collapsing space onto a plane, line, or point. 
+\end{remark}
+
+\begin{remark}
+  The \textbf{sign of a determinant} tells us whether the orientation of space has changed. For example, in two-dimensional space, if \( \det(A) = -1 \), \( \hat i \) might go from being to the right of \( \hat j \) to being to the left. We can use the right-hand rule to figure out whether the orientation of 3-space has changed.
+\end{remark}
+
+
+
+\end{document}
+
+
