@@ -1,0 +1,259 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 HW 7  \\
+  \large{3.2 The 4 fundamental subspaces}
+}
+\author{Asa Royal (ajr74)}
+\date{October 3, 2023}
+
+\begin{document}
+\maketitle
+
+\section*{3.2}
+
+\begin{enumerate}
+  \item Show that if \( B \) is obtained from \( A \) by performing one or more row operations, then \( R(B) = R(A) \).
+
+    We first show that \( R(B) \subset R(A) \). \( B \) is formed by some combination of three operations on the rows of \( A \), swapping, scaling, and adding scalar multiples. 
+    \begin{enumerate}
+      \item If we swap rows of \( A \) to form \( B \), \( B \) still has the same rows as \( A \), so \( R(B) \subset R(A) \).
+      \item If we scale a row of \( A \) to form a row of \( B \), \( \textbf{B}_i = c\textbf{A}_i \) where \( c \neq 0 \). Then \( R(B) = c_1\textbf{A}_1 + \ldots c_i(c\textbf{A}_i) + \ldots + c_m\textbf{A}_m \), so \( R(B) \subset R(A) \).
+      \item If we add a scalar multiple of some \( \textbf{A}_i \) to some \( \textbf{A}_j \) so that \( \textbf{B}_j = \textbf{A}_j + c\textbf{A}_i \), \( R(B) = c_1 \textbf{B}_1 + \ldots c_i \textbf{B}_i + \ldots c_j (\textbf{A}_j + c \textbf{A}_i) + \ldots c_m \textbf{B}_m = c\textbf{A}_1 + \ldots (c_jc + c_i) \textbf{A}_i + \ldots c_j \textbf{A}_j + \ldots  c_m \textbf{A}_m \). This in the span of the rows of \( A \), so \( R(B) \subset R(A) \).
+    \end{enumerate}
+  We now show that \( R(A) \subset R(B) \). Since \( A \) can be formed from \( B \) by using the inverse of the row operations discussed above used to transform \( A \) into \( B \), by the arguments above, \( R(A) \subset R(B) \). \\\\
+  Since \( R(A) \subset R(B)  \) and \( R(B) \subset R(A) \), \( R(A) = R(B) \).
+  \skipitems{8}
+\item Let \( A \) be an \( m \times n \) matrix and \( B  \) be an \( n \times p \) matrix. Prove that 
+  \begin{enumerate}
+    \item \( N(B) \subset N(AB) \) 
+      \begin{proof}
+        \( N(B) \) consists of \( \textbf{x} \in \mathbb{R}^n \) s.t. \( B \textbf{x} = \textbf{0} \). \( N(AB) \) consists of \( \textbf{x} \in \mathbb{R}^n \) s.t. \( AB \textbf{x} = \textbf{0} \) or, equivalently, \( A(B \textbf{x}) = 0 \). The set of vectors \( \textbf{x} \) that fulfill \( B \textbf{x} = 0 \) also fulfill \( (AB)\textbf{x} = 0 \), since when \( B \textbf{x} = \textbf{0} \), \( (AB)\textbf{x} = A(B\textbf{x}) =   A(\textbf{0}) = \textbf{0} \). Otherwise stated, \( \textbf{x} \in N(B) \implies \textbf{x} \in N(AB) \), so \( N(B) \subset N(AB) \).
+      \end{proof}
+    \item \( C(AB) \subset C(A) \)
+      \begin{proof}
+        \( b \in C(AB) \iff \exists \textbf{x} \in \mathbb{R}^p \) s.t. \( b = AB(\textbf{x}) = A(B\textbf{x}) \). The definition of matrix vector multiplication then requires that if \( b=A(B\textbf{x}), b= a_1 (bx)_1 + a_2 (bx)_2 + \ldots a_n (bx)_n\), where \( a_i \) is the i-th column of \( A \) and \( (bx)_i \) is the i-th component of the vector \( B\textbf{x} \). We can see that \( b \) is expressed as a linear combination of the columns of \( A \), which means that \( b \in C(A) \). We have thus shown that \( b \in C(AB) \implies b \in C(A) \), so we can conclude that \( C(AB) \subset C(A) \).
+      \end{proof}
+    \item \( N(B) = N(AB) \) when \( A \) is nonsingular.
+      \begin{proof}
+        We begin by proving that \( N(B) \subset N(AB) \). \( N(AB) \) consists of vectors \( \textbf{x} \in \mathbb{R}^n \) s.t. \( AB(\textbf{x}) = A(B\textbf{x}) = \textbf{0} \). Since \( A \) is nonsingular, when \( A(B\textbf{x) = \textbf{0}} \), \( B\textbf{x} \) must equal \( 0 \), given that \( \forall \textbf{y} \in \mathbb{R}^n, A \textbf{y} = \textbf{0} \) can have only the trivial solution \( \textbf{y} = \textbf{0} \). The set of \( \textbf{x} \) s.t. \( B\textbf{x} = \textbf{0} \) = N(B). Thus \( \forall \textbf{x} \in \mathbb{R}^n, \textbf{x} \in N(B) \implies \textbf{x} \in N(AB) \), so \(N(B) \subset N(AB) \). \\
+        \\
+        We now prove that \(  N(AB) \subset N(B) \). The proof is quite similar to what we showed above. Since \( A \) is nonsingular, \( N(AB) \), which is equal to \( \{ \textbf{x} \in \mathbb{R}^p | A(B\textbf{x}) = \textbf{0} \} \), is (included in) the the set of vectors \( \textbf{x} \) that fulfills \( B \textbf{x} = \textbf{0} \). Thus, \( N(AB) \subset N(B) \). \\
+        \\
+        Because \( N(AB) \subset N(B) \) and \( N(B) \subset N(AB) \), \( N(AB) = N(B) \).
+      \end{proof}
+    \item C(AB) = C(A) when \( B \) is nonsingular.
+      We have already shown that \( C(AB) \subset C(A) \). We know show that \( C(A) \subset C(AB) \). Let \( b \) be an arbitrary vector in \( C(A) \). By the definition of a column space, \( \exists \textbf{x} | A\textbf{x} = \textbf{b} \). Given that \( B \) is an \( n \times n \) nonsingular matrix, we know it must be invertible, too. Using that fact, we can recover \( b \) from \( AB \) by multiplying it by \( B^{-1}\textbf{x} \). \( AB(B^{-1} \textbf{x}) = A\textbf{x} = \textbf{b} \). Thus \( \textbf{b} \in C(AB) \). Since \( b \in C(A) \implies \textbf{b} \in C(AB), C(A) \subset C(AB) \). \\
+      \\
+      We have now shown that \( C(AB) \subset C(A) \) and that \( C(A) \subset C(AB) \). Therefore, \( C(AB) = C(A) \). 
+  \end{enumerate}
+\item Let \( A \) be an \( m \times n \) matrix. Prove that \( N(A^{\intercal}A) = N(A) \).
+  \begin{proof}
+    We first show that \( N(A) \subset N(A^{\intercal}A) \). \( N(A^{\intercal}A) = \{\textbf{x} | A^{\intercal}A\textbf{x} = \textbf{0} \} \). Per exercise 2.5.15, if \(A^{\intercal}A\textbf{x} = \textbf{0}  \), then \( A\textbf{x} = \textbf{0} \). When \( A \textbf{x} = \textbf{0} \) (i.e. \( \textbf{x} \in N(A) \)), \( A^{\intercal}A\textbf{x} = A^{\intercal}\textbf{0} = \textbf{0} \), which means \( \textbf{x} \in N(A^{\intercal}A) \). Because \( \textbf{x} \in N(A) \implies \textbf{x} \in N(A^{\intercal}A) \), we can conclude that \( N(A) \subset N(A^{\intercal}A) \). \\
+    \\
+    We then show that \( N(A^{\intercal}A) \subset N(A) \). By the definition of matrix multiplication, \( A^{\intercal}A \) is a linear combination of the rows of the rightmost matrix, \( A \). Since \( N(A^{\intercal}A) \) is the set of vectors orthogonal to the rows of \( A^{\intercal}A \), and \( A^{\intercal}A \) is a linear combination of the rows of \( A \), a vector in \( N(A^{\intercal}A) \) must also be orthogonal to the rows of \( A \). In other words, \( \textbf{x} \in N(A^{\intercal}A) \implies \textbf{x} \in N(A) \). Thus \( N(A^{\intercal}A) \subset N(A) \). \\
+    \\
+    Because \( N(A) \subset N(A^{\intercal}A) \) and \( N(A^{\intercal}A) \subset N(A) \), \( N(A^{\intercal}A) = N(A) \).
+  \end{proof}
+\end{enumerate}
+
+\section*{3.3}
+\begin{enumerate}
+  \skipitems{7}  
+  \item Supose \( \textbf{v, w} \in \mathbb{R}^n \) and \( \{ \textbf{v}, \textbf{w} \} \) is linearly independent. Prove that \( \{\textbf{v} - \textbf{w}, \textbf{2v}  + \textbf{w} \} \) is linearly independent as well. 
+    \begin{proof}
+      We will prove that \( \{\textbf{v} - \textbf{w}, \textbf{2v}  + \textbf{w} \} \) is indepedent by showing that if \( c_1(\textbf{v} - \textbf{w}) + c_2(2\textbf{v} + \textbf{w}) = \textbf{0} \), then \( c_1=c_2=0 \). Multiplying out the LHS, we find that \( c_1 \textbf{v} - c_1 \textbf{w} + 2c_2 \textbf{v} + c_2 \textbf{w} = 0 \), which after factorization shows that \( (c_1 + 2c_2)\textbf{v} + (c_2-c_1) \textbf{w} = \textbf{0}\). Since \( \{ \textbf{v}, \textbf{w} \} \) is linearly independent, \( c_1 + 2c_2 = 0 \) and \( c_2 - c_1 = 0 \). Solving that pair of linear equation shows that \( c_1 = c_2 = 0 \). Thus, \( \{\textbf{v} - \textbf{w}, \textbf{2v}  + \textbf{w} \} \) is linearly independent.
+    \end{proof}
+
+  \skipitems{1}
+  \item Supose \( \textbf{v}_1, \ldots , \textbf{v}_k \) are nonzero vectors with the property that \( \textbf{v}_i \cdot \textbf{v}_j = 0 \) whenever \( i \neq j \). Prove that \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent.
+
+  \begin{proof}
+    Suppose \( c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  + c_k \textbf{v}_k = \textbf{0} \). Take the dot product of both sides with the vector \( \textbf{v}_1 \). Then we see that \( c_1 {\lVert \textbf{v}_1 \rVert} + c_2 \textbf{v}_2 \cdot \textbf{v}_1 + \ldots c_k \textbf{v}_k \cdot \textbf{v}_1 = \textbf{0} \). Since all of the vectors are orthogonal to each other, this simplifies to \( c_1 {\lVert \textbf{v}_1 \rVert} = \textbf{0} \). \( {\lVert \textbf{v}_1 \rVert} \neq 0 \), so \( c_1 = 0 \). If we repeat this process for \( \textbf{v}_2 \ldots \textbf{v}_k \), we find similarly that \( c_2,\ldots c_k = 0 \). Since only the trivial combination of \( \textbf{v}_1,\ldots \textbf{v}_k \) produces the \( \textbf{0} \) vector, \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent.
+  \end{proof}
+
+  \item Supose \( \textbf{v}_1,\ldots ,\textbf{v}_n  \) are nonzero, mutually orthogonal vectors in \( \mathbb{R}^n \). 
+    \begin{enumerate}
+      \item Prove that they form a basis for \( \mathbb{R}^n \)
+        \begin{proof}
+          To prove that \( \textbf{v}_1,\ldots ,\textbf{v}_n \) form a basis for \( \mathbb{R}^n \), we must show they are linearly independent and that they span \( \mathbb{R}^n \). Per exercise 10, we know they are linearly independent. To show that they span \( \mathbb{R}^n \), we assume for contradiction that there is some vector \( \textbf{v} \in \mathbb{R}^n \) s.t. \( \textbf{v} \notin \text{span}(\textbf{v}_1,\ldots ,\textbf{v}_n) \). Then \( \{ \textbf{v}_1,\ldots ,\textbf{v}_n, \textbf{v} \} \) is linearly independent. But if we represent that set of vectors as a matrix like,
+          \[
+            A = 
+            \begin{bmatrix}
+              \vert & \vert & \vert & \vert \\
+              \textbf{v}_1 & \ldots & \textbf{v}_n & \textbf{v} \\
+              \vert & \vert & \vert & \vert \\
+            \end{bmatrix}
+          \]
+          \( A \) is an \( n \times (n+1) \) matrix, which means \( \text{rank}(A) \) is constrained by the number of rows, \( n \), and is thus less than the number of variables, \( n+1 \). This indicates that the equation \( A \textbf{x} = \textbf{b} \) has free variables, and that there are multiple linear combinations of the columns of \( A \), which again are \( \textbf{v}_1, \ldots , \textbf{v}_n, \textbf{v} \), that can form some arbitrary vector \( b \). But that contradicts the assumption that \(  \textbf{v}_1,\ldots ,\textbf{v}_k  \) are linearly independent, since if that were the case, \( b \) could only be formed by precisely one linear combination of those vectors. We thus reject our false assumption and conclude that \( \forall v \in \mathbb{R}^n, \textbf{v} \in \text{span}(\textbf{v}_1,\ldots , \textbf{v}_n) \). That is, \( \textbf{v}_1,\ldots ,\textbf{v}_n \) span \( \mathbb{R}^n \). \\
+          \\
+          Because \( \textbf{v}_1, \ldots , \textbf{v}_n  \) are linearly independent and span \( \mathbb{R}^n \), they are a basis for \( \mathbb{R}^n \).
+        \end{proof}
+    \end{enumerate}
+  \skipitems{2}
+  \item Suppose \( \{ \textbf{v}_1, \ldots , \textbf{v}_k \} \) form a linearly independent set. Show that for any \( 1 \leq l < k  \), the set\( \{ \textbf{v}_1,\ldots ,\textbf{v}_l \} \) is linearly independent as well. 
+    \begin{proof}
+      Assume that \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) form a linearly independent set. 
+      We will prove by induction that for any \( 1 \leq \ell < k  \), the set\( \{ \textbf{v}_1,\ldots ,\textbf{v}_l \} \) is linearly independent as well. \\
+      Let \( P(\ell) \) mean that the set of vectors with \( \ell \) vectors from the original set is linearly independent. \\
+      \\
+      \textbf{Base case}: P(1). The set with one vector is trivially indepedent. There are no other vectors it could be a linear combination of. \\
+      \textbf{Inductive hypothesis}: \( P(\ell) \). Assume  \( \ell < k \) vectors from the set of \( k \) linearly independent are linearly independent, too.\\
+      \textbf{Inductive step}: \( P(\ell) \implies P(\ell+1) \). Our inductive hypothesis is that \( \ell  < k\) vectors are linearly independent--none of them are in the span of the others. Now, when we add the \( \ell+1 \)-th vector, assume for contradiction that it lies in the span of \( \textbf{v}_1,\ldots ,\textbf{v}_ell \), so that \( \textbf{v}_1,\ldots ,\textbf{v}_{\ell+1} \) is linearly dependent. \\
+      Then \( \textbf{v}_{\ell+1} = c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  + 0\textbf{v}_{\ell+2} + 0\textbf{v}_{\ell+3}+ \ldots + 0 \textbf{v}_k \). We can rearrange that to \(c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  + c_{\ell} \textbf{v}_{\ell} + (-1)\textbf{v}_{\ell+1} +0 \textbf{v}_{\ell+2} + 0 \textbf{v}_{\ell+3} +  \ldots + 0 \textbf{v}_k = \textbf{0}\). This violates our initial assumption that \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent, because \( c_{\ell+1} = -1 \). We thus reject the ssumption that \( \{ \textbf{v}_1,\ldots ,\textbf{v}_{\ell+1} \} \) is linearly dependent and conclude that it is linearly independent. We have now shown \( P(\ell+1) \).\\
+      \textbf{Induction conclusion}: We have shown \( P(1) \) and that \( P(\ell) \implies P(\ell + 1) \). We thus conclude \( P(\ell) \), that a set of \( \ell < k  \) vectors chosen from the linearly independent set \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent, too. 
+      %Now, for contradiction, assume that for some \( \ell \) satisfying \( 1 \leq l < k \), the set \( \{ \textbf{v}_1,\ldots ,\textbf{v}_{\ell} \} \) is linearly dependent. If \( \{ \textbf{v}_1,\ldots ,\textbf{v}_{\ell} \} \) is linearly dependent, \( c_1 \textbf{v}_1 + \ldots + c_{\ell} \textbf{v}_{\ell} = \textbf{0} \) can be satisfied with at least one non-zero constant. Let us call this constant \( c_i \). then \( c_i \textbf{v}_i =  -(c_1 \textbf{v}_1 +  c_2 \textbf{v}_2 + \ldots  + c_{i-1} \textbf{v}_{i-1} + c_{i+1} \textbf{v}_{i+1} + \ldots c_{\ell} \textbf{v}_{\ell} \) and \( \textbf{v}_i =  -(\frac{c_1}{c_i} \textbf{v}_1 +  \frac{c_2}{c_i} \textbf{v}_2 + \ldots  + \frac{c_{i-1}}{c_i} \textbf{v}_{i-1} + \frac{c_{i+1}}{c_i} \textbf{v}_{i+1} + \ldots \frac{c_{\ell}}{c_i} \textbf{v}_{\ell}) \), which we simplify to  \( \textbf{v}_i =  c_1' \textbf{v}_1 +  c_2' \textbf{v}_2 + \ldots  + c_{i-1}' \textbf{v}_{i-1} + c_{i+1}' \textbf{v}_{i+1} + \ldots c_{\ell}' \textbf{v}_{\ell}) \). \\
+      % \( \textbf{v}_i \) is thus shown to be a linear combination of the other vectors in  . \\
+      % \textcolor{red}{c me}
+      % We plug the expression for \( \textbf{v}_i \) into the equation \( c_1 \textbf{v}_1 + \ldots + c_{i} \textbf{v}_{i} + \ldots  + c_k \textbf{v}_k = \textbf{0}\) that follows from the linear independence of \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) and requires \( c_1 = \ldots c_k = 0 \). \( c_1\textbf{v}_1 + \ldots +  c_i(c_1' \textbf{v}_1 +  c_2' \textbf{v}_2 + \ldots  + c_{i-1}' \textbf{v}_{i-1} + c_{i+1}' \textbf{v}_{i+1} + \ldots c_{\ell}' \textbf{v}_{\ell}) \). This simplifies to \( (c_1-\frac{c_1}{c_i}) \textbf{v}_1 +  (c_2 - \frac{c_2}{c_i}) \textbf{v}_2 + \ldots + (c_l - \frac{c_l}{c_i}) \textbf{v}_l = \textbf{0} \)
+    \end{proof}
+
+  \item Supose \( k > n \). Prove that any \( k \) vectors in \( \mathbb{R}^n \) must form a linearly dependent set. 
+    \begin{proof}
+      Suppose we have \( k > n \) vectors in \( \mathbb{R}^n \). THe set of \( k \) vectors can be represented as the columns of a matrix \( A \), where 
+      \[
+            A = 
+            \begin{bmatrix}
+              \vert & \vert & \vert & \vert \\
+              \textbf{v}_1 & \textbf{v}_2 & \ldots & \textbf{v}_k \\
+              \vert & \vert & \vert & \vert \\
+            \end{bmatrix}
+      \]
+            
+        Since the vectors that make up the columns of \( A \) have \( n \) components, there are at most \( n \) rows in \( A \), and \( \text{rank}(A) \), which is limited by the number of rows, is \( <k \), the number of columns. That means a solution to \( A \textbf{x} = \textbf{b} \) has free variables and \( A \textbf{x} = \textbf{0} \) therefore has a nontrivial solution, where \( x_1 \textbf{v}_1 + x_2 \textbf{v}_2 + \ldots  + x_k \textbf{v}_k = \textbf{0} \) and some \( x_i \neq 0 \). Thus, the \( k \) vectors are, by definition, linearly dependent. 
+    \end{proof}
+  \skipitems{3}
+  \item Let \( A \) be an \( n \times n \) matrix. Prove that if \( A \) is nonsingular and \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent, then \( \{ A\textbf{v}_1,\ldots , A\textbf{v}_k \} \)  is likewise linearly independent. Give an example to show that the result is false if \( A \) is singular. 
+    \begin{proof}
+      We can show that \( \{ A\textbf{v}_1,\ldots , A\textbf{v}_k \} \) is linearly independent by showing that \( c_1 A\textbf{v}_1 + \ldots  + c_k A \textbf{v}_k = \textbf{0} \) is only true if \( c_1=\ldots =c_k = 0 \). \\\\ 
+      \( c_1 A\textbf{v}_1 + \ldots  + c_k A \textbf{v}_k = \textbf{0} \) can be factored to \( A(c_1\textbf{v}_1 + \ldots  + c_k \textbf{v}_k) = \textbf{0} \). Because \( A \) is nonsingular, we know \( c_1 \textbf{v}_1 + \ldots  + c_k \textbf{v}_k = \textbf{0} \), and because \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent, we know that \( c_1= c_2 = \ldots  = c_k = 0 \). Thus, \( \{A\textbf{v}_1, \ldots , A\textbf{v}_k \} \) is linearly independent. \\
+      \\
+    \end{proof}
+      For an example showing that this results is false when \( A \) is singular, consider the linearly independent set of vector \( \left\{ \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \end{bmatrix} \right\} \) and the matrix \( A = \begin{bmatrix} 1 & 0 \\ 1 & 0 \end{bmatrix} \). \( \{ A\textbf{v}_1, A \textbf{v}_2 \} = \{\begin{bmatrix} 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 \\ 1 \end{bmatrix} \} \), which cannot be linearly independent, given it contains the \( \textbf{0} \) vector.
+
+    \skipitems{1}
+    \item  Let \( A \) be an \( m \times n \) matrix of rank \( n \). Supose \( \textbf{v}_1,\ldots ,\textbf{v}_k \in \mathbb{R}^n\) and \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent. Prove that \( \{A \textbf{v}_1,\ldots , A \textbf{v}_k \subset \mathbb{R}^m \) is likewise linearly independent. \\
+        \begin{proof}
+    We can show that \( \{ A\textbf{v}_1,\ldots , A\textbf{v}_k \} \) is linearly independent by showing that \( c_1 A\textbf{v}_1 + \ldots  + c_k A \textbf{v}_k = \textbf{0} \) is only true if \( c_1=\ldots =c_k = 0 \). \\\\ 
+    \( c_1 A\textbf{v}_1 + \ldots  + c_k A \textbf{v}_k = \textbf{0} \) can be factored to \( A(c_1\textbf{v}_1 + \ldots  + c_k \textbf{v}_k) = \textbf{0} \). Because \( \text{rank}(A) = n \), \( A \textbf{x} = \textbf{b} \) has precisely one solution when it is consistent (and \( A \textbf{x} = \textbf{0} \) is always consistent, with solution \( \textbf{x} = \textbf{0} \)).  Thus \( c_1 \textbf{v}_1 + \ldots  + c_k \textbf{v}_k = \textbf{0} \), and because \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent, by the definition of linear independence, we know that \( c_1= c_2 = \ldots  = c_k = 0 \). Thus, \( \{A\textbf{v}_1, \ldots , A\textbf{v}_k \} \) is linearly independent.
+
+          
+        \end{proof}
+    \item Let \( A \) be an \(  n \times n \) matrix and suppose \( \textbf{v}_1, \textbf{v}_2, \textbf{v}_3 \in \mathbb{R}^n \) are nonzero vectors that satisfy 
+      \begin{align*}
+        A\textbf{v}_1 &= \textbf{v}_1 \\
+        A \textbf{v}_2 &= 2 \textbf{v}_2 \\
+        A \textbf{v}_3 &= 3 \textbf{v}_3
+      \end{align*}
+      Prove that \( \{ \textbf{v}_1, \textbf{v}_2, \textbf{v}_3 \} \) is linearly independent. 
+      \begin{proof}
+      We first show that \( \{ \textbf{v}_1, \textbf{v}_2 \} \) is linearly independent. Assume for contradiction that they are not. Then \( \textbf{v}_2 = c\textbf{v}_1 \), which means \( A\textbf{v}_2 = 2\textbf{v}_2 = 2 c\textbf{v}_1 \), for some nonzero \( c \). But \( A\textbf{v}_2 = A c\textbf{v}_1\), too. Thus, \(2c\textbf{v}_1 = c\textbf{v}_1\) , but this is impossible because \( \textbf{v}_1 \) is a nonzero vector, and \( 2 \neq 1 \). Thus, by contradiction, \( \{ \textbf{v}_1, \textbf{v}_2 \} \) must be linearly independent. \\
+      
+
+    We now proceed to show that \( \{ \textbf{v}_1, \textbf{v}_2, \textbf{v}_3 \} \) is linearly independent. Assume for contradiction that it is not. Then \( \textbf{v}_3 = c_1\textbf{v}_1 + c_2 \textbf{v}_2 \), where at least one of \( c_1 \) or \( c_2 \neq 0 \). So \( A \textbf{v}_3 =  3 \textbf{v}_3 = 3c_1 \textbf{v}_1 + 3c_2 \textbf{v}_2 \). We also know that \( A\textbf{v}_3 = A(c_1\textbf{v}_1 + c_2 \textbf{v}_2) =  c_1A\textbf{v}_1 + c_2 A\textbf{v}_2 = c_1\textbf{v}_1 + 2c_2 \textbf{v}_2 \). Then \( 3c_1\textbf{v}_1 + 3c_2 \textbf{v}_2 = c_1 \textbf{v}_1 + 2c_2 \textbf{v}_2 \), which simplifies to \( 2c_1 \textbf{v}_1 + c_2 \textbf{v}_2 = \textbf{0 }\). We have already shown that \( \textbf{v}_1 \) and \( \textbf{v}_2 \) are linearly independent of each other, so the constants \( 2c_1 = c_2 = 0 \), which means \( c_1 = c_2 = 0 \). This contradicts our asssuumption that either  \( c_1 \)  or \(c_2 \neq 0 \). We thus reject our initial assumpion and conclude that \( \{ \textbf{v}_1, \textbf{v}_2, \textbf{v}_3 \} \) is linearly independent. 
+        
+      \end{proof}
+      
+
+\end{enumerate}
+\end{document}
+

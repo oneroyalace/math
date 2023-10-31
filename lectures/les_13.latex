@@ -1,0 +1,193 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 Lec 13  \\
+  \large{3.2 The 4 fundamental subspaces}
+}
+\author{Asa Royal (ajr74)}
+\date{October 10, 2023}
+
+\begin{document}
+\maketitle
+
+\section{Fundamental subspaces of linear transforms}
+
+\begin{remark}
+  There are really two fundamental subspaces of linear transformations
+\end{remark}
+
+\begin{definition}[Kernel and image]
+  Let \( f: \mathbb{R}^n \mapsto \mathbb{R}^m \) be a linear transformation. \\
+  The \textbf{kernel} of \( f \) is \( \ker(f) = \{ \textbf{v}  \in \mathbb{R}^n: f( \textbf{v} ) = \textbf{0} \}  \). \( \ker(f) \subset \mathbb{R}R^n \).\\
+  The \textbf{image} of \( f \) is \( \Img(f) = \{ f(\textbf{v}): \textbf{v} \in \mathbb{R}^n \} \). \( \Img(f) \subset \mathbb{R}^m \).
+\end{definition}
+
+\begin{theorem}[Kernel and image subspaces]
+  Let \( f: \mathbb{R}^n \mapsto \mathbb{R}^m \) be a linear transformation.
+  \begin{enumerate}[label=(\alph*)]
+    \item \( \ker(f) \) is a subspace of \( \mathbb{R}^n \).
+    \item \( \Img(f) \) is a subspace of \( \mathbb{R}^m \).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Normal subspace proof
+\end{proof}
+
+\section{Fundamental subspaces of matrices}
+
+\begin{definition}[column space]
+   The \textbf{column space} of a matrix \( A \), \( C(A) \), is the span of its columns.
+\end{definition}
+
+\begin{remark}
+  The column space of \( A \) is the image of the linear transformation represented by \( A \), \( \mu_A \). 
+\end{remark}
+
+\begin{definition}[nullspace]
+  The \textbf{nullspace} of \( A \) is the set of vectors \( \textbf{x} \) s.t. \( A \textbf{x} = \textbf{0} \), aka the homogoenous solution of \( A \).  
+\end{definition}
+
+\begin{remark}
+  The null space of \( A \) is the kernel of the linear transformation represented by \( A \). 
+\end{remark}
+
+\begin{definition}[row space]
+  The row space of \( A \), \( R(A) \) is the span of its rows. Note that the book calls this \( R(A^{\intercal}) \), because it treats every vector as a column.
+\end{definition}
+
+\begin{definition}[left nullspace]
+  The \textbf{left nullspace} of \( A \), \( N(A^{\intercal}) \)consists of row vectors \( \{ \textbf{x} \in \mathbb{R}^m_{row} | \textbf{x}A=0 \} \). A linear combination of the rows of \( A \) using components of \( \textbf{x} \in N(A^{\intercal}) \) wil produce \( \textbf{0} \).
+\end{definition}
+
+\begin{theorem}[relationship between nullspace and row space]
+  \( N(A) = R(A)^{\perp} \)
+\end{theorem}
+
+\begin{proof}
+  Let \( x \in N(A) \). Let \( y_i \in R(A) \). We know that \( A \textbf{x} = \textbf{0} \) since \( x \in N(A) \). 
+  \[
+    A\textbf{x} = \brows{
+        \textbf{y}_1 \\
+        \textbf{y}_2 \\
+        \rowsvdots \\
+        \textbf{y}_m
+      }
+      \textbf{x}
+      =
+    \begin{bmatrix}
+      \textbf{y}_1 \cdot x \\
+      \textbf{y}_2 \cdot x \\
+      \vdots \\
+      \textbf{y}_m \cdot x \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      0 \\
+      0 \\
+      \vdots \\
+      0
+    \end{bmatrix}
+  \] 
+    \( \textbf{x} \cdot \textbf{y}_i \) is always \( 0 \), so they are orthogonal.
+\end{proof}
+
+\end{document}
+
+
+
+
+

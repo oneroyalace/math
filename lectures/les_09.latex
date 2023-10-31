@@ -76,7 +76,10 @@
   \import{./figures/}{#1.pdf_tex}
 }
 
-\title{Math 221 Lec 9 (2.3: Inverse Matrices) }
+\title{%
+  Math 221 Lec 9\\
+  \large{2.3: Inverse Matrices}
+}
 \author{Asa Royal (ajr74)}
 \date{September 26, 2023}
 
@@ -84,10 +87,88 @@
 \maketitle
 %Consider the function \( \mathbb{f}: \mathbb{R}^2 \mapsto \mathbb{R}^2 \) and \( \mathbb{g}: \mathbb{R}^2 \mapsto \mathbb{R}^3 \)
 
+\section{Inverse functions}
+\begin{definition}[inverse function]
+  Generally, for \( f: S \mapsto T \), \\
+  We say that \( g \) is a \textbf{left inverse} of \( f \) if \( g \circ f = I_s \). That is,  \( \forall x, g(f(x)) = x\)\\
+  We say that \( g \) is a \textbf{right inverse} of \( f \) if \( f \circ g = I_t \). That is, \( \forall x, f(g(x)) = x  \)
+\end{definition}
+
+\begin{lemma}
+  If \( f \) has a left inverse and a right inverse, they are equal. Is this true for non-square matrices???
+\end{lemma}
+
+\begin{proof}
+  Let \( l \) and \( r \) be the respective left and right inverses of \( f \). \\
+  Pciture...
+\end{proof}
 \section{Inverse matrices}
 
+\begin{definition}[inverse matrices]
+  Let \( A \) be an \(  m \times n \) matrix. \\
+  The \textbf{left inverse} of \( A \) is an \( n \times m \) matrix \( C \) s.t. \( CA=I_n \).\\
+  The \textbf{right inverse} of \( A \) is an \( n \times m \) matrix \( C \) s.t. \( CA=I_m \).
+\end{definition}
+
 \begin{remark}
-  If a matrix \( A \) is invertible, we can find \( A^{-1} \) by performing Gaussian elimination on the augmented matrix \( [A|I] \). This augmented matrix represents multiple sets of simultaneous equations, wherein we solve for multiple \( \textbf{x} \) vectors, s.t. \( A \textbf{x}_1 = i_1\) (the first column of \( I \)), \( A \textbf{x}_2 = i_2 \ldots  \)
+  Since \( A \) translates vectors of length \( n \) to length \( m \), its left and right inverses must do the reverse (be \( n \times m \) matrices that map from \( m \mapsto n \).
+\end{remark}
+
+\begin{prop}
+  If \( A \) has a left inverse \( C \), then a solution to \( A \textbf{x} = \textbf{b} \), if it exists, must be unique.
+\end{prop}
+\begin{proof}
+  If \( A \textbf{x} = \textbf{b} \), then \( C(A \textbf{x}) = C \textbf{b} \). We can rewrite this as \( (CA) \textbf{x} = C \textbf{b} \). Since \( C=A^{-1} \), \( \textbf{x}=C \textbf{b} \). Thus, if \( \textbf{x} \) is a solution to \( A \textbf{x} = \textbf{b} \), \( \textbf{x} \) is unique and equal to \( C \textbf{b} \).
+\end{proof}
+
+\begin{remark}
+  Let \( A \) be a left invertible matrix. Since \( A \textbf{x} = \textbf{b} \) has only unique solutions, \( \text{rank}(A) = n \).
+\end{remark}
+
+\begin{prop}
+  \( A \) has a right inverse precisely when \( \text{rank}(A)=m \).
+\end{prop}
+
+\begin{proof}
+  Let \( A \) be a matrix with a right inverse. If \( \text{rank}(A) < m \), the reduced echelon form of \( A \) will have one or more rows of zeros at the bottom. When \( [A|I] \) is solved to find the right inverse of \( A \), these zero rows of \( A \) will be set equal to non-zero rows of the identity matrix, indicating there is no set of solutions that satisfies \( AB=I \). Thus, by contradiction, we show \( \text{rank}(A) = m \).
+\end{proof}
+
+\begin{lemma}
+  Suppose \( A \) and \( B \) are inveritble \( n \times n \) matrices. Then \( (AB)^{-1} = B^{-1}A^{-1} \).
+\end{lemma}
+
+\begin{proof}
+  We can prove the above by showing \( AB \cdot (B^{-1}A^{-1}) = I_n  \)\\
+  \begin{equation*}
+    AB(B^{-1}A^{-1}) = A(BB^{-1}) A^{-1} = A I_n A^{-1} = A A^{-1}=I_n
+  \end{equation*}
+\end{proof}
+\begin{definition}[invertible matrix]
+  An \textbf{invertible} matrix has a left and right inverse. This requires that \( \text{rank}(A) = n = m \). For an \( n \times n \) matrix, the following are synonymous:
+  \begin{enumerate}
+    \item \( A \) is invertible
+    \item \( A \) has a right inverse 
+    \item \( A \) has a left inverse
+    \item \( A \) is nonsingular. I.e., \( \text{rank}(A) = n \)
+  \end{enumerate}
+\end{definition}
+
+\begin{prop}
+  Invertible matrices are nonsingular.
+\end{prop}
+
+\begin{proof}
+  Let \( A \) be a an invertible matrix. Assume for contradiction that \( A \) is singular. Then \( A \textbf{x} = \textbf{0} \) has a nontrivial (non-zero) solution. But since \( A \) is invertible and \( A^{-1} \) exists, \( A^{-1} A \textbf{x} = A^{-1} \textbf{0} \), which means \( x=\textbf{0} \). This is a contradiction!
+\end{proof}
+
+\begin{proof}
+  Alternatively, let \( A \) be an invertible matrix. Assume again for contradiction that \( A \) is singular. When solving \( [A|I] \), \( A \) will row reduce to a matrix with a row of zeros in the bottom, which cannot possibly equal the bottom row of \( I \). 
+\end{proof}
+
+
+\subsection{Finding inverse matrices}
+\begin{remark}
+  If a matrix \( A \) is invertible, we can find \( A^{-1} \) by performing Gaussian elimination on the augmented matrix \( [A|I] \). This augmented matrix represents multiple sets of simultaneous equations, wherein we solve for multiple \( \textbf{x} \) vectors, s.t. \( (A \textbf{x})_1 = i_1\) (the first column of \( I \)), \( (A \textbf{x})_2 = i_2 \ldots, (A \textbf{x})_m=I_m  \)
 \end{remark}
 
 \begin{eg}
@@ -98,20 +179,6 @@
   
 Fill out...
 \end{eg}
-\begin{prop}
-  Nonsingular matrices are invertible.
-\end{prop}
-
-Why do singular matrices not have inverses?
-
-\begin{proof}
-  Assume \( A \) is a singular matrix. Then \( A \textbf{x} = \textbf{0} \) has a nontrivial (non-zero) solution. But if \( A^{-1} \) existed, \( A^{-1} A \textbf{x} = A^{-1} \textbf{0} \), which means \( x=\textbf{0} \). This is a contradiction!
-\end{proof}
-
-\begin{proof}
-  Alternatively, given singular matrix \( A \), try solving the multiple systems of equations represented by \( AB=I \), where \( B \) is the hypothetical \( A^{-1} \). \( A \) will row reduce to a matrix with a row of zeros in the bottom, which cannot possibly equal the bottom row of \( I \). 
-\end{proof}
-
 \section{Determinants}
 \begin{definition}[determinant]
   The \textbf{determinant} of a linear transformation tells us how much a unit of area changes after the transformation is applied.
@@ -136,8 +203,6 @@ Why do singular matrices not have inverses?
 \begin{remark}
   The \textbf{sign of a determinant} tells us whether the orientation of space has changed. For example, in two-dimensional space, if \( \det(A) = -1 \), \( \hat i \) might go from being to the right of \( \hat j \) to being to the left. We can use the right-hand rule to figure out whether the orientation of 3-space has changed.
 \end{remark}
-
-
 
 \end{document}
 

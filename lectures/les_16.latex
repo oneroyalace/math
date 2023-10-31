@@ -1,0 +1,192 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 Lec 16  \\
+  \large{3.4: Dimension}
+}
+\author{Asa Royal (ajr74)}
+\date{October 12, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{prop}
+  \( a_1,\ldots ,a_n \) are dependent in \( R^m \) if \( n > m \)
+\end{prop}
+
+\begin{proof}
+  \( \text{rank}(A) \leq m < n \), and if \( \text{rank}(A) < n \), the columns of \( A \) are dependent.
+\end{proof}
+
+\begin{remark}
+  The proof above shows that vectors are linearly independent iff they are a basis for their span. 
+\end{remark}
+
+\begin{prop}
+  \( A \in R^{n \times n} \) is nonsingular iff the columns of \( A \) form a basis of \( R^n \) 
+\end{prop}
+
+\begin{proof}
+  \( A \) is singular iff \( N(A) = \{ \textbf{0} \} \) iff the columns of \( A \) are linearly independent. Since \( n  \) linearly independent vectors span \( R^n \), the columsn of \( A \) are both liearly independent and span \( R^n \). They are thus a basis for \( R^n \). 
+\end{proof}
+
+\begin{theorem}[Bases of subspaces]
+  Every subspace \( V \subset R^n \) has a basis. 
+\end{theorem}
+
+\begin{proof}
+  Every subspace can be expressed as a span of vectors. If \( V = \{ \textbf{0} \}, \empty \) is a basis. now build upwards. Take a vector in it. if it spans v, we have a basis. If not, take a vector not in its span. Do those vectors span? Then we have a basis. If not...\\
+  \\
+  terminates at or before \( k=n \) by first prop on this page
+\end{proof}
+
+\begin{theorem}[All bases of a subspace have the same size]
+  \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) and \( \{ \textbf{w}_1,\ldots ,\textbf{w}_{\ell} \} \) are two bases for the subspace \( V \subset \mathbb{R}^n \implies k = \ell \).
+\end{theorem}
+
+\begin{proof}
+  \( w_i \in \text{span}(v_1,\ldots ,v_k) \implies w_i = Ax_i \) for some \( x_i \in \mathbb{R}^k \) where \( A = \begin{bmatrix}
+    \lvert & & \lvert \\
+    v_1 & \ldots  & v_k \\
+    \lvert & & \lvert
+  \end{bmatrix} \)
+  and \( x_i \) is the set of coefficients for a linear combination of the vectors \( \textbf{v}_1,\ldots ,\textbf{v}_k \) . We can express this in a single statement as an equation with a matrix on either side 
+  \[
+    \begin{bmatrix}
+      \lvert & & \lvert \\
+      w_1 & \ldots  & w_{\ell} \\
+      \lvert & & \lvert
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+      \lvert & & \lvert \\
+      v_1 & \ldots  & v_{k} \\
+      \lvert & & \lvert
+    \end{bmatrix}
+    \begin{bmatrix}
+      \lvert & & \lvert \\
+      x_1 & \ldots  & x_{\ell} \\
+      \lvert & & \lvert
+    \end{bmatrix}
+  \]
+  By the bye, \( W \) is an \( n \times \ell \) matrix and \( A \) is a \( n \times k \) matrix, which means \( X \) is an \( k \times \ell \) matrix. We're attempting to show that \( k = \ell \). \\
+  \\
+  Imagine that \( l > k \). Then the columns of \( X \) are linearly dependent and \( N(X) \neq \{ \textbf{0} \} \). This implies that \( \exists \textbf{y} \neq \textbf{0} \in N(X) \). If we multiply the matrix equation above by that vector \( y \), we get \( W \textbf{y} = (AX) \textbf{y} = A (X \textbf{y}) = A \textbf{0} = \textbf{0} \). Then \( N(W) \neq \{ \textbf{0} \} \), so \( \textbf{w}_1, \ldots , \textbf{w}_l \) are linearly dependent. That is a contradiction, so \( l \leq k \). But if we repeat the same argument above, noting that \( \textbf{v}_i \in \text{span}(\textbf{w}_i,\ldots ,\textbf{w}_{\ell}) \), we see that \( k \leq \ell \). Thus we conclude that \( k = \ell \). 
+\end{proof}
+
+\begin{definition}[dimension]
+  \( \dim V \) is the size of a(ny) basis of \( V \subset \mathbb{R}^n\). 
+\end{definition}
+
+\begin{prop}
+  Suppose \( V \) and \( W \) are subspaces of \( \mathbb{R}^n \) with the property that \( W \subset V \). If \( \dim V = \dim W \), then \( V = W \). 
+\end{prop}
+
+\begin{proof}
+  \textcolor{red}{need help with this proof}
+  Since \( W \subset V \), \( V=W \) is true if \( V \subset W \). Assume for contradiction that this is not true. Let \(  \{ \textbf{w}_1, \ldots , \textbf{w}_k \} \) be a basis for \( W \). Then \( \exists v_1 \in V \) s.t. \( v_1 \notin \text{span}(\textbf{w}_1, \ldots , \textbf{w}_k) \). Then \( \{ \textbf{w}_1, \ldots , \textbf{w}_k, \textbf{v}_1 \} \) is a linearly independent set of size with dimension \( k+1 \). But given that \( W \subset V \), 
+\end{proof}
+
+\begin{prop}
+  Let \( V \subset \mathbb{R}^n \) be a \( k \)-dimensional subspace. Then any \( k \) vectors that span \( V \) must b elinearly independent and any \( k \) linearly independent vectors in \( V \) must span \( V \). 
+\end{prop}
+\begin{align*}
+  (Treated_{after} - Treated_{before}) - (Control_{after} - Control{before})  &= (.139-.170) - (.142-.163) \\
+                                                                              &= (-.031) - (-.021) \\
+                                                                              &= -.01
+\end{align*}
+\end{document}
+

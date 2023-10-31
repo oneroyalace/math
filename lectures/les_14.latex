@@ -1,0 +1,142 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 Lec 13  \\
+  \large{3.3: Linear independence and basis}
+}
+\author{Asa Royal (ajr74)}
+\date{October 12, 2023}
+
+\begin{document}
+\maketitle
+
+\section{Linear independence}
+
+\begin{definition}[linear dependence/independence]
+  A set of vectors, \( \textbf{v}_1,\ldots ,\textbf{v}_k \) is \textbf{linearly independent } if  none of them can be expressed as a linear combination of the others. The set is \textbf{linearly dependent} if at least one of the vectors can be expressed as a linear combination of the others.
+\end{definition}
+% \( \forall v \in V \), \(  \textbf{v}\) has a unique expression as a linear combination of \( \textbf{v}_1,\ldots, \textbf{v}_k \).
+
+\begin{prop}
+Linear indepenedence requires that \( c_1\textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  + c_k \textbf{v}_k = \textbf{0} \implies c_1,\ldots ,c_k \in \mathbb{R} \) are all 0. If that were not the case and some \( c_i \neq 0 \), we could write \( \textbf{v}_i = \frac{c_1}{c_i}\textbf{v}_1 + \frac{c_2}{c_{i-1}}\textbf{v}_2 + \frac{c_1}{c_{i+1}}\textbf{v}_1 + \ldots + \frac{c_k}{c_i} \textbf{v}_k\). I.e., at least one vector could be expressed as a linear combination of the others. 
+
+\end{prop}
+
+\begin{remark}
+  Let \( A \) be the matrix whose columsn are \( \textbf{v}_1,\ldots, \textbf{v}_k \) (TODO: copy matrix from notes). \( \textbf{v}_1,\ldots ,\textbf{v}_k \) are linearly independent iff \( A \textbf{x} = \textbf{0} \) has only the trivial solution in \( \mathbb{R}^k \). That is, \( N(A) = \{\textbf{0}\} \).
+\end{remark}
+
+\begin{prop}
+  Suppose \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is a linearly independent set in \( \mathbb{R}^n \). Let \( \textbf{v} \in \mathbb{R}^n \). Then \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k, \textbf{v} \} \) is linearly independent iff \( \textbf{v} \notin \text{span}( \textbf{v}_1,\ldots ,\textbf{v}_k ) \). 
+\end{prop} 
+
+\begin{proof}
+  We prove the contrapositive statement: \( \textbf{v} \in \text{span}( \textbf{v}_1,\ldots ,\textbf{v}_k ) \iff \{ \textbf{v}_1,\ldots ,\textbf{v}_k, \textbf{v} \} \) is linearly dependent. \\
+  Forwards conditional: if \( \textbf{v} \in \text{span}(\textbf{v}_1,\ldots ,\textbf{v}_k), \textbf{v} = c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  + c_k \textbf{v}_k \), which means \( c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  + c_k \textbf{v}_k + (-1) \textbf{v} = \textbf{0} \). Note that the coefficient in front of \( \textbf{v} \) is not 0, which shows that \( \textbf{0} \) can be formed by a nontrivial combination of the vectors in the set. Thus, the set is linearly dependent. \\
+  \\
+  Backwards conditional: If \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly dependent , \( c_1 \textbf{v}_1 + \ldots  + c_k \textbf{v}_k + c_v \textbf{v} = \textbf{0} \). Then \( c_v \textbf{v} = -(c_1 \textbf{v}_1 + \ldots  + c_k \textbf{v}_k) \).  There are two cases to explore. 
+  \begin{enumerate}
+    \item If  \( c_v = 0 \), some other \( c_i \neq 0 \), so \( \textbf{v}_i = - \frac{c_1}{c_i} \textbf{v}_1 + \ldots  + \frac{c_k}{c_i} \textbf{v}_k \), but this violates the assumption that \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent. 
+    \item If \( c_v \neq 0 \), \( \textbf{v} = - \frac{c_1}{c_v} \textbf{v}_1 + \ldots  + \frac{c_k}{c_v} \textbf{v}_k \), so \( \textbf{v} \in \text{span}(\textbf{v}_1,\ldots ,\textbf{v}_k) \).
+  \end{enumerate}
+\end{proof}
+\end{document}
+
+
+
+
+
+
