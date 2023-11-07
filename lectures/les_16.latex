@@ -168,7 +168,7 @@
 \end{proof}
 
 \begin{definition}[dimension]
-  \( \dim V \) is the size of a(ny) basis of \( V \subset \mathbb{R}^n\). 
+  \( \dim V \) is the size of any basis of \( V \subset \mathbb{R}^n\). 
 \end{definition}
 
 \begin{prop}
@@ -176,17 +176,67 @@
 \end{prop}
 
 \begin{proof}
-  \textcolor{red}{need help with this proof}
-  Since \( W \subset V \), \( V=W \) is true if \( V \subset W \). Assume for contradiction that this is not true. Let \(  \{ \textbf{w}_1, \ldots , \textbf{w}_k \} \) be a basis for \( W \). Then \( \exists v_1 \in V \) s.t. \( v_1 \notin \text{span}(\textbf{w}_1, \ldots , \textbf{w}_k) \). Then \( \{ \textbf{w}_1, \ldots , \textbf{w}_k, \textbf{v}_1 \} \) is a linearly independent set of size with dimension \( k+1 \). But given that \( W \subset V \), 
+  Since \( W \subset V \), \( V=W \) is true if \( V \subset W \). Assume for contradiction that this is not true. Let \(  \{ \textbf{w}_1, \ldots , \textbf{w}_k \} \) be a basis for \( W \). Then \( \exists v_i \in V \) s.t. \( v_i \notin \text{span}(\textbf{w}_1, \ldots , \textbf{w}_k) \). Then \( \{ \textbf{w}_1, \ldots , \textbf{w}_k, \textbf{v}_i \} \) is a linearly independent set of size with dimension \( k+1 \). But \( k \) linearly independent vectors span \( V \), so those \( k+1 \) vectors mus tbe lienarly dependent, and each arbitrary \( \textbf{v}_i \in \text{span}(\textbf{w}_1,\ldots ,\textbf{w}_k) \). A symmetrical proof shows that each \( \textbf{w}_i \in \text{span}(\textbf{v}_1,\ldots , \textbf{v}_k)  \). Therefore \( V = W \). 
 \end{proof}
 
 \begin{prop}
-  Let \( V \subset \mathbb{R}^n \) be a \( k \)-dimensional subspace. Then any \( k \) vectors that span \( V \) must b elinearly independent and any \( k \) linearly independent vectors in \( V \) must span \( V \). 
+  Let \( V \subset \mathbb{R}^n \) be a \( k \)-dimensional subspace. Then any \( k \) vectors that span \( V \) must be linearly independent and any \( k \) linearly independent vectors in \( V \) must span \( V \). 
 \end{prop}
-\begin{align*}
-  (Treated_{after} - Treated_{before}) - (Control_{after} - Control{before})  &= (.139-.170) - (.142-.163) \\
-                                                                              &= (-.031) - (-.021) \\
-                                                                              &= -.01
-\end{align*}
+
+\begin{proof}
+  We first prove that any \( k \) vectors that span \( V \) must be linearly independent. Let \( \textbf{v}_1,\ldots ,\textbf{v}_k \) span \( V \). Assume for contradiction that they are linearly dependent. Them some \( \textbf{v}_i \in \text{span}(\textbf{v}_1,\ldots ,\textbf{v}_{i-1}, \textbf{v}_{i+1}, \ldots , \textbf{v}_k) \), and at most \( k-1 \) vectors in \( \textbf{v}_1,\ldots ,\textbf{v}_k \) are linearly independent. \textcolor{red}{But \( k-1 \) vectors cannot span a subspace with \( \dim k \)}, so we have a contradiction. We thus conclude that \( \textbf{v}_1,\ldots ,\textbf{v}_k \) are linearly independent. \\
+  \\
+  We now prove that any \( k \) linearly indepe3ndent vectors in \( V \) span \textbf{V}. Let \( A= \begin{bmatrix}
+    \lvert & \lvert & & \lvert \\
+    \textbf{v}_1 & \textbf{v}_2 & & \textbf{v}_k \\
+    | & | & & |
+  \end{bmatrix} \). Because \( \textbf{v}_1,\ldots ,\textbf{v}_k \) are lineraly independent, \( A \) is nonsingular, so \( \forall \textbf{b} \in \mathbb{R}^k, \exists \textbf{x} \) s.t. \( A \textbf{x} = \textbf{b} \). In otherwords, \( \textbf{b} \in C(A) \), which means any arbitrary \( \textbf{b} \in V \) is \( \in \text{span}(\textbf{v}_1, \textbf{v}_2, \ldots , \textbf{v}_k) \). 
+\end{proof}
+
+\section*{Dimension of the fundamental subspaces}
+
+\begin{theorem}[Dimension of the subspaces]
+  Let \( A \) be an \( m \times n \) matrix. Let \( U  \)and \( R \) denote teh echelon and reduced echelon form, respectively, of \( A \), and let \( EA=U \) represent the product of \( A \) with the product of elementary matrices to produce \( U \). 
+  \begin{enumerate}
+    \item The nonzero rows of \( U \) or \( R \) give a basis for \( R(A) \)
+    \item The vectors obtained by setting each freee variable equal to \( 1 \) and the remaining free variables equal to \( 0 \) in the general solution of \( A \textbf{x} = \textbf{0} \) (read off from solutions to \( R \textbf{x} = \textbf{0} \) give a basis for \( NA(A) \).
+    \item The pivot columns of \( A \) give  basis for \( C(A) \). 
+    \item The rows of \( E \) that correspond to the zero rows of \( U \) give a basis for \( N(A^{\intercal}) \) (also true of \( E' \) where \( E'A = R \) ). 
+    
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Relation of subspaces to pivots]
+  Let \( A \) be an \( m \times n \) matrix of rank \( r \). Then 
+  \begin{enumerate}
+    \item \( \dim R(A) = \dim C(A) = r\)
+    \item \( \dim N(A) = n-r \)
+    \item \( \dim N(A^{\intercal}) = m-r \)
+  \end{enumerate}
+
+  \begin{proof}
+    Each basis vector for \( R(A) \) and \( C(A) \) contains a pivot, and there are \( r \) pivots. \\
+    \\
+    The basis for the null space comes from free variables. There are \( n-r \) free variables. \\
+    \\
+    The number of zero rows in \( U \) is equal to the number of rows \( m \) minus the number of nonzero rows \( r \). Thus \( \dim N(A^{\intercal}) = m-r \). 
+  \end{proof}
+\end{theorem}
+
+\begin{corollary}[Nullity-rank theorem]
+  Let \( A \) be an \(  m \times n \) matrix. Then \( \text{null}(A) + \text{rank}(A) = n \)
+\end{corollary}
+
+\begin{prop}
+  Let \( V \subset \mathbb{R}^n \) be a \( k \)-dimensional subspace. Then \( \dim V^{\perp} = n-k \)
+\end{prop}
+
+\begin{proof}
+ Let the basis vectors of \( V \) be the rows of a matrix \( A \). \( \text{rank}(A) = k \), since each of the row vectors is linearly independent. The subspace perpendicular to \( R(A) \), i.e. \( V ^{\perp} \), is \( N(A) \), which must have  \(\dim n-k \) per rank-nullity theorem. 
+\end{proof}
+
+\begin{theorem}
+  Let \( V \subset \mathbb{R}^n \) be a subspace. THen every vector in \( \mathbb{R}^n \) can be written uniquely as teh sum of a vector in \( V \) and a vector in \( V ^{\perp} \). In particular, we have \( \mathbb{R}^n = V + V ^{\perp} \)
+\end{theorem}
 \end{document}
 
