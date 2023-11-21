@@ -1,0 +1,198 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 Lec 16  \\
+  \large{3.4: Dimension}
+}
+\author{Asa Royal (ajr74)}
+\date{October 12, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[ortohogonal set]
+  Let \( \textbf{v}_1,\ldots ,\textbf{v}_k \in \mathbb{R}^m \). \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is an \textbf{orthogonal set} of fectors iff \( \textbf{v}_i \cdot \textbf{v}_j = 0 \) when \( i \neq j \). \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is an orthogonal basis for a subspace \( V \) if \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is both a basis for \( V \) and an orthogonal set. \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is an \textbf{orthonormal basis} for \( V \) if it is an orthogonal basis consisting of unit vectors. 
+\end{definition}
+
+
+\begin{prop}
+ Let  \( \textbf{v}_1,\ldots ,\textbf{v}_k \in \mathbb{R}^m\). If \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is an orthogonal set of nonzero vectors, then \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent. 
+\end{prop}
+
+\begin{proof}
+  Fill this in. Think about dot product. 
+\end{proof}
+
+\begin{lemma}
+  Suppose \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is a basis for \( V \). Then the equation
+  \[
+    \textbf{x} = \sum_{i=1}^k \text{proj}_{\textbf{v}_i} \textbf{x} = \sum_{i=1}^k \text{proj}_{\textbf{v}_i} \frac{\textbf{x} \cdot \textbf{v}_i}{{\lVert \textbf{v}_i \rVert}^2} \textbf{v}_i
+  \]
+  holds for all \( \textbf{x} \in V \) iff \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is an orthogonal basis for \( V \). 
+\end{lemma}
+
+\begin{proof}
+  Suppose \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is an orthogonal basis for \( V \). Then there are scalars \( c_1, \ldots , c_k \) s.t. 
+  \[
+    \textbf{x} = c_1 \textbf{v}_1 + \ldots  + c_i \textbf{v}_i + \ldots  + c_k \textbf{v}_k
+  \]
+  And since the \( \textbf{v}_j \)'s are orthogonal, we can dot the equation above with \( \textbf{v}_i \). 
+  \begin{align*}
+    \textbf{x} \cdot \textbf{v}_i &= c_1 (\textbf{v}_1 \cdot \textbf{v}_i) + \ldots  + c_i (\textbf{v}_i \cdot \textbf{v}_i) + \ldots  + c_k (\textbf{v}_k \cdot \textbf{v}_i)\\
+                                  &= c_i {\lVert \textbf{v}_i \rVert}^2
+  \end{align*}
+  So
+  \[
+    c_i = \frac{\textbf{x} \cdot \textbf{v}_i}{{\lVert \textbf{v}_i \rVert}^2}
+  \]
+\end{proof}
+
+\begin{prop}
+  Let \( V \subset \mathbb{R}^m \) be a \( k \)-dimensional subspace. The equation 
+  \[
+    \text{proj}_{V} \textbf{b} = \sum_{i=1}^k \text{proj}_{\textbf{v}_i} \textbf{b} = \sum_{i=1}^k \frac{\textbf{b} \cdot \textbf{v}_i}{{\lVert \textbf{v}_i \rVert}^2} \textbf{v}_i
+  \]
+  holds for all \( \textbf{b} \in \mathbb{R}^m \) iff \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is an orthogonal basis for \( V \). 
+\end{prop}
+
+\begin{proof}
+  
+\end{proof}
+
+\begin{theorem}[Gram-Schmidt process]
+  Given a basis \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) for an innerproduct space \( V \), we obtain an orthogonal basis \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) for \( V \) as follows:
+  \begin{align*}
+    \textbf{w}_1 &= \textbf{v}_1 \\
+    \textbf{w}_2 &= \textbf{v}_2 - \text{proj}_{\textbf{w}_1} \textbf{v}_2 \\
+    \vdots \\
+    \textbf{w}_{k} &= \textbf{v}_{k} - \text{proj}_{\textbf{w}_{k-1}} \textbf{v}_{k} - \text{proj}_{\textbf{w}_{k-2}} \textbf{v}_{k} - \ldots - \text{proj}_{\textbf{w}_1} \textbf{v}_{k}
+  \end{align*}
+\end{theorem}
+
+\begin{definition}[QR Decomposition]
+  THe \( QR \) decomposition of a matrix expresses a matrix \( A \) as the product of its orthogonal basis, as determined by Graham-Schmidt, by an upper triangular \( n \times n \) matrix \( R \). The entries of \( R \) are computed by keeping track of the arithmetic during Gram-Schmidt, but because \( Q^{-1}=Q^{\intercal} \), \( Q^{\intercal}A = R \), so \( r_{ij} = \textbf{q}_i \cdot \textbf{a}_j \)
+\end{definition}
+
+\begin{definition}[orthogonal matrix]
+  An orthogonal matrix is a matrix with all columns orthogonal to each other (*cough*, the \( Q \) of \( QR \)). Note that for an orthogonal matrix \( Q \), \( Q^{\intercal}Q=I \), since the rows of \( Q^{\intercal} \) are the columns of \( Q \). Thus \( Q^{-1}=Q^{\intercal} \). 
+\end{definition}
+
+\begin{prop}
+  Using \( QR \) decomposition, we can find the least squares solution to a sys. of linear equations by solving \( \bar{\textbf{x}} = R^{-1} Q^{\intercal} \textbf{b} \). 
+\end{prop}
+
+\begin{proof}
+  The normal equations for projection arithmetic are
+  \begin{align*}
+    (A^{\intercal}A)\bar{\textbf{x}} &= A^{\intercal} \textbf{b}
+  \end{align*}
+  We can express \( A = QR \), so
+  \begin{align*}
+    ((QR)^{\intercal} (QR)) \bar{\textbf{x}} &= (QR)^{\intercal}\textbf{b} \\
+    R^{\intercal}Q^{\intercal} QR \bar{\textbf{x}} &= R^{\intercal}Q^{\intercal}\textbf{b}\\
+    R^{\intercal}(Q^{\intercal}Q)R \bar{\textbf{x}} &= R^{\intercal}Q^{\intercal} \textbf{b} \\
+  \end{align*}
+  and since \( Q^{\intercal}Q = I_n \), 
+  \begin{align*}
+    R^{\intercal} R \bar{\textbf{x}} = R^{\intercal} Q^{\intercal} \textbf{b}
+  \end{align*}
+  And finally, because \( R \) is nonsingular and thus invertible, 
+  \begin{align*}
+    \bar{x} = R^{-1} Q^{\intercal} \textbf{b}
+  \end{align*}
+\end{proof}
+
+\end{document}

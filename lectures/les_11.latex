@@ -146,8 +146,11 @@
                          1 & 1 & 1
                        \end{bmatrix}
   \end{align*}
-  
 \end{eg}
+
+\begin{definition}[orthogonal matrix]
+  An \( n \times n \) matrix \( A \) is orthogonal if \( A^{\intercal}A = I_n \), which is true iff \( \textbf{a}_i \cdot \textbf{a}_j = 0 \) for \( i \neq j \) and \( 1 \) for \( i=j \). 
+\end{definition}
 
 \section{Left multiplication (row vector * matrix) }
 
