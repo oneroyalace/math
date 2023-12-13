@@ -95,7 +95,7 @@
 
 \title{%
   Math 221 Lec 16  \\
-  \large{3.4: Dimension}
+  \large{4.3: Linear transformations \& change of basis}
 }
 \author{Asa Royal (ajr74)}
 \date{11/2/23, 11/9/23}
@@ -107,7 +107,7 @@
   A function \( T: \mathbb{R}^n \mapsto \mathbb{R}^m \) is called a \textbf{linear transformation} if it satisfies
   \begin{enumerate}
     \item \( T(\textbf{x} + \textbf{y}) = T(\textbf{x}) + T(\textbf{y}) \forall \textbf{x}, \textbf{y} \in \mathbb{R}^n \)
-    \item \( T(c \textbf{x}) = c T(\textbf{x}) \forall \textbf{x} in \mathbb{R}^n \) and scalars \( c \)
+    \item \( T(c \textbf{x}) = c T(\textbf{x}) \forall \textbf{x} \in \mathbb{R}^n \) and scalars \( c \)
   \end{enumerate}
 \end{definition}
 
@@ -154,6 +154,109 @@ then
           \lvert & \lvert & & \lvert
     \end{bmatrix}
   \]
+\end{remark}
+
+\begin{definition}[coordinates w.r.t. basis]
+  Let \( V \) be a subspace of \( \mathbb{R}^n \) and let \( \mathcal{B} = \{\textbf{v}_1, \textbf{v}_2, \ldots , \textbf{v}_k \} \) be a basis for \(  V \). Then for \( \textbf{v} \in V, \textbf{v}= c_1 \textbf{v}_1 + \ldots  + c_k \textbf{v}_k \). \( c_1, \ldots , c_k \) are the coordinates of \( \textbf{v} \) with respect to basis \( \mathcal{B} \). 
+\end{definition}
+
+\begin{eg}
+  Say \( \mathcal{B} = \{\textbf{v}_1, \textbf{v}_2 \} \) is a basis for \( \mathbb{R}^2 \) with \( \textbf{v}_1 = \begin{bmatrix} 2 \\ 1 \end{bmatrix} \) and \( \textbf{v}_2 = \begin{bmatrix} 1 \\ 2 \end{bmatrix} \). Further, let's consider the vector \( \textbf{a} = \begin{bmatrix} 8 \\ 7 \end{bmatrix} \). Note that \( \textbf{a} = 3 \textbf{v}_1 + 2 \textbf{v}_2 \). So \( {\begin{bmatrix} \textbf{a} \end{bmatrix}}_{\mathcal{B}} = \begin{bmatrix} 3 \\ 2 \end{bmatrix} \). That is, the coordinates for \( \textbf{a} \) with respect to the basis \( \mathcal{B} \) are \( \begin{bmatrix} 3 \\ 2 \end{bmatrix} \)
+\end{eg}
+
+\begin{remark}
+  When we talk offhand about Cartesian coordinates \( (2,1) \) for example, we are usually referring to those as coordinates with respect to the standard basis for \( \mathbb{R}^2 \), \( \begin{bmatrix} \textbf{e}_1 & \textbf{e}_2 \end{bmatrix} \). \( (2,1) = 2\textbf{e}_1 + 1 \textbf{e}_2 \). 
+\end{remark}
+
+\begin{definition}[change-of-basis matrix]
+  The change of basis matrix for some basis \( \mathcal{B} = \{ \textbf{v}_1, \ldots , \textbf{v}_k  \} \) is simply \( \begin{bmatrix} \textbf{v}_1 & \ldots  &  \textbf{v}_2 \end{bmatrix} \). It represents the linear transformation of basis vectors in one basis to basis vectors in another. 
+\end{definition}
+
+\begin{eg}
+  Imagine we have \( \begin{bmatrix} -1 \\ 2 \end{bmatrix} \) in some basis \( \mathcal{B} = \left\{ \begin{bmatrix} 1 \\ 2 \end{bmatrix}, \begin{bmatrix} 2 \\ 3 \end{bmatrix} \right\} \) and we want to get its coordinates in the standard basis. Then \( \begin{bmatrix} 1 & 2 \\ 2 & 3  \end{bmatrix} \) is the change of basis matrix between \( \mathcal{B} \)   and \( \mathcal{\varepsilon} \), so we can take \( \begin{bmatrix} 1 & 2 \\ 2 & 3 \end{bmatrix}  \begin{bmatrix} -1 \\ 2 \end{bmatrix}\) and get coordinates w.r.t. the standard basis. 
+  \\
+  \\
+  If we had \( \begin{bmatrix} -1 \\ 2 \end{bmatrix} \) in standard basis coordinates and wanted to find its coordinates with respect to \( \mathcal{B} \), We could take \( \begin{bmatrix} 1 & 2 \\ 2 & 3 \end{bmatrix}^{-1} \begin{bmatrix} -1 \\ 2 \end{bmatrix} \). 
+\end{eg}
+
+\begin{remark}
+  Can kinda think of the change of basis matrix as translating between coordinate systems (languages for representing vectors). The matrix with basis 2's basis vectors written in coordinates (language) of basis 1 shows how to translate basis 2's coordinates into basis 1 coordinates (language). 
+\end{remark}
+
+\begin{remark}
+  We can figure out coordinates for linear transformations in any basis through the following process. Imagine a matrix \( A \) that represents linear transformation \( T \) in some basis \( \mathcal{B_1} \), and we want to find the matrix \( [T]_{\mathcal{B}_2} \), which tells us how \( T \) affects vectors with coordinates written w.r.t. basis \( \mathcal{B}_2 \). First, we take some vector \( \textbf{x} \) with coordinates in \( \mathcal{B}_1 \) and convert its coordinates to \( \mathcal{B}_1 \). How? Change of basis matrix \( P \) = basis vectors of \( \mathcal{B}_2 \). So we take \( P \textbf{x} \). We then apply the linear transformation \( T \), as represented by \( A \) in \( \mathcal{B_1} \), which gives us \( AP \textbf{x} \). Finally, we convert coordinates back to \( \mathcal{B}_2 \). Then the coordinates for \( T[\textbf{x}] \) w.r.t. \( \mathcal{B}_2 \) are given by  \( P^{-1} A P  \). 
+\end{remark}
+
+\begin{remark}
+  If \( T: \mathbb{R}^n \mapsto \mathbb{R}^n \) maps \( \textbf{x} \mapsto T(\textbf{x}) \), \( T \) of course maps \( [\textbf{x}]_{\mathcal{B}} \mapsto T(\textbf{x})_{\mathcal{B}} \), since the vectors in the latter statement are the same ones as in the first, simply expresssed w.r.t a different basis. But the matrix we use to represent \( T \) changes depending on the basis we're operating w.r.t. see below
+\end{remark}
+
+\begin{remark}
+  Why would we transform bases? Some matrices are much easier to multiply in certain bases. For example, if we can transform a matrix into a basis where it's diagonal, we save a lot of multiplication computations. 
+\end{remark}
+
+\begin{definition}[alt. def matrix w.r.t. basis]
+  The linear transformation of basis vectors \( \textbf{v}_1,\ldots ,\textbf{v}_n \) is a linear combination of of basis vectors \( \textbf{w}_1, \ldots , \textbf{w}_m \) (from the target basis) with coefficients (coordinates) given by the matrix \( [T]_{\mathcal{V}, \mathcal{W}} \). The \( j \)th column of \( [T]_{\mathcal{V}, \mathcal{W}} \) provides the coordinates for \( T[\textbf{v}_j] \) w.r.t. \( \textbf{w}_1, \ldots , \textbf{w}_m \)
+  \begin{equation}
+    T \begin{bmatrix}
+      \textbf{v}_1 & \ldots  & ... & \textbf{v}_n 
+    \end{bmatrix} 
+    = 
+    \begin{bmatrix}
+      \textbf{w}_1 & \ldots  & \textbf{w}_m
+    \end{bmatrix}
+    [T]_{\mathcal{V}, \mathcal{W}}
+  \end{equation}
+\end{definition}
+
+\begin{remark}
+  Per the definition above, \( T(\textbf{v}_1) \in W \), which means \( T\textbf{v}_1  \) is a linear combination of the combination of \( \textbf{w}_i \). Which linear combination? The combination given by \( T\textbf{v}_1 = a_{11} \textbf{w}_1 + \ldots  + a_{m_1} \textbf{w}_m = \begin{bmatrix} \textbf{w}_1 & \ldots  & \textbf{w}_m \end{bmatrix} \begin{bmatrix} a_{11} \\ \vdots \\ a_{m1} \end{bmatrix}\)
+\end{remark}
+
+\begin{remark}
+  If we set \( A = [T]_{\mathcal{V}, \mathcal{W}} \in \mathbb{R}^{m \times n} \), saying \( A \textbf{x} = \textbf{b} \) means that the coefficients of \( \textbf{x} \) of \( \textbf{v} \in V \) on \( \textbf{v}_1, \ldots , \textbf{v}_n \) get taken to the coefficients \( \textbf{b} \) of \( \textbf{w} \in W \) on \( \textbf{w}_1, \ldots , \textbf{w}_m \) by \( A=[T]_{\mathcal{V}, \mathcal{W}} \). 
+\end{remark}
+
+\begin{lemma}
+  Fix \( V \) with basis \( \textbf{v}_1, \ldots , \textbf{v}_n \). If \( \textbf{v}_1', \ldots , \textbf{v}_n' \) is another basis of \( V \) then
+  \begin{equation*}
+    \begin{bmatrix} \textbf{v}_1' & \ldots  & \textbf{v}_n' \end{bmatrix} = \begin{bmatrix} \textbf{v}_1 & \ldots  & \textbf{v}_n \end{bmatrix} P 
+  \end{equation*}
+  for some invertible \( P \in \mathbb{R}^{n \times n} \). 
+\end{lemma}
+
+\begin{remark}
+  Why? Because each \( \textbf{v}_i' \) can be expressed as a linear combination of the vectors \( \textbf{v}_1, \ldots , \textbf{v}_n \). Embed coefficients for the \( \textbf{v}_1, \ldots , \textbf{v}_n \) into the \( i \)th column of \( P \). Note: We expect \( P \) to be invertible, because each \( \textbf{v}_i \) can also be expressed as a linear combination of \( \textbf{v}_1', \ldots , \textbf{v}_n' \). 
+\end{remark}
+
+\begin{proof}
+  The remark above serves as proof that \( P \) exists, but we can state more simply  that \( P = [\text{id}_V]_{\mathcal{V}', \mathcal{V}} \). I.e., P is the matrix for the identity linear transformation (that does absolutely nothing) with an input expressed w.r.t. \( \mathcal{V}' \) and output expressed w.r.t. \( \mathcal{V} \). We can show \( P \) is invertible by showing that \( \textbf{x} \in N(P) \implies \textbf{x} = \textbf{0} \). If \( \textbf{x} \in N(P) \),
+  \begin{equation*}
+    \begin{bmatrix} \textbf{v}_1' & \ldots  & \textbf{v}_n' \end{bmatrix} = \begin{bmatrix} \textbf{v}_1 & \ldots  & \textbf{v}_n \end{bmatrix} P\textbf{x} = 0 
+  \end{equation*}
+  Which means \( x_1 \textbf{v}_1' + \ldots  + x_n \textbf{v}_n' = 0 \). But \( \textbf{v}_1', \ldots , \textbf{v}_n' \) are linearly independent, so \( \textbf{x} = \textbf{0} \)
+\end{proof}
+
+\begin{definition}[change of basis matrix take 1000]
+  \( P \) above is the change of basis matrix. It tells us how to express the basis vectors of \( V' \) in terms of the vectors of \( V \). Again, see proof above--the change of basis matrix is the matrix for the identity linear transformation with an different input and output basis. 
+\end{definition}
+
+\begin{definition}[change-of-basis formula]
+  Fix 
+  \begin{itemize}
+    \item a linear map \( T: V \mapsto W \) 
+    \item ordered bases \\
+      \( \mathcal{V}, \mathcal{V}' \) for \( V \) with \(\begin{bmatrix} \textbf{v}_1' & \ldots  & \textbf{v}_n'  \end{bmatrix} = \begin{bmatrix} \textbf{v}_1 & \ldots  & \textbf{v}_n  \end{bmatrix}P\), \\
+      \( \mathcal{W}, \mathcal{W}' \) for \( W \) with \(\begin{bmatrix} \textbf{w}_1' & \ldots  & \textbf{w}_n'  \end{bmatrix} = \begin{bmatrix} \textbf{w}_1 & \ldots  & \textbf{w}_n  \end{bmatrix}Q\)
+    \item \( A = [T]_{\mathcal{V}, \mathcal{W}} \), \( A' = [T]_{\mathcal{V'}, \mathcal{W'}} \)
+  \end{itemize}
+
+  Then \( A' = Q^{-1} AP \)
+\end{definition}
+
+\begin{remark}
+  \( A' \) is the matrix for the transform with respect to bases \( \mathcal{V}' and \mathcal{W}' \), so we know that a formula for it starts by taking in a vector \( \in V' \). It then changes bases from \( V' \) to \( V \) using \( P \), applies the linear transform \( T \), using coordinates from \( A \) so that the answer is w.r.t. basis \( W \), then uses \( Q^{-1} \) to convert from bases \( W  \) to \( W' \)\\
+  For a basis \( \mathcal{B} \) and \( T:V \mapsto V \) (instead of \( T: V \mapsto W \)), we set \( [T]_{\mathcal{B}} = [T]_{\mathcal{B}, \mathcal{B}} \). \( [T]_{\mathcal{B}} \) takes the coefficients \( x \) of of \( \textbf{v} in V \) on \( \textbf{v}_1, \ldots , \textbf{v}_n \) to the coefficients of \( b \) of \( T \textbf{v} \) on \( \textbf{v}_1, \ldots , \textbf{v}_n \). 
 \end{remark}
 \end{document}
 
