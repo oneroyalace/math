@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+% \usepackage{tikz}
+% \usepackage{tikz-cd}
+
+
+
+% \usepackage{import}
+% \usepackage{xifthen}
+% \usepackage{pdfpages}
+% \usepackage{transparent}
+% \usepackage{graphicx}
+
+% % include figure stored at ./figures/name.pdf_tex
+% \newcommand{\incfig}[1]{
+%   \def\svgwidth{0.5\columnwidth}
+%   \import{./figures/}{#1.pdf_tex}
+% }
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+
+\title{Math 340 HW 1}
+\author{Asa Royal (ajr74)}
+\date{January 18, 2024}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+  \item 1.1.15: Show that in a countably infinite sample space, it is impossible to assign equal probability to all possible outcomes. 
+    \begin{proof}
+      Assume there exists a countably infinite sample space where all possible outcomes have equal probability. Let \( c \in \mathbb{R} \) and \( 0 < c < 1 \). Then \( P(\Omega) = \sum_{i=1}^{\inf} p(\omega_i) = c \inf = \inf \). But \( P(\Omega) \) must equal \( 1 \) per the definition of the sample space, \( \Omega \). Thus, by contradiction, reject the initial assumption and conclude that it is impossible to assign equal probability to all possible outcomes in a countably infinite sample space. 
+    \end{proof}
+
+\end{enumerate}
+\end{document}
+
