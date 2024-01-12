@@ -1,0 +1,205 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 HW 8  \\
+  \large{3.4 }
+}
+\author{Asa Royal (ajr74)}
+\date{October 3, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+  \skipitems{6}
+  \item Let \( A = \textbf{u} \textbf{v}^{\intercal} \). Describe the four fundamental subspaces of \( A \) in terms of \( \textbf{u} \) and \( \textbf{v} \). \\
+    \( C(A) \): \( \text{span}(\textbf{u}) \)\\
+    \( N(A) \): \( (\textbf{v}^{\intercal})^{\perp} \)\\
+    \( R(A) \): \( \text{span}((\textbf{v}^{\intercal}) \)\\
+    \( N(A^{\intercal}) \) = \( \textbf{u}^{\perp} \)
+  
+  \skipitems{9}
+\item Let \( V \subset \mathbb{R}^n \) be a subspace, and suppose you are given a linearly independent set of vectors \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \}  \subset V\). Show that if \( \dim V > k \), then there are vectors \( \textbf{v}_{k+1}, \ldots , \textbf{v}_{\ell} \in V \) so that \( \{ \textbf{v}_1, \ldots , \textbf{v}_{\ell}  \) forms a basis for \( V \). 
+    \begin{proof}
+      Since \( k < \dim V \), \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) cannot span \( V \). Then \( \exists \textbf{v}_{k+1} \) s.t. \( \textbf{v}_{k+1} \in V \) but \( \textbf{v}_{k+1} \notin \text{span}(\textbf{v}_1, \ldots , \textbf{v}_k) \). If we add it to the set of vectors, the set remains linearly independent since \( \textbf{v}_{k+1} \) was not in its members' span. If \( \{ \textbf{v}_1,\ldots ,\textbf{v}_{k+1} \} \) spans \( V \), we have found a set \( \{\textbf{v}_1, \ldots , \textbf{v}_{\ell} \} \) (of size one) that forms a basis for \( V \). If the set does not span \( V \), add some \( \textbf{v}_{k+2} \in V \) that is not \( \in \text{span}(\textbf{v}_1, \ldots , \textbf{v}_{k+1}) \). Continue this process until there are \( \dim V \) vectors in the set. We now have a linearly independent set of vectors of size \( \dim V \). Proposition 4.4 states that they span the \( x=\dim V \) -dimensional subspace \( V \). Therefore, they are a basis for \( V \). \\\\
+      We have thus found vectors \( \textbf{v}_{k+1}, \ldots , \textbf{v}_{\ell} \) s.t. \( \{\textbf{v}_1, \ldots , \textbf{v}_{\ell} \} \) form a basis for \( V \). 
+    \end{proof}
+  
+  \skipitems{2}
+  \item Let \( U \) and \( V \) be subspaces of \( \mathbb{R}^n \). Prove that if \( U  \cap V = \{ \textbf{0} \}\), then \( \dim(U + V) = \dim U + \dim V \). 
+    \begin{proof}
+      Let \( \{ \textbf{u}_1,\ldots ,\textbf{u}_k \} \) be a basis for \( U \) and \( \{ \textbf{v}_1,\ldots ,\textbf{v}_{\ell} \} \) be a basis for \( V \). No \( \textbf{u}_i \in \text{span}(v_1,\ldots, v_{\ell}) \), because if such a vector were, then \( \textbf{u}_i \in V \), and \( U \cap V = \{ \textbf{u}_i \} \). The same argument applies to each \( \textbf{v}_i \)-- none of them lie in \( \text{span}(\textbf{u}_1,\ldots , \textbf{u}_k) \). As we have proved before, if a set of vectors \( \textbf{w}_1,\ldots \textbf{w}_z \) is linearly independent, and \( \exists \textbf{x} \notin \text{span}(\textbf{w}_1, \ldots , \textbf{w}_z) \), then \( \textbf{w}_1, \ldots , \textbf{w}_z, \textbf{x}  \) are linearly independent. Thus, \( \{ \textbf{u}_1, \textbf{u}_2, \ldots , \textbf{u}_k, \textbf{v}_1, \textbf{v}_2, \ldots , \textbf{v}_{\ell} \} \) is a linearly independent set. Because it contains the basis vectors for \( U \) and \( V \), it must span both subspaces, too. Consequently, it is a basis for \( U + V \). \( \dim (U + V) \), the number of vectors in the basis set above, is clearly \( k + \ell \), which is \( \dim U + \dim V \). 
+    \end{proof}
+
+  \skipitems{1}
+  \item  Let \( A \) be an \( m \times n \) matrix, and let \( B \) be an \( n \times p \) matrix. 
+    \begin{enumerate}
+      \item Prove that \( \text{rank}(AB) \leq \text{rank}(A) \)
+        \begin{proof}
+          We know per exercise 3.2.10b that \( C(AB) \subset C(A) \). THe dimension of a subspaces must be \( \leq \) that of the space it is within, so \( \dim C(AB) \leq \dim C(A) \). Since rank is the dimension of the column space, \( \text{rank}(AB) \leq \text{rank}(A) \).
+        \end{proof}
+
+      \item Prove that if \( n = p \) and \( B \) is nonsingular, then \( \text{rank}(AB) = \text{rank}(A) \). 
+        \begin{proof}
+          We know per exercise 3.2.10 that \( C(AB) = C(A) \) when \( B \) is nonsingular. In this case, \( \dim C(AB) = \dim C(A) \), which is equaivalen to saying \( \text{rank}(AB) = \text{rank}(A) \). 
+        \end{proof}
+
+      \item Prove that \( \text{rank}(AB) \leq \text{rank}(B) \)
+        \begin{proof}
+          There are \( p \) columns in \( AB \) and \( B \). Thus, per the rank-nullity theorem, 
+          \begin{equation}
+            p = \text{null}(AB) + \text{rank}(AB) = \text{null}(B) + \text{rank}(B)
+          \end{equation}
+          so 
+          \begin{equation}
+            \text{rank}(B) = \text{rank}(AB) + \text{null}(AB) - \text{null}(B)
+          \end{equation}
+          We know that \( \text{null}(AB) - \text{null}(B) \geq 0 \) since \( N(B) \subset N(AB) \) per exercise 3.2.10a. Plugging that into (2), we see that \( \text{rank}(B) \geq \text{rank}(AB) \).
+        \end{proof}
+
+      \item Prove that if \( m = n \) and \( A \) is nonsingular, then \( \text{rank}(AB) = \text{rank}(B) \). 
+        \begin{proof}
+          Because \( A \) is nonsingular, when \( (AB) \textbf{x} = A(B\textbf{x}) = \textbf{0} \), \( B\textbf{x} = \textbf{0} \), and when \( B\textbf{x} = \textbf{0}, (AB)\textbf{x} = \textbf{0} \). Thus, \( \textbf{x} \in N(AB) \iff \textbf{x} \in N(B) \). In other words, \( N(AB) = N(B) \) and, of course, \( \text{null}(AB) = \text{null}(B) \). \\
+          \\
+          \( AB \) and \( B \) are both \( n \times p \) matrices with \( p \) columns. Thus by the rank-nullity theorem, 
+          \begin{equation}
+            p = \text{null}(AB) + \text{rank}(AB) = \text{null}(B) + \text{rank}(B)
+          \end{equation}
+          We have shown that \( \text{null}(AB) = \text{null}(B) \). Plugging that into (3), we see that \( \text{rank}(AB) = \text{rank}(B) \). 
+        \end{proof}
+
+      \item Prove that if \( \text{rank}(AB) = n \) then \( \text{rank}(A) = \text{rank}(B) = n \). 
+        \begin{proof}
+          We first prove that \( \text{rank}(A) = n \). \( C(AB) \) is defined as the subspace spanning all vectors of the form \( AB(\textbf{x}) \). \( AB(\textbf{x}) = A(B\textbf{x}) \), so every vector in \( C(AB) \) is in \( C(A) \). Assume for contradiction that \( \text{rank}(A) < n \). Then \( C(AB) \) has higher dimension than \( C(A) \), so there are vectors in \( C(AB) \) that are not in \( C(A) \). But this contradicts our finding that every vector in \( C(AB) \) is in \( C(A) \). We thus reject the false assumption that \( \text{rank}(A) < n \) and accept that \( \text{rank}(A) \geq n \). But since \( A \) has \( n \) columns and thus must have \( \leq n \) pivots, \( \text{rank}(A) \leq n \). Combining the two constraints, we deduce that \( \text{rank}(A) = n \).\\
+          \\
+          We next prove that \( \text{rank}(B) = n \). Assume for contradiction that \( \text{rank}(B) < n \). Then at least one row of \( B \) is a linear combination of the others, so \( \dim R(B) \leq n \). Since \( AB \) is composed of a linear combination of the rows of \( B \), \( \dim R(AB) \) and \( \dim C(AB) \) are \( \leq n \). But this conflicts with the given statement that \( \text{rank}(AB) = n \). We thus reject the assumption that \( \text{rank}(B) < n \). So \( \text{rank}(B) \geq  n \). We know, however, that \( \text{rank}(B) \leq n\) because \( B \) has \( n \) rows and, consequently, \( \leq n \) pivots.  Thus \( \text{rank}(B) = n \).\\
+          \\
+          We have shown that \( \text{rank}(A) = \text{rank}(B) = n \)
+        \end{proof}
+    \end{enumerate}
+
+  \skipitems{1}
+  \item Let \( A \) be an \( m \times n \) matrix.
+    \begin{enumerate}
+      \item Prove \( N(A^{\intercal}A) = N(A) \). 
+        \begin{proof}
+          Per 3.2.10a, \( N(A) \subset N(A^{\intercal}A) \). We now show that \( N(A^{\intercal}A) \subset N(A) \). Let \( \textbf{x} \in N(A^{\intercal}A) \). Then \( A^{\intercal}A (\textbf{x}) = A^{\intercal}(A\textbf{x) = }\textbf{0} \). \( A\textbf{x} \in N(A^{\intercal}) \), and is, by definition, in \( C(A) \). Since \( C(A) \perp N(A^{\intercal}) \), \( A\textbf{x} = \textbf{0} \), so \( \textbf{x} \in N(A) \). Since \( \textbf{x} \in N(A^{\intercal}A) \implies \textbf{x} \in N(A) \), \( N(A^{\intercal}A) \subset N(A) \). Having already shown that \( N(A) \subset N(A^{\intercal}A) \), we conclude that \( N(A) = N(A^{\intercal}A) \)\\
+          \\
+        \end{proof}
+
+      \item Prove that \( \text{rank}(A) = \text{rank}(A^{\intercal}A) \)
+        \begin{proof}
+          \( A \) and \( A^{\intercal}A \) have the same number of columns, \( n \). Per the rank-nullity theorem, 
+          \begin{equation}
+            n  = \text{null}(A) + \text{rank}(A) = \text{null}(A^{\intercal}A) + \text{rank}(A^{\intercal}A)
+          \end{equation}
+          We showed in 23a that \( \text{null}(A) = \text{null}(A^{\intercal}A) \). Subtracting away both of those terms from (4), we see that \( \text{rank}(A) = \text{rank}(A^{\intercal}A) \).
+        \end{proof}
+      \item Prove that \( C(A^{\intercal}A) = C(A^{\intercal}) \)
+        \begin{proof}
+          The columns of \( A^{\intercal}A \) are composed of linear combinations of the columns of \( A^{\intercal} \), so each column of \( A^{\intercal}A \) is in the span of \( C(A) \), and thus \( C(A^{\intercal}) \subset C(A) \). We just showed in 24b that \( \dim C(A) = \dim C(A^{\intercal}A) \). Since \( C(A^{\intercal}A) \subset C(A) \) and \( C(A^{\intercal}A) \) has the same dimension as \( C(A) \), \( C(A^{\intercal}A) = C(A) \). 
+        \end{proof}
+    \end{enumerate}
+\end{enumerate}
+\end{document}
+
+

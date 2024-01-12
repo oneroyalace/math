@@ -1,0 +1,211 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 Lec 13  \\
+  \large{6.1 eigenvectors}
+}
+\author{Asa Royal (ajr74)}
+\date{October 12, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[Eigenvector, eigenvalue]
+  Fix \( T: V \mapsto V \). \( v \in V \) is an eigenvector if \(  \textbf{v} \neq 0 \) and \( T\textbf{v} = \lambda \textbf{v} \) for some scalar \( \lambda \), called an eigenvalue of \( T \)
+\end{definition}
+
+\begin{remark}
+  If \( A \in \mathbb{R}^{n \times n} \) is singular, \( A \) has eigenvalue 0 since \( \exists \textbf{x} \) s.t. \( \textbf{x} \in N(A) \), so for that \( \textbf{x} \), \( A \textbf{x} = 0 = 0( \textbf{x} )\) . 
+\end{remark}
+
+\begin{prop}
+  \( \mathcal{B} \) is a basis of eigenvectors if \( T: V \mapsto V \) iff \( [T]_{\mathcal{B}} \) is diagonal. 
+\end{prop}
+
+\begin{proof}
+  Let \( \textbf{v}_1,\ldots ,\textbf{v}_n \) be the eigenvectors of \( T \). Then 
+  \[
+    T \begin{bmatrix} \textbf{v}_1 & \ldots  & \ldots  \textbf{v}_n \end{bmatrix} = \begin{bmatrix} \lambda_1 \textbf{v}_1 & \ldots  & \lambda_n \textbf{v}_n \end{bmatrix}
+  \]
+  so
+  \[
+    \begin{bmatrix} \lambda_1 \textbf{v}_1 & \ldots  & \lambda_n \textbf{v}_n \end{bmatrix} = \begin{bmatrix} \textbf{v}_1 & \ldots  & \textbf{v}_n \end{bmatrix} \begin{bmatrix}
+    \lambda_1 & & & \\
+              & \lambda_2 & & \\
+              & & \ddots & \\
+              & & & \lambda_n
+    \end{bmatrix} 
+  \]
+    The last term is \( [T]_{\mathcal{B}} \) , the change of basis matrix
+\end{proof}
+
+\begin{definition}[diaganolizable]
+  \( T: V \mapsto V \) is diagonalizable if \( [T]_{\mathcal{B}} \) is diagonal for some basis \( \mathcal{B} \) of \( V \).
+\end{definition}
+
+% \begin{remark}
+  % (In the above case, there are \( \dim V \) eigenvectors, since \( \[T]_{\mathcal{B}} \) is a matrix of eigenvalues. )
+% \end{remark}
+
+\begin{lemma}
+  A is diagonalizable iff \( A \) is similar to a diagonal matrix. 
+\end{lemma}
+
+\begin{proof}
+  Since \( A \) is diagonalizable, 
+  \[
+   \mu_A \begin{bmatrix} \textbf{v}_1 & \ldots  & \textbf{v}_n \end{bmatrix} = \begin{bmatrix} \textbf{v}_1 & \ldots  & \textbf{v}_n \end{bmatrix} \begin{bmatrix}
+    \lambda_1 & & & \\
+              & \lambda_2 & & \\
+              & & \ddots & \\
+              & & & \lambda_n
+    \end{bmatrix}
+  \]
+    Which means 
+    \[
+      A \begin{bmatrix}
+        | & & | \\
+        \textbf{v}_1 & \ldots  & \textbf{v}_n \\
+        | & & |
+      \end{bmatrix}
+      = 
+      \begin{bmatrix}
+        | & & | \\
+        \textbf{v}_1 & \ldots  & \textbf{v}_n \\
+        | & & |
+      \end{bmatrix}
+  \begin{bmatrix}
+    \lambda_1 & & & \\
+              & \lambda_2 & & \\
+              & & \ddots & \\
+              & & & \lambda_n
+    \end{bmatrix}
+    \]
+\( \begin{bmatrix} \textbf{v}_1 & \ldots  & \textbf{v}_n \end{bmatrix} \) is invertible, so we can write \( AP = P \Lambda \) and thus \( A = P \Lambda P^{-1} \). 
+\end{proof}
+
+\begin{prop}
+  \( \lambda \) is an eigenvalue of \( T: V \mapsto V \) (or an \(  n \times n  \) matrix A) iff \( \ker(T - \lambda I) \neq 0 \) or \( N(A - \lambda I_) \neq 0 \).
+\end{prop}
+
+\begin{proof}
+ If \( \lambda \) is an eigenvalue of \( T \), \( \exists \textbf{v} \in V \) s.t. \( T \textbf{v} = \lambda \textbf{v} \). Thus \( (T - \lambda I) \textbf{v} = 0 \), so \( \ker(T - \lambda I) \neq 0 \). 
+\end{proof}
+
+\begin{definition}[eigenspace]
+  \( E(\lambda) \) is the \( \lambda \)-eigenspace of \( A \). If \( \textbf{v} \in E(\lambda) \) and \( \textbf{v} \neq 0 \), \( T\textbf{v} = \lambda \textbf{v} \), so \( T \) has an eigenvector \( \textbf{v} \) with eigenvalue \( \lambda \). 
+\end{definition}
+
+\begin{definition}[characteristic polynomial]
+  Let \( A \) be a square matrix. Then \( p_A(t) = \det(A-tI) \) is called the \textbf{characteristic polynomial} of \( A \). The eigenvalues of \( A \) are the roots of \( p_A \). 
+\end{definition}
+
+\begin{prop}
+  If \( A \) and \( B \) are similar mnatrices, then \( p_A(t) = p_B(t) \). 
+\end{prop}
+
+\begin{proof}
+  \( p_A(t) = \det(A-tI) \). Since \( A = P^{-1} B P \) for some invertible matrix \( P \), \( p_A(t) = \det(P^{-1} B P - tI ) = \det(P^{-1}BP - tI P^{-1}P) = \det(P^{-1}P(B-tI)) = \det(P^{-1}P) \det(B-tI) = \det(B-tI) = p_B(t)  \). 
+\end{proof}
+\end{document}
+
+
+
+
+
+
+
+

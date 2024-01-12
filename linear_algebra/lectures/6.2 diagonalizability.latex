@@ -1,0 +1,211 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 Lec 13  \\
+  \large{6.2 Diagonlizability}
+}
+\author{Asa Royal (ajr74)}
+\date{October 12, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[Diagonlizability]
+  An \( n \times n \) matrix is diagonalizable if 
+  \begin{enumerate}
+    \item \( \exists \) an invertible \( n \times n \) matrix \( P \) s.t. \( P^{-1} A P = \begin{bmatrix}
+        \lambda_1 & & \\
+                  & \ddots & \\
+                  & & \lambda_n
+    \end{bmatrix} \)
+  \item \( \exists \) a basis for \( \mathbb{R}^n \) consistsing of eigenvectors of \( A \).  
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[eigenspace]
+  If \( \lambda \) is an eigenvalue of \( A \), then the eigenspace associated with \( \lambda \) is \( E(\lambda) = \{\textbf{v}: A \textbf{v} = \lambda \textbf{v}  = N(A - \lambda I_n) \) 
+\end{definition}
+
+\begin{lemma}
+  If \( \textbf{v}_1,\ldots ,\textbf{v}_k \) are eigenvectors of \( A \) whos associated eigenvalues are distinct, then \( \{ \textbf{v}_1,\ldots ,\textbf{v}_k \} \) is linearly independent. 
+\end{lemma}
+
+\begin{proof}
+  We will prove the lemma above by induction on \( k \), the number of eigenvectors. \\
+  \textbf{Base case P(1)}: If \( \textbf{v}_1 \) is an eigenvector of \( A \), \( \{ \textbf{v}_1\} \) is trivially independent. \\
+  \textbf{Inductive hypothesis P(k-1)}: Assume that \( \textbf{v}_1, \ldots , \textbf{v}_{k-1} \) are eigenvectors of \( A \) with distinct eigenvalues \( \lambda_1, \ldots , \lambda_{k-1} \), and that \( \{ \textbf{v}_1,\ldots ,\textbf{v}_{k-1} \} \) is linearly independent. \\
+  \textbf{Inductive step}: Suppose  \( \textbf{v}_k \) is an eigenvector and 
+  \begin{equation}
+    c_1 \textbf{v}_1 + \ldots  + c_{k} \textbf{v}_{k} = 0 
+  \end{equation}
+  We can multiply both sides of (1) by \( A \), and since each term on the LHS contains an eigenvector, rewrite the equation as 
+  \begin{equation}
+    c_1\lambda_1 \textbf{v}_1 + \ldots  + c_k \lambda_k \textbf{v}_{k} = 0
+  \end{equation}
+  Now suppose we multiply both sides of (1) by \( \lambda_k \): 
+  \begin{equation}
+    c_1\lambda_k \textbf{v}_1 + \ldots  + c_k \lambda_k \textbf{v}_k = 0
+  \end{equation}
+  And subract (3) from (2):
+  \begin{equation}
+    c_1 (\lambda_1 - \lambda_k) \textbf{v}_1 + \ldots  + c_{k-1} (\lambda_1 - \lambda_{k-1}) \textbf{v}_{k-1} = 0
+  \end{equation}
+  The inductive hypothesis states that \( \{ \textbf{v}_1, \ldots , \textbf{v}_{k-1} \} \) are linearly independent, so \( c_1 = \ldots  = c_{k-1} = 0 \). Plugging those values into (1), we see
+  \begin{equation}
+    c_k \textbf{v}_k = 0
+  \end{equation}
+And since \( \textbf{v}_k \) is an eigenvector and cannot equal \( \textbf{0} \), \( c_k = 0 \). Since (1) implies that \( c_1 = \ldots  = c_k = 0 \), \( \{ \textbf{v}_1, \ldots , \textbf{v}_k \} \) is linearly independent. We have thus shown that \( P(k-1) \implies P(k) \), so we conclude the proof. 
+\end{proof}
+
+\begin{theorem}
+  Let \( A \) be an \( n \times n \) matrix with \( n \) distinct eigenvalues. Then \( A \) is diagonalizable. 
+\end{theorem}
+
+\begin{proof}
+  If \( A \) has \( n  \) distinct eigenvalues, it also has \( n \) distinct eigenvectors, which means its eigenvectors are a basis for \( \mathbb{R}^n \). Thus, by definition, \( A \) is diagonalizabile. 
+\end{proof}
+
+\begin{definition}[algebraic multiplicity]
+  The algebraic multiplicity of an eigenvalue \( c \), denoted \( a(c) \), is the multiplicity of \( c \) as a root of the characteristic polynomial of \( A \). When we completely factor the characteristic polynomial, we will get a factor of \( (c - \lambda)^a \), where \( a \) is the algebraic multiplicity. 
+\end{definition}
+
+\begin{definition}[geometric multiplicity]
+  The geometric multiplicity of an eigenvalue \( \lambda \) is \( \dim N(A - \lambda I_n) \). 
+\end{definition}
+
+\begin{lemma}
+  Let \( A \) be an \(  n \times n \) matrix with eigenvalue \( \lambda \), associated algebraic multiplicity \( a \), and associated geometric multiplicity \( g \). Then \( 1 \leq a \leq g \). 
+\end{lemma}
+
+
+\begin{prop}
+  The determinant of a square matrix \( A \) equals the product of \( A \)'s eigenvalues, counted with multiplicity. 
+\end{prop}
+
+\begin{proof}
+  \begin{align}
+    p_A(\lambda) &= \det(A-\lambda I) \\
+                 &= \lambda^n + a_{n-1} \lambda^{n-1} + \ldots  +  a_1\lambda + a_0 && \text{because \( p_A(\lambda) \) is a polynomial of degree n} \\
+                 &= (\lambda-\lambda_1)(\lambda-\lambda_2)\ldots (\lambda-\lambda_n) && \text{(factor polynomial)}
+  \end{align}
+
+  Per (3), 
+  \begin{equation}
+    p_A(0) = (-\lambda_1)(-\lambda_2)\ldots (-\lambda_n) = (-1)^n \lambda_1 \lambda_2 \ldots  \lambda_n
+  \end{equation}
+
+  Per(1), 
+  \begin{equation}
+     p_A(0) = \det(0-A) = \det(-A) = (-1)^n \det A
+  \end{equation}
+
+  Thus, \( (-1)^n \det A = (-1)^n \lambda_1 \lambda_2 \ldots  \lambda_n \), and \( \det A = \lambda_1 \lambda_2 \ldots  \lambda_n \). 
+
+\end{proof}
+
+\begin{corollary}
+  If \( A \) has eigenvalue 0, it has determinant 0 and is thus singular. 
+\end{corollary}
+\end{document}
+
+
+
+
+
+
+
+
+

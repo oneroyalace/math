@@ -1,0 +1,189 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 Lec 16  \\
+  \large{3.4: Dimension}
+}
+\author{Asa Royal (ajr74)}
+\date{11/2/23, 11/9/23}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[linear transformation]
+  A function \( T: \mathbb{R}^n \mapsto \mathbb{R}^m \) is called a \textbf{linear transformation} if it satisfies
+  \begin{enumerate}
+    \item \( T(\textbf{x} + \textbf{y}) = T(\textbf{x}) + T(\textbf{y}) \forall \textbf{x}, \textbf{y} \in \mathbb{R}^n \)
+    \item \( T(c \textbf{x}) = c T(\textbf{x}) \forall \textbf{x} in \mathbb{R}^n \) and scalars \( c \)
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  If \( T: \mathbb{R}^n \mapsto \mathbb{R}^m \) is a linear transformation, then we can find a matrix \( A \), the so-called standard matrix of \( A \) so that \( T= \mu_A \). THe \( j \)th column of \( A \) is given by \( T(\textbf{e})j \), where \( \textbf{e}_j \) is the \( j \)th standard basis vector. 
+\end{remark}
+
+\begin{prop}
+  Let \( T: \mathbb{R}^n \mapsto \mathbb{R}^m \) be a linear transformation and let \( \mathcal{E} = \{ \textbf{e}_1, \ldots , \textbf{e}_n \} \) be the stanadard basis for \( \mathbb{R}^n \). LEt \( A \) be the matrix whose column vectors are the vectors \( T(\textbf{e}_1), \ldots , T(\textbf{e})_n \in \mathbb{R}^m \) (that is, the coordintae vectors of \( T(\textbf{e}_j) \) with respect to the standard basis of \( \mathbb{R}^m \): 
+  \[
+    A = \begin{bmatrix}
+      \lvert & \lvert & & \lvert \\
+      T(\textbf{e})_1 & T(\textbf{e})_2 & \ldots  & T(\textbf{e})_n \\
+      \lvert & \lvert & & \lvert
+    \end{bmatrix}
+  \]
+Then \( T= \mu_A \) and we call \( A \) the standard matrix for \( T \), denoted \( [T]_{\text{stand}} \). 
+\end{prop}
+
+\begin{proof}
+\end{proof}
+
+\begin{definition}[matrix with respect to basis]
+  Let \( T: \mathbb{R}^n \mapsto \mathbb{R}^n \) be a linear transformation and let \( \mathcal{B} = \{ \textbf{v}_1, \ldots , \textbf{v}_n \} \) be an ordered basis for \( \mathbb{R}^n \). For each \( j=1,\ldots , n \), let \( a_{1j}, a_{2j}, \ldots  a_{nj} \) denote the coordinates of \( T(\textbf{v}_j) \) with respect to the basis \( \mathcal{B} \). We denote this matrix by \( [T]_{\mathcal{B}} \). 
+\end{definition}
+
+\begin{remark}
+  The coefficients of \( T(\textbf{v}_j) \) will be entered as the \( j \)th column of the matrix \( [T]_{\mathcal{B}} \). I.e. given a vector \( \textbf{x} \in \mathbb{R}^n \), we let \( C_{\mathcal{B}(\textbf{x})} \) denote the colum vector whose entires are the coordinates of \( \textbf{x} \) w.r.t. the basis of \( \mathcal{B} \). That is, if \( \{ \textbf{v}_1,\ldots ,\textbf{v}_n \} \) is a basis for \( \mathcal{B} \), 
+  \[
+    \textbf{x} = c_1 \textbf{v}_1 + c_2 \textbf{v}_2 + \ldots  c_n \textbf{v}_n
+  \]
+then 
+  \[
+    C_{\mathcal{B}(\textbf{x})} = \begin{bmatrix}
+      c_1 \\ c_2 \\ \vdots \\ c_n 
+    \end{bmatrix}
+      \]
+  So 
+
+  \[
+    [T]_{\mathcal{B}} = \begin{bmatrix}
+      \lvert & \lvert & & \lvert \\
+    C_{\mathcal{B}}(T(\textbf{v}_1)) & C_{\mathcal{B}} (T(\textbf{v}_2)) & \ldots & C_{\mathcal{B}} (T(\textbf{v}_n)) \\
+          \lvert & \lvert & & \lvert
+    \end{bmatrix}
+  \]
+\end{remark}
+
+\begin{definition}[coordinates w.r.t. basis]
+  Let \( V \) be a subspace of \( \mathbb{R}^n \) and let \( \mathcal{B} = \{\textbf{v}_1, \textbf{v}_2, \ldots , \textbf{v}_k \) be a basis for \(  V \). Then for \( \textbf{v} \in V, \textbf{v}= c_1 \textbf{v}_1 + \ldots  + c_k \textbf{v}_k \). \( c_1, \ldots , c_k \) are the coordinates of \( \textbf{v} \) with respect to basis \( \mathcal{B} \). 
+\end{definition}
+
+\begin{eg}
+  Say \( \mathcal{B} = \{\textbf{v}_1, \textbf{v}_2 \} \) is a basis for \( \mathbb{R}^2 \) with \( \textbf{v}_1 = \begin{bmatrix} 2 \\ 1 \end{bmatrix} \) and \( \textbf{v}_2 = \begin{bmatrix} 1 \\ 2 \end{bmatrix} \). Further, let's consider the vector \( \textbf{a} = \begin{bmatrix} 8 \\ 7 \end{bmatrix} \). Note that \( \textbf{a} = 3 \textbf{v}_1 + 2 \textbf{v}_2 \). So \( {\begin{bmatrix} \textbf{a} \end{bmatrix}}_{\mathcal{B}} = \begin{bmatrix} 3 \\ 2 \end{bmatrix} \). That is, the coordinates for \( \textbf{a} \) with respect to the basis \( \mathcal{B} \) are \( \begin{bmatrix} 3 \\ 2 \end{bmatrix} \)
+\end{eg}
+
+\begin{remark}
+  When we talk offhand about Cartesian coordinates \( (2,1) \) for example, we are usually referring to those as coordinates with respect to the standard basis for \( \mathbb{R}^2 \), \( \begin{bmatrix} \textbf{e}_1 & \textbf{e}_2 \end{bmatrix} \). \( (2,1) = 2\textbf{e}_1 + 1 \textbf{e}_2 \). 
+\end{remark}
+
+\begin{definition}[change-of-basis matrix]
+  The change of basis matrix for some basis \( \mathcal{B} = \{ \textbf{v}_1, \ldots , \textbf{v}_k  \} \) is simply \( \begin{bmatrix} \textbf{v}_1 & \textbf{v}_2 \end{bmatrix} \)
+\end{definition}
+
+\begin{definition}[alt. def matrix w.r.t. basis]
+  The linear transformation of basis vectors \( \textbf{v}_1,\ldots ,\textbf{v}_n \) is a linear combination of of basis vectors \( \textbf{w}_1, \ldots , \textbf{w}_m \) (from the target basis) with coefficients (coordinates) given by the matrix \( [T]_{\mathcal{V}, \mathcal{W}} \). The \( j \)th column of \( [T]_{\mathcal{V}, \mathcal{W}} \) provides the coordinates for \( T[\textbf{v}_j] \) w.r.t. \( \textbf{w}_1, \ldots , \textbf{w}_m \)
+  \begin{equation}
+    T \begin{bmatrix}
+      \textbf{v}_1 & \ldots  & ... & \textbf{v}_n 
+    \end{bmatrix} 
+    = 
+    \begin{bmatrix}
+      \textbf{w}_1 & \ldots  & \textbf{w}_m
+    \end{bmatrix}
+    [T]_{\mathcal{V}, \mathcal{W}}
+  \end{equation}
+\end{definition}
+\end{document}
+

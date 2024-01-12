@@ -1,0 +1,309 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\Z{\ensuremath{\mathbb{Z}}}
+\renewcommand\O{\ensuremath{\emptyset}}
+\newcommand\Q{\ensuremath{\mathbb{Q}}}
+\newcommand\C{\ensuremath{\mathbb{C}}}
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+\DeclareMathOperator{\Img}{Im}
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+
+% Matrix with row vectors (see https://tex.stackexchange.com/a/454734)
+\newcommand{\brows}[1]{%
+  \begin{bmatrix}
+  \begin{array}{@{\protect\rotvert\;}c@{\;\protect\rotvert}}
+  #1
+  \end{array}
+  \end{bmatrix}
+}
+% rotated vertical line (used for matrix w/ row vectors)
+\newcommand{\rotvert}{\rotatebox[origin=c]{90}{$\vert$}}
+% vertical dot rows in a matrix
+\newcommand{\rowsvdots}{\multicolumn{1}{@{}c@{}}{\vdots}}
+
+\title{%
+  Math 221 Lec 13  \\
+  \large{5.1 determinants}
+}
+\author{Asa Royal (ajr74)}
+\date{October 12, 2023}
+
+\begin{document}
+\maketitle
+\begin{definition}[determinant]
+  The \textbf{determinant} is a function satisfying 
+  \begin{enumerate}
+    \item \( \det A = 0 \) if \( A \) has two equal (adjacent?) rows
+    \item \( \det A' = c \det A \) if \( A' \) is obtained by multiplying a row of \( A \) by \( c \)
+    \item \( \det A = \det A' + \det A'' \) if \( A, A', A'' \) agree in all rows except row \( i \), where \( A_i = A'_i + A''_i \)
+    \item \( \det I_n = 1 \)
+  \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+  \( \det A' = - \det A \) if \( A' \) has two rows swapped from \( A \). 
+\end{lemma}
+
+\begin{proof}
+  \begin{align*}
+    0 = 
+    \det \brows{
+        \rowsvdots \\
+        x+y \\
+        x+y \\
+        \rowsvdots \\
+      }
+      &= 
+   \det \brows{
+        \rowsvdots \\
+        x \\
+        x+y \\
+        \rowsvdots \\
+      }
+      + 
+   \det \brows{
+        \rowsvdots \\
+        y \\
+        x+y \\
+        \rowsvdots \\
+      }
+      \\
+      &= 
+  \det \brows{
+        \rowsvdots \\
+        x \\
+        x \\
+        \rowsvdots \\
+      }
+      + 
+  \det \brows{
+        \rowsvdots \\
+        x \\
+        y \\
+        \rowsvdots \\
+      }
+    + 
+    \det \brows{
+        \rowsvdots \\
+        y \\
+        x \\
+        \rowsvdots \\
+      }
+    + 
+    \det \brows{
+        \rowsvdots \\
+        y \\
+        y \\
+        \rowsvdots \\
+      } \\
+      &= 
+\det \brows{
+        \rowsvdots \\
+        y \\
+        x \\
+        \rowsvdots \\
+      } + 
+\det \brows{
+        \rowsvdots \\
+        x \\
+        y \\
+        \rowsvdots \\
+      }
+  \end{align*}
+
+  So 
+  \[
+\det \brows{
+        \rowsvdots \\
+        x \\
+        y \\
+        \rowsvdots \\
+      } = 
+      - 
+\det \brows{
+        \rowsvdots \\
+        y \\
+        x \\
+        \rowsvdots \\
+      }
+  \]
+\end{proof}
+
+\begin{prop}
+  \( \det(EA) = \det E \det A \)
+\end{prop}
+
+\begin{proof}
+  
+\end{proof}
+
+\begin{theorem}[Determinant of a singular matrix]
+  Let \( A \) be a square matrix. A is singular iff \( \det A = 0 \). 
+\end{theorem}
+
+\begin{proof}
+  \( A = EU \) for some elementary matrix \( E \) and upper triangular matrix \( U \). Then \( \det E \det A = \det U \). Since \( U \) has a row of zeros, \( \det U = 0 \). \( \det E = \det E_k \det E_{k-1} \ldots \det E_1 \neq 0\), since the determinant of an elementary matrix is either \( -1, c \neq 0, \text{ or } 1\). Thus \( \det A = 0 \)
+  \\
+  \\
+  Note: if \( A \) is nonsingular, A = \( EI \), so \( \det A = \det E_k \ldots  \det E_1 \neq 0 \). 
+\end{proof}
+
+\begin{prop}
+  \( \det \) is a unique function. 
+\end{prop}
+
+\begin{proof}
+  If \( A \) is singular, \( \det A = 0 \) per the theorem above. If \( A \) is nosingular, \( EA = I \) for some composition of elemntary matrices, \( E \). Then \( \det E_k \ldots  \det E_1 \det EA = \det I \). So 
+  \[
+    \det A = \frac{1}{\det E_k\ldots \det E_1}
+  \]
+\end{proof}
+
+\begin{theorem}[multiplicative linearity of det]
+  \( A, B \in \mathbb{R}^{n \times n} \implies \det (AB) = \det A \det B \)
+\end{theorem}
+
+\begin{proof}
+  \textbf{case 1: A is singular}. \( \det A \det B = 0 * \det B = 0 \). If \( A \) is singular, \( L(A) \neq \{ \textbf{0} \} \), which means \( L(AB) \neq \{ \textbf{0} \} \). Thuse \( AB \) is singular and \( \det (AB) = 0 \) \\
+  \textbf{case 2: A is nonsingular}. \( \det (AB) = \det (E_k \ldots E_1 B) = \det (E_k\ldots E_1) \det B = \det A \det B\). 
+\end{proof}
+
+\begin{corollary}
+  \( \det(A^{-1}) = \frac{1}{\det A} \)
+\end{corollary}
+
+\begin{proof}
+  \( \det A  \det (A^{-1}) = \det (A A^{-1}) = \det(I) = 1\)
+\end{proof}
+
+\begin{corollary}
+  If \( A \) is similar to \( A' \), \( \det A = \det A' \). 
+\end{corollary}
+
+\begin{proof}
+  \( \det A' = \det (PAP^{-1}) = \det P \det A \det P^{-1} = \det A \). The last step follows because \( \det (P^{-1}) = \frac{1}{\det P} \)
+\end{proof}
+
+\begin{prop}
+  If \( A \) is upper triangular, \( \det A \) is the product of the entries on its diagonal.
+\end{prop}
+
+\begin{proof}
+  When taking the determinant of \( A \), we can use linearity to move the diagonal entries outside the function, s.t. \( \det A = \prod_{\text{diagonals}} \det A' \), where \( A' \) is \( A \) with ones on the diagonal. If \( A \) is singular, one of the diagonal entries must have been equal to zero, so \( \det A = 0 \), as expected. If \( A \) is nonsingular, we can then subtract scalar multiples of rows of \( A' \) from each other to get the identity matrix. Those row operations do not affect the determinant, so \( \det A = \prod_{\text{diagonals}} \det I  = \prod_{\text{diagonals}}\). 
+\end{proof}
+
+\section{Geometric interpretation}
+
+What we call a determinant in algebra is the same thing as what we call volume in geometry 
+\begin{remark}
+  The determinant of a matrix with two vectors is their volume (which in two dimnesnions, is what we think of as area). The axioms we use to define determinants (see definition above) are the same as those we use to define volume
+\end{remark}
+\begin{enumerate}
+  \item if \( \textbf{v}_1,\ldots ,\textbf{v}_n \) are dependent, \( \dim(\text{span}() < n) \), so they compose a flat hyperplane and have volume zero. Think about a piece of paper in \( \mathbb{R}^3 \). \( n=3 \) vectors in the plane plane of the paper are linearly dependent, so they have volume zero
+  \item If you scale an edge of a space by \( c \), volume of the scaled space becomes \( c*vol \). So if you scale all edges of a cube from 1cm to 2cm, volume of the new cube = \( 2^3*(\text{old vol} \). 
+\end{enumerate}
+
+\begin{theorem}[Cramer's rule]
+  if \( A \textbf{x} = \textbf{b} \) with \( A \) nonsingular, \( x_i = \frac{\det B_i}{\det A} \), where \( B_i \) is the matrix formed by replace the \( i \)-th column of \( A \) with \( b \). 
+\end{theorem}
+
+\begin{proof}
+  Since \( b = A \textbf{x} = x_1 \textbf{a}_1 + \ldots  + x_n \textbf{a}_n \), 
+  \begin{align*}
+    \det B_i &= 
+    \det \begin{bmatrix}
+      | & | & | & | & | & | & | \\
+      % \vert & \vert & \vert & \vert & \vert & \vert & \evrt \\
+      a_1 & \ldots  & a_{i-1} & x_1 \textbf{a}_1 + \ldots  + x_n \textbf{a}_n & a_{i+1} & \ldots  & a_n \\
+      | & | & | & | & | & | & |
+    \end{bmatrix}
+    \\
+             &= \det \begin{bmatrix}
+               | & | & | & | & | & | & | \\
+               a_1 & \ldots  & a_{i-1} & x_i \textbf{a}_i & a_{i+1} & \ldots  & a_n \\
+               | & | & | & | & | & | & |
+             \end{bmatrix}
+             \\
+             &= x_i \det A
+  \end{align*}
+\end{proof}
+\end{document}
+
+
+
+
+
+
+

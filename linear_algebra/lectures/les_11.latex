@@ -114,6 +114,14 @@
 \end{remark}
 
 \begin{remark}
+  The remark above reveals that vectors themselves are linear transformations. \( \textbf{x} \in \mathbb{R}^n\) is \( n \)-dimensional, but \( \textbf{x} \cdot \textbf{y} \) is 1-dimesional, so \( x^{\intercal} \) is the \( 1 \times n \) matrix that encodes a linear transformation that takes an \( n \)-dimensional vector to 1 dimension. \( \textbf{x}_1 \) tells us what the linear transformation maps \( \hat i \) to, and so on... Add all that hat vectors and you get a scalar: the output of the linear transformation. 
+\end{remark}
+
+\begin{definition}[dual]
+  The \textbf{dual} of a vector is the linear transformation it encodes. The \textbf{dual} of a linear transformation from \( n \) dimensions to \( 1 \) dimension is a certain vector. 
+\end{definition}
+
+\begin{remark}
   Note then that \( \textbf{a}^{\intercal} \textbf{a} = \textbf{a} \cdot \textbf{a} = {\lVert \textbf{a} \rVert}^2 \)
 \end{remark}
 
