@@ -89,7 +89,7 @@
       \item At least two of the three events occur
         \( ( A \cap B ) \cup (A \cap C) \cup (B \cap C) \)
     \end{enumerate}
-  \item 1.2.5: How many ways are there to fill four holes with six different colors if we can re-use colors? \\\\
+  \item 1.2.6: How many ways are there to fill four holes with six different colors if we can re-use colors? \\\\
     \( 1296 \). The number of length \( 4 \) sequences we can construct with \( 6 \) symbols is \( 6^4=1296 \). 
   \item The student is incorrect. They may have thought that \( \Omega \), the sample space, is \( \{18, 19, 21 \} \), when in fact, \( \Omega \) is the set of all students ("objects" we can draw).  In this case, we are studying the event that a 21-year-old student is selected. Since all outcomes are equally likely, the probability of that event is its cardinality (the number of outcomes in the event) divided by the total cardinality of the outcome space. The number of students age 21 is 32. The total cardinality of the outcome space is the total number of students: \( 4 + 32 + 2 = 38 \). Thus, \( P(age=21) = 32/38 = 16/19 \).
 
@@ -102,7 +102,7 @@
       \[
          (3,6), (4,5), (4,6), (5,4), (5,5), (5,6), (6,3), (6,4), (6,5), (6,6) 
       \]
-      Since \( \Omega \) has a finite cardinality and its outcomes are equally likely to occur, \( P(sum>8) = 10/ |\Omega| = 10/36 = 5/18 \)
+      Since \( \Omega \) is a finite space and its outcomes are equally likely to occur, \( P(sum>8) = 10/ |\Omega| = 10/36 = 5/18 \)
     \end{enumerate}
 
 \end{enumerate}
