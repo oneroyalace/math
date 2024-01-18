@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 2 (Combinatorics)}
+\author{Asa Royal (ajr74)}
+\date{January 11, 2024}
+
+\begin{document}
+\maketitle
+
+\say{There is not much theory involved in combinatorics. For each new situation, we have to think again how the counting should be done. Often there are various approaches leading to the correct answer. THe only way to get acquainted to combinatorics is to train yourself by doing exercises}
+
+\begin{definition}[permutation]
+  A \textbf{permutation} is an ordering of objects. The number of permutations of size \( k \) from a set with \( n \) elements is denoted \( nPk \). 
+  \begin{equation*}
+    nPk = \frac{n!}{(n-k)!} = n(n-1)\ldots(n-k+1) 
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  If we're selecting an ordered subset of size \( k \), there are \( n \) choices for the first element, \( n-1 \) for the second, and so on, down to \( n-k-1 \) for the \( k \)th element. 
+\end{remark}
+
+\begin{eg}[Permutations of cards]
+  How many ways can 4 cards be dealt from a 52-card deck if order matters?
+  There are 52 choices for the first card, 51 for the second, 50 for the second, and 49 for the fourth. Thus, there are \( 52*51*50*49=6,497,400 \) 4-card permutations. 
+\end{eg}
+
+\begin{corollary}
+  There are \( n! \) unique permutations of a set of \( n \) objects. This is \( n P n \). 
+\end{corollary}
+
+\begin{definition}[combination]
+  A \textbf{combination} is an order-blind subset of objects from a set. The number of subsets of \( k \) elements from a set with \( n \) elements is denoted \( n \choose k \)
+  \begin{equation*}
+    {n \choose k} = \frac{n!}{k! (n-k)!}
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  This draws on the formula for permutations, but accounts for the fact that permutations are ordered subsets. If we're selecting a subset of \( k \) objects from a set of \( n \) objects, there are \( n \) choices for the first element, \( n-1 \) for the second, and so on, down to \( n-k-1 \) for the \( k \)th element. If we multiply those terms, there are \( k! \) different orderings of \( k \) elements in the factors. If we divide by \( k! \), we get the number of unordered combinations. \\ \\
+  One can consider the \( (n-k)! \) to represent the number of orderings of objects not in our subset (objects we don't select). If \( n! \) tells us how many orderings of \( n \) objects there are, and we only care about \( k \) we select, we need to divide by \( (n-k)! \) to get rid of ordering outside our subset selection, then divide by \( k! \) again to get rid of orderings in our selection. 
+  
+\end{remark}
+
+\begin{eg}[Combinations of cards]
+  How many combinations of 4 cards can be dealt from a 52-card deck? There are \( 52 \) choices for the first card... \( 49 \) choices for the \( 4th \) card. But we don't care which of the four cards is first, so we divide the product of those factors by \( 4 \). We don't care about which of the cards is second, so we divide again by \( 3 \), and then \( 2 \)...
+\end{eg}
+\end{document}

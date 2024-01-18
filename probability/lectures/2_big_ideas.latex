@@ -1,0 +1,110 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 2 Big Ideas Journal}
+\author{Asa Royal (ajr74)}
+\date{January 16, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection*{The probability mass function}
+
+Assuming \( \Omega \) is finite, we can define a probability mass function \( \rho: \Omega \mapsto [0,1]  \) that assigns probabilities to the events containing each \( \omega \in \Omega \). \( \mathbb{P}(A) \subset \Omega \), then, is \( \sum_{\omega \in A} \rho(\omega) \) since \( A = \bigcup_{k=1}^{\infty} \{\omega_k\} \)
+
+\subsection*{Equally likely outcomes}
+
+Asssuming \( \Omega \) is finite and the probability measure / probabililty mass function are defined such that all outcomes are equally likely, \( \mathbb{P}(A) = \frac{|A|}{|\Omega|} \) for any \( A \subset \Omega \). 
+
+\subsection*{Combinatorics experiments}
+
+Note: for combinatorics problems, we can define \( \Omega \) in a way that best suits the problem at hand. For example, if we run an experiment where we toss a coin \( n \) times, but we only care about the the first toss in each outcome, we could define \( \Omega = \{H,T\} \) instead of \( \Omega = \{H,T\}^N \). \\ When setting up problems, remember that we should embed our assumptions within the probability measure. See example below
+
+\begin{eg}[Tossing a fair coin]
+  Imagine we toss a fair coin \( n \) times. Then let \( \Omega  = \{ H, T\}^N \). Since we have assumed we have a fair coin, all outcomes are equally likely. Thus \( \rho(\omega) = 1/|\Omega| \). We rely on this assumption to define \( \mathbb{P}(A) \). \( A = \bigcup_{\omega \in A} \omega \), so \( \mathbb{P}(A) = \sum_{i=1}^{|A|} \rho(\omega_i) = |A| * \rho(\omega_i) = \frac{|A|}{|\Omega|} \) 
+\end{eg}
+
+\subsubsection*{n choose k}
+In combinatorics problems, we often want to find the number of ways to choose \( k \) things from a collection of \( n \) things. We do so by calculating \( {n \choose k} \). 
+\begin{equation*}
+  {n \choose k} = \frac{n!}{(n-k)! k!} 
+\end{equation*}
+
+This quantity represents the number of ways to permute \( n \) things \( (n!) \) divided by the number of ways to arrange the \( n-k \) items not selected (since we don't care about them), divided again by the number of ways to arrange the \( k \) items we did select (since we're finding the number of unordered subsets). 
+
+\begin{eg}[Chance of drawing 5 cards and getting a full house hand]
+  A full house consists of 3 cards of one rank and 2 cards of a second rank. To find the number of full house combinations, we note that we can initiate our full house hand with a card from any of the \( 13 \) ranks for the trio. Given a rank, there are \( 4 \choose 3 \) ways to select a trio of cards from that rank. There are then \( 12 \) choices for the second rank, and \( 4 \choose 2 \) ways to select a pair of cards of that rank. The total number of combinations of full houses is thus \( 13 * 12 * {4 \choose 3} * {4 \choose 2} \). \\
+  \\
+  To find the probability of drawing a full house, we calculate \( \mathbb{P}(FullHouse)/|\Omega| \). \( \Omega \) is the set of all combinatgions of \( 5 \) cards. There are \( 52 \choose 5 \) ways to select 5 cards from a full deck, so 
+  \[
+    \mathbb{P}(FullHouse) =  \frac{{13 \choose 1} * {4 \choose 3} * {12 \choose 1} * {4 \choose 2} } {{52 \choose 5}} \approx 0.00144
+  \]
+\end{eg}
+\end{document}
+
