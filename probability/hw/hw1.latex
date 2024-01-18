@@ -6,7 +6,7 @@
 \usepackage{url}
 
 \usepackage{geometry}
-\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+\newgeometry{left=12mm, right=17mm, top= 5mm, bottom=12mm}
 
 
 \usepackage{graphicx}
@@ -58,7 +58,7 @@
 
 
 \title{Math 340 HW 1}
-\author{Asa Royal (ajr74)}
+\author{Asa Royal (ajr74) [collaborators: none]}
 \date{January 18, 2024}
 
 \begin{document}
@@ -66,8 +66,44 @@
 \begin{enumerate}
   \item 1.1.15: Show that in a countably infinite sample space, it is impossible to assign equal probability to all possible outcomes. 
     \begin{proof}
-      Assume there exists a countably infinite sample space where all possible outcomes have equal probability. Let \( c \in \mathbb{R} \) and \( 0 < c < 1 \). Then \( P(\Omega) = \sum_{i=1}^{\inf} p(\omega_i) = c \inf = \inf \). But \( P(\Omega) \) must equal \( 1 \) per the definition of the sample space, \( \Omega \). Thus, by contradiction, reject the initial assumption and conclude that it is impossible to assign equal probability to all possible outcomes in a countably infinite sample space. 
+      Assume there exists a countably infinite sample space where all possible outcomes have equal probability. Let \( c \) be this probability. Then \( \forall \omega_i \in \Omega, \rho(\omega_i) = c \), where \( 0 \leq c \leq 1 \). Accordingly, \( P(\Omega) = \sum_{i=1}^{\infty} \rho(\omega_i) = c * \infty  = \infty\ \) if \( c > 0 \) or \( 0 \) if \( c = 0 \). But \( P(\Omega) \) must equal \( 1 \) per the definition of the sample space, \( \Omega \). Thus, by contradiction, we reject the initial assumption and conclude that it is impossible to assign equal probability to all possible outcomes in a countably infinite sample space. 
     \end{proof}
+
+  \item 1.7.2: \( A, B \), and \( C \) are events. Express the following events in \( A, B,  \) and \( C \). 
+    \begin{enumerate}
+      \item Only \( A \) occurs \\
+        \( A \cap ( B^c \cap C^c) \). \( B^c \cap C^c \) is the event that neither \( B \) nor \( C \) occurs. The solution provided is the event that \( A \) occurs, while neither \( B \) nor \( C \) occurs. 
+      \item \( A \) and \( B \) occur, but \( C \) does not occur. \\
+        \( (A \cap B) \cap C^c \). \( A \cap B \) is the event that \( A \) and \( B \) occur. The solution provided is the event that this event occurs, but \( C \) does not. 
+      \item All three events occur \\
+        \( (A \cap B) \cap C \)
+      \item Exactly one of the three events occurs
+        \( [ A \cap (B^c \cap C^c) ] \cup [B \cap (A^c \cap C^c)] \cup [ C \cap (A^c \cap B^c)] \) \\
+        This is the union of the events where, respectively, only \( A \) occurs, only \( B \) occurs, and only \( C \) occurs. 
+      \item At most one of the events occurs \\
+        \( [ A \cap (B^c \cap C^c) ] \cup [B \cap (A^c \cap C^c)] \cup [ C \cap (A^c \cap B^c)] \cup (A^c \cap B^c \cap C^c) \) \\
+        This is the union of the event described in \( 2d \) with the event that neither \( A, B \), nor \( C \) occurs. 
+      \item None of the three events occur \\
+        \( A^c \cap (B^c \cap C^c) \) 
+        This is the event that \( A \) does not occur, \( B \) does not occur, and \( C \) does not occur. 
+      \item At least two of the three events occur
+        \( ( A \cap B ) \cup (A \cap C) \cup (B \cap C) \)
+    \end{enumerate}
+  \item 1.2.5: How many ways are there to fill four holes with six different colors if we can re-use colors? \\\\
+    \( 1296 \). The number of length \( 4 \) sequences we can construct with \( 6 \) symbols is \( 6^4=1296 \). 
+  \item The student is incorrect. They may have thought that \( \Omega \), the sample space, is \( \{18, 19, 21 \} \), when in fact, \( \Omega \) is the set of all students ("objects" we can draw).  In this case, we are studying the event that a 21-year-old student is selected. Since all outcomes are equally likely, the probability of that event is its cardinality (the number of outcomes in the event) divided by the total cardinality of the outcome space. The number of students age 21 is 32. The total cardinality of the outcome space is the total number of students: \( 4 + 32 + 2 = 38 \). Thus, \( P(age=21) = 32/38 = 16/19 \).
+
+  \item Suppose we roll two standard 6-sided dice
+    \begin{enumerate}
+    \item We can define the outcome space of this experiment as the ordered results of two independent experiments. Doing so allows us to consider the rolls \( (4,6) \) as an event separate from the rolls \( (6,4) \). \\\\
+      If \( x_1 \) represents rolling a 1 on one die, \( x \), and \( y_1 \) represents rolling a 1 on the other die, \( y \), \( \Omega \) will look like \( \{ (x_1,y_1), (x_1, y_2),\ldots (x_1, y_6), (x_2, y_1), (x_2, y_2),\ldots ,(x_2, y_6), \ldots, \ldots , (x_6, y_6) \} \). \( | \Omega | = 36\)
+    \item The probability that the two dice show different values is 1 minus the probability that they show the same value. The cardinality of the event where they show the same value is \( 6 \), because the event only occurs when both dice can either equal \( 1, 2, \ldots , 6 \). As stated above, \( |\Omega| = 36 \), so \( P(\text{different values}) = 1 - 6/36 = 5/6 \). 
+    \item There are 10 outcomes where the sum of the numbers rolled is greater than 8: 
+      \[
+         (3,6), (4,5), (4,6), (5,4), (5,5), (5,6), (6,3), (6,4), (6,5), (6,6) 
+      \]
+      Since \( \Omega \) has a finite cardinality and its outcomes are equally likely to occur, \( P(sum>8) = 10/ |\Omega| = 10/36 = 5/18 \)
+    \end{enumerate}
 
 \end{enumerate}
 \end{document}
