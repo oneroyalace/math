@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 5mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+% \usepackage{tikz}
+% \usepackage{tikz-cd}
+
+
+
+% \usepackage{import}
+% \usepackage{xifthen}
+% \usepackage{pdfpages}
+% \usepackage{transparent}
+% \usepackage{graphicx}
+
+% % include figure stored at ./figures/name.pdf_tex
+% \newcommand{\incfig}[1]{
+%   \def\svgwidth{0.5\columnwidth}
+%   \import{./figures/}{#1.pdf_tex}
+% }
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+
+\title{Math 340 HW 1}
+\author{Asa Royal (ajr74) [collaborators: none]}
+\date{January 18, 2024}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+  \item \textbf{1.7.10}: Supose we dial a random 6-digit number on my telephone. What is the probability that:
+    \begin{enumerate}
+      \item The number does not contain a 6 \\
+        \( \approx \textbf{.531} \). The probability that any given digit is not 6 is 9/10. There are 6 digits, and each is dialed independently, so the probability that the number does not contain a 6 is \( (9/10)^6 \). 
+      \item The number contains only even digits \\
+        \( \textbf{1/64} \). The probability that any given digit is even is 1/2. There are 6 digits, and each is independently, so the probability that all of them are even is \( (1/2)^6 \). 
+      \item The number contains the pattern 2345 \\
+        \( \textbf{.0003} \). If the pattern \( 2345 \) appears in the phone number, it must begin at the first, second, or third index. The other two digits in the phone number can be chosen freely; there are 10 choices for each. There are thus \( 3*10*10 \) 6-digit phone numbers containing the pattern \( 2345 \). There are \( 10^6 \) 6-digit phone numbers, so the probability of \( 2345 \) appearing in a randomly dialed phone number is \( (3*10*10)/(10^6) = 3/(10^4)=.0003 \)
+      \item The number contains the pattern 2222 \\
+        \( \textbf{.0003} \). Per part \( c \), there are \( 3*10*10 \) 6-digit phone numbers that include a specific 4-digit pattern. It does not matter that this pattern contains a block of \( 2 \)s. Dialing one 2 first and another second is no different than dialing the second first and the first second. \( (3*10*10)/(10^6) = 3/(10^4)=.0003 \)
+    \end{enumerate}
+  \item \textbf{1.7.21}: Supose that 20 rabbits live in a certain region. We catch 5 of them, mark these, and let them go again. After a while we catch 4 rabbits. Compute the probability that exactly 2 of these 4 are marked. Be very precise about the assumptions that you make when you compute this probability. \\\\
+    Assuming that our selection of rabbits in the second round is independent of our selection of rabbits in the first round, there is a \( 5/20 \) chance that a rabbit we catch in the second round was previously marked. The probability that exactly 2 of them can be calculated
+    \[
+      \mathbb{P}(\text{2 marked}) = {4 \choose 2}\left(\frac{5}{20}\right)^2 \left( \frac{15}{20} \right) ^2
+    \]
+    \textcolor{red}{But are trials independent here??}... I think they are. But I also think the answer might just be (5/20)(5/20)(15/20)(15/20)  
+  \item A box contains five tickets labeled \( 1,2,3,4,5 \) which are otherwise identical Ten people take turns drawing a ticket randomly from the box, replacing and mixing the tickets after each draw so that the draws are independent. 
+    \begin{enumerate}
+      \item For \( k=1,\ldots , 5 \), let \( A_k \) be the event that ticket \( k \) is not chosen by anyone. What is \( \mathbb{P}(A_k) \)? \\
+        \( \textbf{.107} \). There is a \( 4/5 \) chance that ticket \( k \) is not picked on any given draw. Since the draws are independent, the chance of this occuring ten times is \( (4/5)^{10} \approx .107 \)
+      \item Are the events \( A_k \) and \( A_j \) independent if \( k \neq j \)?  \\
+        \textbf{No.} \( \mathbb{P}(A_j \cap A_k) = (3/5)^{10} \), because there is a \( 3/5 \) chance that neither ticket \( j \) nor \( k \) is picked on any given draw. \( \mathbb{P}(A_j) = \mathbb{P}(A_k) = (4/5)^{10} \). \( \mathbb{P}(A_j \cap A_k) \neq \mathbb{P}(A_j) * \mathbb{P}(A_k) \), so \( A_j \) and \( A_k \) are not independent. 
+      \item  \( B = ({A_1}^c \cap {A_2}^c \cap {A_3}^c \cap {A_4}^c \cap {A_5}^c) = \left( \bigcup A_i \right)^c \)
+    \end{enumerate}
+  \item s
+  \item Out of a group of 20 people, 5 are chosen randomly to receieve a prize, and the rest get nothing. Let \( A \) be the event that Alonzo gets a prize. Let \( B \) be the event that Biji gets a prize. Are the events \( A \) and \( B \) independent? \\
+    \( \mathbb{P}(A \cap B) = \frac{{20 \choose 3}}{{20 \choose 5}}\) \textcolor{red}{????. 20c3 ways to choose folks if we know alonzo and biji are in the prize group, right?} \( \mathbb{P}(A) = \mathbb{P}(B) = 1/4 \)
+\end{enumerate}
+\end{document}
+
+
