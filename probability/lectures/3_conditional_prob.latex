@@ -1,0 +1,139 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 3 (Conditional probability)}
+\author{Asa Royal (ajr74)}
+\date{January 18, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection*{Conditional probability}
+
+\begin{definition}[conditional probability]
+  Given two events \( A,B \subset \Omega \) with \( \mathbb{P}(B) > 0, \)
+  \begin{equation*}
+    \mathbb{P}(A|B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}
+  \end{equation*}
+
+  This is the probability that an outcome in \( A \) and \( B \) occurs divide by the probability that an outcome in \( B \) occurs. In a manner of thinking, \( B \) has become the updated sample space, and the event we're calculating the probability of is the set of outcomes in \( A \) that overlap with \( B \). \\
+  \\
+  Note: conditional probability requires that \( \mathbb{P}(B) \neq 0 \), because it doesn't make much sense to think about the probability of \( A \) given an event that cannot happen. 
+\end{definition}
+
+Conditional probabilities let us update our models with new information. For example, imagine we have some prior expectation about \( \mathbb{P}(A) \). If we know \( B \) has occurred, an updated forecast for \( A \) is \( \mathbb{P}(A|B) \). 
+
+\subsection*{Bayes' Theorem}
+
+\subsubsection*{Derivation}
+
+A corollary of the formula for conditional probability is 
+\begin{equation*}
+  \mathbb{P}(A \cap B) = \mathbb{P}(A|B) \mathbb{P}(B)
+\end{equation*}
+
+Since \( \mathbb{P}(A \cap B) = \mathbb{P}(B \cap A) \), 
+\begin{equation}
+  \mathbb{P}(B|A) = \frac{\mathbb{P}(B \cap A)}{\mathbb{P}(A)} = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(A)} = \frac{\mathbb{P}(A|B) \mathbb{P}(B)}{\mathbb{P}(A)}
+\end{equation}
+
+Equation (1) is called Bayes' Theorem: it allows us to express the conditional probability of \( A \) on \( B \) in terms of the conditional probability of \( B \) on \( A \), once again giving us a way to update models. 
+
+\subsection*{Partition rule}
+\begin{definition}[partition]
+  Events \( B_1, \ldots , B_n \) are a partition of \( \Omega \) if the \( B_k \)'sQ are mutually disjoint and their union is equal to \( \Omega \). 
+\end{definition}
+
+\begin{theorem}[Partition rule]
+  The partition rule states that for any event \( A \subset \Omega \), the sets \( \{ ( A \cap B_K ) \}^n\) are a partition of \( A \). i.e. the set of those intersections is disjoint and their union is \( A \). Mathematically, by the additivity proposition,
+  \begin{equation*}
+    \mathbb{P}(A) = \sum_{k=1}^n \mathbb{P}(A|B_k) \mathbb{P}(B_k)
+  \end{equation*}
+  p>
+\end{theorem}
+
+\begin{remark}
+  Note 2: We can think think about the calculations involved in the partition formula as cascading probabilities in a decision tree. \\
+\end{remark}
+
+\begin{remark}
+  The partition rule is used when a problem's setup includes randomization in the first stage, then selection. The randomization forms partitions! Problem examples: Boxes and marbles. 
+\end{remark} 
+
+\begin{theorem}[Baye's theorem w/ partition rule]
+  We can express the denominator in Baye's theorem as a sum of disjoint partition intersections. I.e.
+  \begin{equation*}
+    \mathbb{P}(B|A) = \frac{\mathbb{P}(A|B) \mathbb{P}(B)}{\mathbb{P}(A)} = \frac{\mathbb{P}(A|B) \mathbb{P}(B)}{\sum_{k=1}^n \mathbb{P}(A|B_k) \mathbb{P}(B_k)}
+  \end{equation*}
+\end{theorem}
+Note 3: We can use the partition rule to calculate the denominator in the Baye's theorem formula by summing up the weighted conditional probability of the denominator event. See e.g., medical diagnosis problem. 
+
+
+\end{document}
+
