@@ -76,11 +76,10 @@
         \( \textbf{.0003} \). Per part \( c \), there are \( 3*10*10 \) 6-digit phone numbers that include a specific 4-digit pattern. It does not matter that this pattern contains a block of \( 2 \)s. Dialing one 2 first and another second is no different than dialing the second first and the first second. \( (3*10*10)/(10^6) = 3/(10^4)=.0003 \)
     \end{enumerate}
   \item \textbf{1.7.21}: Supose that 20 rabbits live in a certain region. We catch 5 of them, mark these, and let them go again. After a while we catch 4 rabbits. Compute the probability that exactly 2 of these 4 are marked. Be very precise about the assumptions that you make when you compute this probability. \\\\
-    Assuming that our selection of rabbits in the second round is independent of our selection of rabbits in the first round, there is a \( 5/20 \) chance that a rabbit we catch in the second round was previously marked. The probability that exactly 2 of them can be calculated
+    Assume that our selection of rabbits in the second round is independent of our selection fo rabbits in the first round. There are \( 5 \choose 2 \) combinations of marked rabbits we could pick in the second round and \( 15 \choose 2 \) combinations of unmarked rabbits. The total number of ways to pick 4 rabbits from the 20 in the region is \( 20 \choose 4 \). Thus, since each \( \omega \) is equally likely, the probability of picking 4 rabbits and finding that exactly two of them are marked is
     \[
-      \mathbb{P}(\text{2 marked}) = {4 \choose 2}\left(\frac{5}{20}\right)^2 \left( \frac{15}{20} \right) ^2
+      \mathbb{P}(\text{2 marked}) = \frac{{5 \choose 2}{15 \choose 2}}{{20 \choose 4}} \approx 0.217
     \]
-    \textcolor{red}{But are trials independent here??}... I think they are. But I also think the answer might just be (5/20)(5/20)(15/20)(15/20)  
   \item A box contains five tickets labeled \( 1,2,3,4,5 \) which are otherwise identical Ten people take turns drawing a ticket randomly from the box, replacing and mixing the tickets after each draw so that the draws are independent. 
     \begin{enumerate}
       \item For \( k=1,\ldots , 5 \), let \( A_k \) be the event that ticket \( k \) is not chosen by anyone. What is \( \mathbb{P}(A_k) \)? \\
@@ -89,9 +88,39 @@
         \textbf{No.} \( \mathbb{P}(A_j \cap A_k) = (3/5)^{10} \), because there is a \( 3/5 \) chance that neither ticket \( j \) nor \( k \) is picked on any given draw. \( \mathbb{P}(A_j) = \mathbb{P}(A_k) = (4/5)^{10} \). \( \mathbb{P}(A_j \cap A_k) \neq \mathbb{P}(A_j) * \mathbb{P}(A_k) \), so \( A_j \) and \( A_k \) are not independent. 
       \item  \( B = ({A_1}^c \cap {A_2}^c \cap {A_3}^c \cap {A_4}^c \cap {A_5}^c) = \left( \bigcup A_i \right)^c \)
     \end{enumerate}
-  \item s
-  \item Out of a group of 20 people, 5 are chosen randomly to receieve a prize, and the rest get nothing. Let \( A \) be the event that Alonzo gets a prize. Let \( B \) be the event that Biji gets a prize. Are the events \( A \) and \( B \) independent? \\
-    \( \mathbb{P}(A \cap B) = \frac{{20 \choose 3}}{{20 \choose 5}}\) \textcolor{red}{????. 20c3 ways to choose folks if we know alonzo and biji are in the prize group, right?} \( \mathbb{P}(A) = \mathbb{P}(B) = 1/4 \)
+  \item There are 20 dice. 17 of them are fair dice, and 3 of them are trick dice. The "trick dice" are just like the fair dice except that the faces on the trick dice are labeled 1,1,2,3,4,5. Imagine you draw a die randomly from the box, and then you roll it. Let \( T \) be the event that you drew a trick die. Let \( R_k \) be the event that you rolled the number \( k \). Compute and compare the quantities \( \mathbb{P}(T), \mathbb{P}(T | R_5) \), and \( \mathbb{P}(T | R_1) \). \\
+  \\
+  \( \mathbb{P}(T) = 3/20 \). Given that we draw dice randomly from the box, we are equally likely to any of the dice, so \( \mathbb{P}(T) = |\text{Trick}|/|\Omega| \). \\ \\
+  \( \mathbb{P}(T|R_5) = 3/20 \). We supect this because \( R_5 \) is equally likely whether we pick a trick or fair die. But we can confirm the probability by applying Bayes' rule with partitioning: \[
+    \mathbb{P}(T|R_5) = \frac{\mathbb{P}(R_5|T) \mathbb{P}(T)}{\mathbb{P}(R_5)} = \frac{(1/6)(3/20)}{(3/20)(1/6) + (17/20)(1/6)} = \frac{(1/6)(3/20)}{1/6} = 3/20
+  \]
+  \( \mathbb{P}(T|R_1) = 6/23 \). We find this by applying Bayes' rule with partitioning. 
+  \[
+    \mathbb{P}(T|R_1) = \frac{\mathbb{P}(R_1|T) \mathbb{P}(T)}{\mathbb{P}(R_1)} = \frac{(1/3)(3/20)}{(3/20)(1/3) + (17/20)(1/6)} = \frac{1/20}{1/20 + 17/120} = (6/120)(120/23) = 6/23
+  \]
+  \item Out of a group of 20 people, 5 are chosen randomly to receieve a prize, and the rest get nothing. Let \( A \) be the event that Alonzo gets a prize. Let \( B \) be the event that Biji gets a prize. Are the events \( A \) and \( B \) independent? \\\\
+    \textbf{No}. There are \( 18 \choose 3 \) combinations of winners that include Biji and Alonzo, and \( 20 \choose 5 \) combinations of winners overall. Thus \( \mathbb{P}(A \cap B) = \frac{{18 \choose 3}}{{20 \choose 5}} \). If \( A \) and \( B \) are independent, \( \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B) \). \( \mathbb{P}(A) = \mathbb{P}(B) = 5/20 \). \( \mathbb{P}(A) * \mathbb{P}(B) = 1/6 \neq \mathbb{P}(A \cap B) \). Thus \( A  \) and \( B \) are not independent. 
+
+  \item A box contains 10 cards: 5 cards are red, 5 cards are blue. The red cards are labeled \( 1,2,3,4,5 \). The blue cards are also labeled \( 1,2,3,4,5 \). Consider the following game:  \\\\
+    Joe draws a card at random, \textbf{without} replacement. Then Kamala chooses randomly from among the remaining cards. Kamala wins if either (a) her card has a higher numerical value than Joe's or (b) the color of her cards is different from Joe's card. If neither (a) nor (b) happen, then Joe wins. 
+    \begin{enumerate}
+      \item What is the probability that Kamala wins? \\
+      \item Suppose we are told that Kamala won and that she drew a red 4. Given this information, what is the probability that Joe's card was blue? \\
+        Let \( A \) be the event that Joe loses. Let \( B \) be the event that Joe draws a card with value \( < 4 \). Let \( C \) be the event that Joe draws a blue card. \( A = B \cup C \). And thus,
+        \[
+          \mathbb{P}(A) = \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(B \cap C) 
+        \]
+        Since Joe lost, \( \mathbb{P}(A) = 1 \). We know that \( B \cup C \) happened. Thus,
+        \[
+          1 = \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(B \cap C) = 6/9 + \mathbb{P}(C) - 1/9
+        \]
+          Since there are 6 of the 9 remaining cards Joe could have chosen with value < 4 and 1/9 that have value < 4 and are blue. And therefore, 
+          \[
+            \mathbb{P}(C) = 1 - 6/9 + 1/9 = 4/9
+          \]
+
+
+    \end{enumerate}
 \end{enumerate}
 \end{document}
 
