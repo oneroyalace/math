@@ -69,7 +69,7 @@
       \item The number does not contain a 6 \\
         \( \approx \textbf{.531} \). The probability that any given digit is not 6 is 9/10. There are 6 digits, and each is dialed independently, so the probability that the number does not contain a 6 is \( (9/10)^6 \). 
       \item The number contains only even digits \\
-        \( \textbf{1/64} \). The probability that any given digit is even is 1/2. There are 6 digits, and each is independently, so the probability that all of them are even is \( (1/2)^6 \). 
+        \( \textbf{1/64} \). The probability that any given digit is even is 1/2. There are 6 digits, and each is independently chosen, so the probability that all of them are even is \( (1/2)^6 \). 
       \item The number contains the pattern 2345 \\
         \( \textbf{.0003} \). If the pattern \( 2345 \) appears in the phone number, it must begin at the first, second, or third index. The other two digits in the phone number can be chosen freely; there are 10 choices for each. There are thus \( 3*10*10 \) 6-digit phone numbers containing the pattern \( 2345 \). There are \( 10^6 \) 6-digit phone numbers, so the probability of \( 2345 \) appearing in a randomly dialed phone number is \( (3*10*10)/(10^6) = 3/(10^4)=.0003 \)
       \item The number contains the pattern 2222 \\
@@ -83,11 +83,11 @@
   \item A box contains five tickets labeled \( 1,2,3,4,5 \) which are otherwise identical. Ten people take turns drawing a ticket randomly from the box, replacing and mixing the tickets after each draw so that the draws are independent. 
     \begin{enumerate}
       \item For \( k=1,\ldots , 5 \), let \( A_k \) be the event that ticket \( k \) is not chosen by anyone. What is \( \mathbb{P}(A_k) \)? \\
-        \( \textbf{.107} \). There is a \( 4/5 \) chance that ticket \( k \) is not picked on any given draw. Since the draws are independent, the chance of this occuring ten times is \( (4/5)^{10} \approx .107 \)
+        \( \textbf{0.107} \). There is a \( 4/5 \) chance that ticket \( k \) is not picked on any given draw. Since the draws are independent, the chance of this occuring ten times is \( (4/5)^{10} \approx .107 \)
       \item Are the events \( A_k \) and \( A_j \) independent if \( k \neq j \)?  \\
         \textbf{No.} \( \mathbb{P}(A_j \cap A_k) = (3/5)^{10} \), because there is a \( 3/5 \) chance that neither ticket \( j \) nor \( k \) is picked on any given draw. \( \mathbb{P}(A_j) = \mathbb{P}(A_k) = (4/5)^{10} \). \( \mathbb{P}(A_j \cap A_k) \neq \mathbb{P}(A_j) * \mathbb{P}(A_k) \), so \( A_j \) and \( A_k \) are not independent. 
       \item  Let \( B \) be the event that each of the 5 tickets is chosen by at least one person. Compute \( \mathbb{P}(B) \). \\
-        \( B = {A_1}^c \cap {A_2}^c \cap {A_3}^c \cap {A_4}^c \cap {A_5} = \left(\bigcup A_i \right)^c \) per DeMorgan's. \( \mathbb{P}(B) = 1 - \mathbb{P}(\bigcup A_i) \). Per Lemma 1.3.2, \( \mathbb{P}(\bigcup A_i) \) is
+        \( \textbf{0.523} \). \( B = {A_1}^c \cap {A_2}^c \cap {A_3}^c \cap {A_4}^c \cap {A_5} = \left(\bigcup A_i \right)^c \) per DeMorgan's. \( \mathbb{P}(B) = 1 - \mathbb{P}(\bigcup A_i) \). Per Lemma 1.3.2, \( \mathbb{P}(\bigcup A_i) \) is
         \begin{align*}
           \sum_1^5 \mathbb{P}(A_i) &- \sum_{i < j} \mathbb{P}(A_i \cap A_j) \\
                                    &+ \sum_{i < j < k } \mathbb{P}(A_i \cap A_j \cap A_k)\\
@@ -113,26 +113,26 @@
     \end{enumerate}
   \item There are 20 dice. 17 of them are fair dice, and 3 of them are trick dice. The "trick dice" are just like the fair dice except that the faces on the trick dice are labeled 1,1,2,3,4,5. Imagine you draw a die randomly from the box, and then you roll it. Let \( T \) be the event that you drew a trick die. Let \( R_k \) be the event that you rolled the number \( k \). Compute and compare the quantities \( \mathbb{P}(T), \mathbb{P}(T | R_5) \), and \( \mathbb{P}(T | R_1) \). \\
   \\
-  \( \mathbb{P}(T) = 3/20 \). Given that we draw dice randomly from the box, we are equally likely to any of the dice, so \( \mathbb{P}(T) = |\text{Trick}|/|\Omega| \). \\ \\
-  \( \mathbb{P}(T|R_5) = 3/20 \). We supect this because \( R_5 \) is equally likely whether we pick a trick or fair die. But we can confirm the probability by applying Bayes' rule with partitioning: \[
+  \( \mathbb{P}(T) = \textbf{3/20 }\). Given that we draw dice randomly from the box, we are equally likely to pick any of the dice, so \( \mathbb{P}(T) = |\text{Trick}|/|\Omega| \). \\ \\
+  \( \mathbb{P}(T|R_5) = \textbf{3/20} \). We supect this because \( R_5 \) is equally likely whether we pick a trick or fair die. But we can confirm the probability by applying Bayes' rule with partitioning: \[
     \mathbb{P}(T|R_5) = \frac{\mathbb{P}(R_5|T) \mathbb{P}(T)}{\mathbb{P}(R_5)} = \frac{(1/6)(3/20)}{(3/20)(1/6) + (17/20)(1/6)} = \frac{(1/6)(3/20)}{1/6} = 3/20
   \]
-  \( \mathbb{P}(T|R_1) = 6/23 \). We find this by applying Bayes' rule with partitioning. 
+  \( \mathbb{P}(T|R_1) = \textbf{6/23} \). We find this by applying Bayes' rule with partitioning. 
   \[
     \mathbb{P}(T|R_1) = \frac{\mathbb{P}(R_1|T) \mathbb{P}(T)}{\mathbb{P}(R_1)} = \frac{(1/3)(3/20)}{(3/20)(1/3) + (17/20)(1/6)} = \frac{1/20}{1/20 + 17/120} = (6/120)(120/23) = 6/23
   \]
   \item Out of a group of 20 people, 5 are chosen randomly to receieve a prize, and the rest get nothing. Let \( A \) be the event that Alonzo gets a prize. Let \( B \) be the event that Biji gets a prize. Are the events \( A \) and \( B \) independent? \\\\
-    \textbf{No}. There are \( 18 \choose 3 \) combinations of winners that include Biji and Alonzo, and \( 20 \choose 5 \) combinations of winners overall. Thus \( \mathbb{P}(A \cap B) = \frac{{18 \choose 3}}{{20 \choose 5}} \). If \( A \) and \( B \) are independent, \( \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B) \). \( \mathbb{P}(A) = \mathbb{P}(B) = 5/20 \). \( \mathbb{P}(A) * \mathbb{P}(B) = 1/6 \neq \mathbb{P}(A \cap B) \). Thus \( A  \) and \( B \) are not independent. 
+    \textbf{No}. There are \( 18 \choose 3 \) combinations of winners that include Biji and Alonzo, and \( 20 \choose 5 \) combinations of winners overall. Thus \( \mathbb{P}(A \cap B) = \frac{{18 \choose 3}}{{20 \choose 5}} \). If \( A \) and \( B \) are independent, \( \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B) \). \( \mathbb{P}(A) = \mathbb{P}(B) = 5/20 \). \( \mathbb{P}(A) * \mathbb{P}(B) = 1/16 \neq \mathbb{P}(A \cap B) \). Thus \( A  \) and \( B \) are not independent. 
 
   \item A box contains 10 cards: 5 cards are red, 5 cards are blue. The red cards are labeled \( 1,2,3,4,5 \). The blue cards are also labeled \( 1,2,3,4,5 \). Consider the following game:  \\\\
     Joe draws a card at random, without replacement. Then Kamala chooses randomly from among the remaining cards. Kamala wins if either (a) her card has a higher numerical value than Joe's or (b) the color of her cards is different from Joe's card. If neither (a) nor (b) happen, then Joe wins. 
     \begin{enumerate}
       \item What is the probability that Kamala wins? \\
         \( \textbf{2/3} \). Let \( A \) be the event Kamala draws a card with value greater than Joe's. Let \( B \) be the event Kamala draws a card the same color as the one Joe has already picked. The event that Kamala wins is \( A \cup B \), and \( \mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B) \). \\
-        Assume Joe has already drawn a card. Then \( |\Omega|=9 \). \( \mathbb{P}(B) = 4/9 \), since there are only 4 cards left of the same color the one Joe drew, and outcomes are equally likely. \( \mathbb{E}(\text{Joe's card value}) = \) the average value of the cards, which is \( \frac{(1 + 2 + 3 + 4 + 5)*2}{10} = 3 \). If Joe draws a 3 (which we have shown will be his average draw value), there will be 4 higher-valued cards left in the box, so \( \mathbb{P}(A) = 4/9 \). Given Joe draws the expected value, \( A \cap B \) is composed of two outcomes: the cards with the same color as Joe's draw with values 1 and 2. Thus \( \mathbb{P}(A \cap B) = 2/9 \). \\
+        Assume Joe has already drawn a card. Then \( |\Omega|=9 \) for Kamala's draw. \( \mathbb{P}(B) = 4/9 \), since there are only 4 cards left of the same color the one Joe drew, and outcomes are equally likely. \( \mathbb{E}(\text{Joe's card value}) = \) the average value of the cards, which is \( \frac{(1 + 2 + 3 + 4 + 5)*2}{10} = 3 \). If Joe draws a 3 (which we have shown will be his average draw value), there will be 4 higher-valued cards left in the box (red/blue 4 and 5 cards), so \( \mathbb{P}(A) = 4/9 \). Given Joe draws the expected value, \( A \cap B \) is composed of two outcomes: the cards with the same color as Joe's draw with values 4 and 5. Thus \( \mathbb{P}(A \cap B) = 2/9 \). \\
         \( \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B) = 4/9 + 4/9 - 2/9 = 2/3 \). 
       \item Suppose we are told that Kamala won and that she drew a red 4. Given this information, what is the probability that Joe's card was blue? \\
-        We can solve this problem by applying Bayes' rule with partitioning. Below I use Bayes' rule with partitioning.
+        \textbf{5/8}. We can solve this problem by applying Bayes' rule with partitioning:
         \begin{align*}
           \mathbb{P}(\text{Blue}|\text{lose}) &= \frac{\mathbb{P}(\text{lose}|\text{blue}) * \mathbb{P}(\text{Blue})}{\mathbb{P}(\text{lose})} \\
                                               &= \frac{\mathbb{P}(\text{lose}|\text{blue}) * \mathbb{P}(\text{Blue})}{\mathbb{P}(\text{lose}|\text{blue}) + \mathbb{P}(\text{lose}|\text{red})} \\
@@ -146,12 +146,12 @@
     \[
       \sum_{k=0}^3 {20 \choose k} (0.5)^k (0.5)^{20-k} = \sum_{k=0}^3 {20 \choose k} (0.5)^{20} = \frac{1351}{1048576} \approx .0013
     \]
-  \item Toss 2 fair coins and consider the following events: \( A \) = the event that the firs tcoin landed heads. \( B \) = the event that the second coin landed heads. \( C \) = the event that the two coins landed the same way (either both heads or both tails). Are these events pairwise independent? Are they independent in the sense of Definition 1.5.1? \\
+  \item Toss 2 fair coins and consider the following events: \( A \) = the event that the first coin landed heads. \( B \) = the event that the second coin landed heads. \( C \) = the event that the two coins landed the same way (either both heads or both tails). Are these events pairwise independent? Are they independent in the sense of Definition 1.5.1? \\
   \\
   Let \( \Omega = \{H,T\}^2 \). \( \mathbb{P}(A) = \mathbb{P}(B) = \mathbb{P}(C) = 1/2 \) \\ \\
-  These events are pairwise independent. \( \mathbb{P}(A \cap B) = \mathbb{P}(B \cap C) = \mathbb{P}(A \cap C) = 1/4 \), since there is one outcome out of four in \( \Omega \) that satisifes any two of the events: \( \omega = \{H,H\} \). Thus \( \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B) \), \( \mathbb{P}( B \cap C) = \mathbb{P}(B) \mathbb{P}(C) \), and \( \mathbb{P}(A \cap C) = \mathbb{P}(A) \mathbb{P}(C) \). 
+  \textbf{These events are pairwise independent}. \( \mathbb{P}(A \cap B) = \mathbb{P}(B \cap C) = \mathbb{P}(A \cap C) = 1/4 \), since there is one outcome out of four in \( \Omega \) that satisifes any two of the events: \( \omega = \{H,H\} \). Thus \( \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B) \), \( \mathbb{P}( B \cap C) = \mathbb{P}(B) \mathbb{P}(C) \), and \( \mathbb{P}(A \cap C) = \mathbb{P}(A) \mathbb{P}(C) \). 
 
-  The events are not, however, mutually independent as a set. \( \mathbb{P}(A \cap B \cap C) =  1/4 \), since one outcome out of 4 in \( \Omega \) satisfies the join intersection. \( \mathbb{P}(A) * \mathbb{P}(B) * \mathbb{P}(C) = 1/8 \), however. Were the set of events mutually independent, these two quantites would be equal. Intuitively, we know they are not independent because knowledge of whether two of the events occurred tells us whether the third occurred. 
+  \textbf{The events are not, however, mutually independent as a set}. \( \mathbb{P}(A \cap B \cap C) =  1/4 \), since one outcome out of 4 in \( \Omega \) satisfies the join intersection (again, \( \omega=\{H,H\} \). \( \mathbb{P}(A) * \mathbb{P}(B) * \mathbb{P}(C) = 1/8 \), however. Were the set of events mutually independent, these two quantites would be equal. Intuitively, we know they are not independent because knowledge of whether two of the events occurred tells us whether the third occurred. 
 
 \end{enumerate}
 \end{document}
