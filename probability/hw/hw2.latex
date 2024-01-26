@@ -32,22 +32,22 @@
     \noindent\rule[0.5ex]{\linewidth}{0.5pt}
 }
 
-% \usepackage{tikz}
-% \usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{tikz-cd}
 
 
 
-% \usepackage{import}
-% \usepackage{xifthen}
-% \usepackage{pdfpages}
-% \usepackage{transparent}
-% \usepackage{graphicx}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
 
-% % include figure stored at ./figures/name.pdf_tex
-% \newcommand{\incfig}[1]{
-%   \def\svgwidth{0.5\columnwidth}
-%   \import{./figures/}{#1.pdf_tex}
-% }
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
 
 % Skip items in enumerate (https://tex.stackexchange.com/q/101832)
 \makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
@@ -76,17 +76,40 @@
         \( \textbf{.0003} \). Per part \( c \), there are \( 3*10*10 \) 6-digit phone numbers that include a specific 4-digit pattern. It does not matter that this pattern contains a block of \( 2 \)s. Dialing one 2 first and another second is no different than dialing the second first and the first second. \( (3*10*10)/(10^6) = 3/(10^4)=.0003 \)
     \end{enumerate}
   \item \textbf{1.7.21}: Supose that 20 rabbits live in a certain region. We catch 5 of them, mark these, and let them go again. After a while we catch 4 rabbits. Compute the probability that exactly 2 of these 4 are marked. Be very precise about the assumptions that you make when you compute this probability. \\\\
-    Assume that our selection of rabbits in the second round is independent of our selection fo rabbits in the first round. There are \( 5 \choose 2 \) combinations of marked rabbits we could pick in the second round and \( 15 \choose 2 \) combinations of unmarked rabbits. The total number of ways to pick 4 rabbits from the 20 in the region is \( 20 \choose 4 \). Thus, since each \( \omega \) is equally likely, the probability of picking 4 rabbits and finding that exactly two of them are marked is
+    \( \textbf{0.217} \). Assume that our selection of rabbits in the second round is independent of our selection fo rabbits in the first round. There are \( 5 \choose 2 \) combinations of marked rabbits we could pick in the second round and \( 15 \choose 2 \) combinations of unmarked rabbits. The total number of ways to pick 4 rabbits from the 20 in the region is \( 20 \choose 4 \). Thus, since each \( \omega \) is equally likely, the probability of picking 4 rabbits and finding that exactly two of them are marked is
     \[
       \mathbb{P}(\text{2 marked}) = \frac{{5 \choose 2}{15 \choose 2}}{{20 \choose 4}} \approx 0.217
     \]
-  \item A box contains five tickets labeled \( 1,2,3,4,5 \) which are otherwise identical Ten people take turns drawing a ticket randomly from the box, replacing and mixing the tickets after each draw so that the draws are independent. 
+  \item A box contains five tickets labeled \( 1,2,3,4,5 \) which are otherwise identical. Ten people take turns drawing a ticket randomly from the box, replacing and mixing the tickets after each draw so that the draws are independent. 
     \begin{enumerate}
       \item For \( k=1,\ldots , 5 \), let \( A_k \) be the event that ticket \( k \) is not chosen by anyone. What is \( \mathbb{P}(A_k) \)? \\
         \( \textbf{.107} \). There is a \( 4/5 \) chance that ticket \( k \) is not picked on any given draw. Since the draws are independent, the chance of this occuring ten times is \( (4/5)^{10} \approx .107 \)
       \item Are the events \( A_k \) and \( A_j \) independent if \( k \neq j \)?  \\
         \textbf{No.} \( \mathbb{P}(A_j \cap A_k) = (3/5)^{10} \), because there is a \( 3/5 \) chance that neither ticket \( j \) nor \( k \) is picked on any given draw. \( \mathbb{P}(A_j) = \mathbb{P}(A_k) = (4/5)^{10} \). \( \mathbb{P}(A_j \cap A_k) \neq \mathbb{P}(A_j) * \mathbb{P}(A_k) \), so \( A_j \) and \( A_k \) are not independent. 
-      \item  \( B = ({A_1}^c \cap {A_2}^c \cap {A_3}^c \cap {A_4}^c \cap {A_5}^c) = \left( \bigcup A_i \right)^c \)
+      \item  Let \( B \) be the event that each of the 5 tickets is chosen by at least one person. Compute \( \mathbb{P}(B) \). \\
+        \( B = {A_1}^c \cap {A_2}^c \cap {A_3}^c \cap {A_4}^c \cap {A_5} = \left(\bigcup A_i \right)^c \) per DeMorgan's. \( \mathbb{P}(B) = 1 - \mathbb{P}(\bigcup A_i) \). Per Lemma 1.3.2, \( \mathbb{P}(\bigcup A_i) \) is
+        \begin{align*}
+          \sum_1^5 \mathbb{P}(A_i) &- \sum_{i < j} \mathbb{P}(A_i \cap A_j) \\
+                                   &+ \sum_{i < j < k } \mathbb{P}(A_i \cap A_j \cap A_k)\\
+                                   &- \sum_{i < j < k < l} \mathbb{P}(A_i \cap A_j \cap A_k \cap A_l)\\
+                                   &- \sum_{i < j < k < l < m} \mathbb{P}(A_i \cap A_j \cap A_k \cap A_l \cap A_m)
+        \end{align*}
+        \( \mathbb{P}(A_i) = (4/5)^{10} \) per 3a. In the expression above, this value is summed 5 times, one for each \( A_i \).  \\
+        The probability of the intersection of any two distinct events is \( (3/5)^{10} \), since if \( A_i \) and \( A_j \) occur, there are only 3 ticket values available to pick from the box. We subtract this value for every unique intersection of two events, of which there are 10: \( (1,2), (1,3), (1,4), (1,5), (2,3), (2,4), (2,5), (3,4), (3,5), \) and \( (4,5) \). \\\\
+        The probability of the intersection of any three distinct events is \( (2/5)^{10} \), since if \( A_i, A_j \) and \( A_k \) occur, there are only 2 ticket values available to pick from the box. We subtract this probability for every unique intersection of three events, of which there are 10: \( (1,2,3), (1,2,4), (1,2,5), (1,3,4), (1,3,5), (1,4,5), (2,3,4), (2,3,5), (2,4,5) \), and \( (3,4,5) \) \\
+        \\
+        The probability of the intersection of any four distinct events is \( (1/5)^{10} \), since if \( A_i, A_j \) and \( A_k \), and \( A_l \) occur, there is only a single ticket value available to pick from the box. We subtract this probability for every unique intersection of four events, of which there are 5: \( (1,2,3,4), (1,2,3,5), (1,2,4,5), (1,3,4,5), \) and \( (2,3,4,5) \). \\
+        \\
+        The last term in the lemma formula has probability zero, since we cannot avoid drawing 5 distinct ticket values given there are only 5 ticket values in the box. \\
+        \\
+        Combining these terms, \( \mathbb{P}(\bigcup A_i) \) is 
+        \[
+          5*(4/5)^{10} - 10 * (3/5)^{10} + 10 * (2/5)^{10} - 5 * (1/5)^{10} = \frac{37301}{78125}
+        \]
+        And 
+        \[
+        \mathbb{P}(B) = 1 - \mathbb{P}\left(\bigcup A_i\right) \approx 0.523
+        \]
     \end{enumerate}
   \item There are 20 dice. 17 of them are fair dice, and 3 of them are trick dice. The "trick dice" are just like the fair dice except that the faces on the trick dice are labeled 1,1,2,3,4,5. Imagine you draw a die randomly from the box, and then you roll it. Let \( T \) be the event that you drew a trick die. Let \( R_k \) be the event that you rolled the number \( k \). Compute and compare the quantities \( \mathbb{P}(T), \mathbb{P}(T | R_5) \), and \( \mathbb{P}(T | R_1) \). \\
   \\
@@ -102,25 +125,34 @@
     \textbf{No}. There are \( 18 \choose 3 \) combinations of winners that include Biji and Alonzo, and \( 20 \choose 5 \) combinations of winners overall. Thus \( \mathbb{P}(A \cap B) = \frac{{18 \choose 3}}{{20 \choose 5}} \). If \( A \) and \( B \) are independent, \( \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B) \). \( \mathbb{P}(A) = \mathbb{P}(B) = 5/20 \). \( \mathbb{P}(A) * \mathbb{P}(B) = 1/6 \neq \mathbb{P}(A \cap B) \). Thus \( A  \) and \( B \) are not independent. 
 
   \item A box contains 10 cards: 5 cards are red, 5 cards are blue. The red cards are labeled \( 1,2,3,4,5 \). The blue cards are also labeled \( 1,2,3,4,5 \). Consider the following game:  \\\\
-    Joe draws a card at random, \textbf{without} replacement. Then Kamala chooses randomly from among the remaining cards. Kamala wins if either (a) her card has a higher numerical value than Joe's or (b) the color of her cards is different from Joe's card. If neither (a) nor (b) happen, then Joe wins. 
+    Joe draws a card at random, without replacement. Then Kamala chooses randomly from among the remaining cards. Kamala wins if either (a) her card has a higher numerical value than Joe's or (b) the color of her cards is different from Joe's card. If neither (a) nor (b) happen, then Joe wins. 
     \begin{enumerate}
       \item What is the probability that Kamala wins? \\
+        \( \textbf{2/3} \). Let \( A \) be the event Kamala draws a card with value greater than Joe's. Let \( B \) be the event Kamala draws a card the same color as the one Joe has already picked. The event that Kamala wins is \( A \cup B \), and \( \mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B) \). \\
+        Assume Joe has already drawn a card. Then \( |\Omega|=9 \). \( \mathbb{P}(B) = 4/9 \), since there are only 4 cards left of the same color the one Joe drew, and outcomes are equally likely. \( \mathbb{E}(\text{Joe's card value}) = \) the average value of the cards, which is \( \frac{(1 + 2 + 3 + 4 + 5)*2}{10} = 3 \). If Joe draws a 3 (which we have shown will be his average draw value), there will be 4 higher-valued cards left in the box, so \( \mathbb{P}(A) = 4/9 \). Given Joe draws the expected value, \( A \cap B \) is composed of two outcomes: the cards with the same color as Joe's draw with values 1 and 2. Thus \( \mathbb{P}(A \cap B) = 2/9 \). \\
+        \( \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B) = 4/9 + 4/9 - 2/9 = 2/3 \). 
       \item Suppose we are told that Kamala won and that she drew a red 4. Given this information, what is the probability that Joe's card was blue? \\
-        Let \( A \) be the event that Joe loses. Let \( B \) be the event that Joe draws a card with value \( < 4 \). Let \( C \) be the event that Joe draws a blue card. \( A = B \cup C \). And thus,
-        \[
-          \mathbb{P}(A) = \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(B \cap C) 
-        \]
-        Since Joe lost, \( \mathbb{P}(A) = 1 \). We know that \( B \cup C \) happened. Thus,
-        \[
-          1 = \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(B \cap C) = 6/9 + \mathbb{P}(C) - 1/9
-        \]
-          Since there are 6 of the 9 remaining cards Joe could have chosen with value < 4 and 1/9 that have value < 4 and are blue. And therefore, 
-          \[
-            \mathbb{P}(C) = 1 - 6/9 + 1/9 = 4/9
-          \]
-
-
+        We can solve this problem by applying Bayes' rule with partitioning. Below I use Bayes' rule with partitioning.
+        \begin{align*}
+          \mathbb{P}(\text{Blue}|\text{lose}) &= \frac{\mathbb{P}(\text{lose}|\text{blue}) * \mathbb{P}(\text{Blue})}{\mathbb{P}(\text{lose})} \\
+                                              &= \frac{\mathbb{P}(\text{lose}|\text{blue}) * \mathbb{P}(\text{Blue})}{\mathbb{P}(\text{lose}|\text{blue}) + \mathbb{P}(\text{lose}|\text{red})} \\
+                                              &= \frac{1 * 5/9}{(5/9) + (4/9)(3/4)} \\
+                                              &= \frac{5}{9} * \frac{9}{8} \\
+                                              &= \frac{5}{8}
+        \end{align*}
     \end{enumerate}
+  \item Suppose you toss a fair coin 20 times. Write an expression for the probability that less than 4 heads were tossed. \\ \\
+    Let \( A_k \) be the event that exactly \( k \) heads are tossed in a 20-toss experiment. The probability that less than 4 heads are tossed is the probability that exactly 0, 1, 2, or 3 heads are tossed. Note that for \( i \neq j \), \( A_i \) is independent from \( A_j \) because \( \mathbb{P}(A_i|A_j) = 0 \neq \mathbb{P}(A_i)  \) : if precisely \( i \) heads are tossed, then there is no chance that precisely \( j \) have been tossed, too. Since all \( A_k \) are independent, the probability that 0, 1, 2, or 3 heads are tossed is \( \sum_{k=0}^3 \mathbb{P}(A_k) \). \( \mathbb{P}(A_k) \) for a p-coin is \( {n \choose k} p^k (1-p)^{n-k} \). In this case, \( \sum_{k=0}^3 \mathbb{P}(A_k) \) is
+    \[
+      \sum_{k=0}^3 {20 \choose k} (0.5)^k (0.5)^{20-k} = \sum_{k=0}^3 {20 \choose k} (0.5)^{20} = \frac{1351}{1048576} \approx .0013
+    \]
+  \item Toss 2 fair coins and consider the following events: \( A \) = the event that the firs tcoin landed heads. \( B \) = the event that the second coin landed heads. \( C \) = the event that the two coins landed the same way (either both heads or both tails). Are these events pairwise independent? Are they independent in the sense of Definition 1.5.1? \\
+  \\
+  Let \( \Omega = \{H,T\}^2 \). \( \mathbb{P}(A) = \mathbb{P}(B) = \mathbb{P}(C) = 1/2 \) \\ \\
+  These events are pairwise independent. \( \mathbb{P}(A \cap B) = \mathbb{P}(B \cap C) = \mathbb{P}(A \cap C) = 1/4 \), since there is one outcome out of four in \( \Omega \) that satisifes any two of the events: \( \omega = \{H,H\} \). Thus \( \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B) \), \( \mathbb{P}( B \cap C) = \mathbb{P}(B) \mathbb{P}(C) \), and \( \mathbb{P}(A \cap C) = \mathbb{P}(A) \mathbb{P}(C) \). 
+
+  The events are not, however, mutually independent as a set. \( \mathbb{P}(A \cap B \cap C) =  1/4 \), since one outcome out of 4 in \( \Omega \) satisfies the join intersection. \( \mathbb{P}(A) * \mathbb{P}(B) * \mathbb{P}(C) = 1/8 \), however. Were the set of events mutually independent, these two quantites would be equal. Intuitively, we know they are not independent because knowledge of whether two of the events occurred tells us whether the third occurred. 
+
 \end{enumerate}
 \end{document}
 
