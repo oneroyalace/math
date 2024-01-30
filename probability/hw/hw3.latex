@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 5mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+
+\title{Math 340 HW 2}
+\author{Asa Royal (ajr74) [collaborators: none]}
+\date{January 26, 2024}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+  \item 
+    \begin{enumerate}[label=(\roman*)]
+      \item In this setup, we are essentially modelling 120 flips of a p-coin. Each \( \omega \in \Omega \) is a sequence of 120 true/false values. Thus, 
+      \begin{align*}
+        \mathbb{P}(<3 \text{ calls}) &= \mathbb{P}(0 \text{ calls}) + \mathbb{P}(1 \text{ calls}) +\mathbb{P}(2 \text{ calls}) \\
+                                     &= {120 \choose 1} (0.05)^0(0.95)^{120-0} + {120 \choose 0} (0.05)^1(0.95)^{120-1} + {120 \choose 2} (0.05)^2(0.95)^{120-2} 
+      \end{align*}
+    \item In this setup, \( \omega \in \mathbb{W} \), and we can use a Poisson distriubtion with parameter \( \lambda=6 \) to model the nubmer of arrivals in an hour. We choose \( \lambda = 6  \) because \( 6/120 = 0.05 \), which the last problem stated was the probability of an arrival during an interval. Once again, the probability of seeing \(  <3 \) calls during a 1 hour interval can be calculated by summing the probabilites of seeing zero, one, or two calls during the hour: 
+      \begin{align*}
+        \mathbb{P}(<3 \text{ calls}) &= \mathbb{P}(0 \text{ calls}) + \mathbb{P}(1 \text{ calls}) +\mathbb{P}(2 \text{ calls}) \\
+      \end{align*}
+      Per the probability mass function of the Poisson distribution, \( \mathbb{P}(A_k) = \frac{\lambda^k}{k!}e^{- \lambda} \), so 
+      \begin{align*}
+        \mathbb{P}(<3 \text{ calls}) &= \frac{6^0}{0!}e^{-6} + \frac{6^1}{1!}e^{-6} + \frac{6^2}{2!}e^{-6} \\
+                                     &= e^{-6} + 6e^{-6} + 16e^{-6}\\
+                                     &=  23 e^{-6}\\
+                                     & \approx 0.057
+      \end{align*}
+      
+    \end{enumerate}
+  \item 
+    \begin{enumerate}[label=(\roman*)]
+      \item What is the probability that after \( n \) tosses of a p-coin, you have not seen heads? \\
+        This is the probability of seeing \( n \) tails in a row. Each p-coin flip is independent, so 
+        \begin{align*}
+          \mathbb{P}(n \text{ tails}) = \prod_{k=1}^n \rho(T) = \prod_{k=1}^n (1-p) = (1-p)^n
+        \end{align*}
+
+      \item What is the probability that you toss \( n-1 \) tails and then heads occurs for the first time on the \( n \)th toss. \\
+        The first \( n-1 \) tosses are independent of the \( n \)th toss, so \( \mathbb{P}(A) \), where \( A \) is the event described above, is \( \mathbb{P}(n-1 \text{ tails}) * \mathbb{P}(\text{head}) \). Per 2a, \( \mathbb{P}(n-1 \text{ tails}) = (1-p)^{n-1} \). \( \mathbb{P}(\text{head}) = p \) by construction. Thus,
+        \[
+          \mathbb{P}(A) = (1-p)^{n-1}*p  
+        \]
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}[label=(\roman*)]
+      \item \( B_1 \) and \( B_2 \) are indeed independent. \( \mathbb{P}(B_1 \cap B_2) =  \)
+      \item Suppose your coin lands heads \( k \) times (out of the \( n \) tosses). What is the probability that your coin is the \( j \)th coin. \\
+        Let \( X_i \) be the event that we have the \( i \)th coin. Let \( A_{k} \) be the event that we flip \( k \) heads . Per Bayes' Rule
+        \begin{align*}
+          \mathbb{P}(X_j|A_k) &= 
+          \frac{\mathbb{P}(A_k|X_j) * \mathbb{P}(X_j)}{\sum_{i=1}^M \mathbb{P}(A_{k}|X_i) * \mathbb{P}(X_i)}  
+          \\&= 
+          \frac{
+            \left[{n \choose k} (p_j)^k (1-p_j)^{n-k} \right] \frac{1}{M}
+          }
+          {
+          \sum_{i=1}^M \left[ {n \choose k} (p_i)^k (1-p_i)^{n-k} \right] \frac{1}{M}
+          } \\
+          &= 
+          \frac{
+            {n \choose k} (p_j)^k (1-p_j)^{n-k} 
+          }
+          {
+          \sum_{i=1}^M {n \choose k} (p_i)^k (1-p_i)^{n-k} 
+          }
+        \end{align*}
+      \item Suppose your coin lands heads \( n \) times in a row. You suspect it is the most biased coin (i.e. with the largest \( p=p_M \). How large would \( n \) have to be in order that the probability of it being the most biased coin is at least ten times as large as the probability of it being the next most biased (i.e. the one with \( p=p_{M-1} \)? \\\\
+        Note that 
+        \begin{align}
+          \mathbb{P}(A_n|X_m) &= {n \choose n} (p_m)^n (1-p_m)^0 = (p_m)^n\\
+        \mathbb{P}(A_n|X_{m-1}) &= {n \choose n} (p_{m-1})^n (1-p_{m-1})^0 = (p_{m-1})^n
+        \end{align}
+        If we are at least ten times likelier to have coin \( m \) vs coin \( m-1 \), we can set \( \mathbb{P}(A_n|X_m) \geq 10 * \mathbb{P}(A_n|X_{m-1}) \) and solve to find the minimum satisfying  \( n \). 
+        \begin{align*}
+          \mathbb{P}(A_n|X_m) &\geq 10 * \mathbb{P}(A_n|X_{m-1}) \\
+          (p_m)^n & \geq 10 (p_{m-1})^n & \text{plugging in (1) and (2)}\\
+          n \ln(p_m) & \geq \ln(10) + n \ln(p_{m-1}) & \text{natural log both sides} \\
+          n \ln(p_m) - n \ln(p_{m-1}) & \geq \ln(10)  \\
+          n (\ln(p_m) - \ln(p_{m-1})) & \geq \ln(10)  & \text{factor out \( n \)} \\
+          n & \geq \frac{ln(10)}{\ln(p_m) - \ln(p_{m-1})} \\
+            & \geq \frac{\ln(10)}{ln(\frac{p_m}{p_{m-1}}) } & \text{diff of logs} \\ 
+            &\geq \ln \left(10 - \frac{p_m}{p_{m-1}} \right) & \text{diff of logs} 
+        \end{align*}
+    \end{enumerate}
+
+  \item \textbf{Meester 1.7.36}\\
+    A pack contains \( m \) cards, labelled \( 1,2,\ldots ,m \). The cards are dealt out in a random order, one by one. Given that the label of the \( k \)th card dealt is the largest of the first \( k \) cards, waht is the probability that it is also the largest in the whole pack. 
+    \[
+      \frac{1}{m-k}
+    \]
+
+\end{enumerate}
+\end{document}
+
+
+
