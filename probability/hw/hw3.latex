@@ -69,13 +69,13 @@
       \item In this setup, we are essentially modelling 120 flips of a p-coin. Each \( \omega \in \Omega \) is a sequence of 120 true/false values. Thus, 
       \begin{align*}
         \mathbb{P}(<3 \text{ calls}) &= \mathbb{P}(0 \text{ calls}) + \mathbb{P}(1 \text{ calls}) +\mathbb{P}(2 \text{ calls}) \\
-                                     &= {120 \choose 1} (0.05)^0(0.95)^{120-0} + {120 \choose 0} (0.05)^1(0.95)^{120-1} + {120 \choose 2} (0.05)^2(0.95)^{120-2} 
+                                     &= {120 \choose 0} (0.05)^0(0.95)^{120-0} + {120 \choose 1} (0.05)^1(0.95)^{120-1} + {120 \choose 2} (0.05)^2(0.95)^{120-2} 
       \end{align*}
-    \item In this setup, \( \omega \in \mathbb{W} \), and we can use a Poisson distriubtion with parameter \( \lambda=6 \) to model the nubmer of arrivals in an hour. We choose \( \lambda = 6  \) because \( 6/120 = 0.05 \), which the last problem stated was the probability of an arrival during an interval. Once again, the probability of seeing \(  <3 \) calls during a 1 hour interval can be calculated by summing the probabilites of seeing zero, one, or two calls during the hour: 
+    \item In this setup, \( \omega \in \mathbb{W} \), and we can use a Poisson distriubtion with parameter \( \lambda=6 \) to model the nubmer of arrivals in an hour. We choose \( \lambda = 6  \) so that \( p=\lambda/n = 6/120 = 0.05 \) , which the last problem stated was the probability of an arrival during an interval. We have proved earlier that as \( n \rightarrow \infty \), the \( \mathbb{P}(A_k) \) follows the probability mass function stated in * if \( \lambda = pn \). Once again, the probability of seeing \(  <3 \) calls during a 1 hour interval can be calculated by summing the probabilites of seeing zero, one, or two calls during the hour: 
       \begin{align*}
         \mathbb{P}(<3 \text{ calls}) &= \mathbb{P}(0 \text{ calls}) + \mathbb{P}(1 \text{ calls}) +\mathbb{P}(2 \text{ calls}) \\
       \end{align*}
-      Per the probability mass function of the Poisson distribution, \( \mathbb{P}(A_k) = \frac{\lambda^k}{k!}e^{- \lambda} \), so 
+      * Per the probability mass function of the Poisson distribution, \( \mathbb{P}(A_k) = \frac{\lambda^k}{k!}e^{- \lambda} \), so 
       \begin{align*}
         \mathbb{P}(<3 \text{ calls}) &= \frac{6^0}{0!}e^{-6} + \frac{6^1}{1!}e^{-6} + \frac{6^2}{2!}e^{-6} \\
                                      &= e^{-6} + 6e^{-6} + 16e^{-6}\\
@@ -130,22 +130,56 @@
         \end{align}
         If we are at least ten times likelier to have coin \( m \) vs coin \( m-1 \), we can set \( \mathbb{P}(A_n|X_m) \geq 10 * \mathbb{P}(A_n|X_{m-1}) \) and solve to find the minimum satisfying  \( n \). 
         \begin{align*}
-          \mathbb{P}(A_n|X_m) &\geq 10 * \mathbb{P}(A_n|X_{m-1}) \\
-          (p_m)^n & \geq 10 (p_{m-1})^n & \text{plugging in (1) and (2)}\\
+          \mathbb{P}(X_m|A_n) &\geq 10 * \mathbb{P}(X_{m-1}|A_n) & \text{problem setup} \\
+          \frac{\mathbb{P}(A_n|X_m) * \mathbb{P} (X_m)}{\mathbb{P}(A_n)} & \geq 10 \left(\frac{\mathbb{P}(A_n|X_{m-1}) * \mathbb{P} (X_{m-1})}{\mathbb{P}(A_n)}\right) & \text{Bayes' Rule}\\
+          \mathbb{P}(A_n | X_m) & \geq 10 * \mathbb{P}(A_n|X_{m-1}) & \text{cancel terms. \( \mathbb{P}(X_m) = \mathbb{P}(X_{m-1})=1/m \)}\\
+          (p_m)^n  &\geq 10 (p_{m-1})^n & \text{plugging in (1) and (2)}\\
           n \ln(p_m) & \geq \ln(10) + n \ln(p_{m-1}) & \text{natural log both sides} \\
           n \ln(p_m) - n \ln(p_{m-1}) & \geq \ln(10)  \\
           n (\ln(p_m) - \ln(p_{m-1})) & \geq \ln(10)  & \text{factor out \( n \)} \\
           n & \geq \frac{ln(10)}{\ln(p_m) - \ln(p_{m-1})} \\
-            & \geq \frac{\ln(10)}{ln(\frac{p_m}{p_{m-1}}) } & \text{diff of logs} \\ 
-            &\geq \ln \left(10 - \frac{p_m}{p_{m-1}} \right) & \text{diff of logs} 
+            & \geq \frac{\ln(10)}{\ln(\frac{p_m}{p_{m-1}}) } & \text{diff of logs} \\ 
+            % &\geq \ln \left(10 - \frac{p_m}{p_{m-1}} \right) & \text{diff of logs} 
         \end{align*}
     \end{enumerate}
 
   \item \textbf{Meester 1.7.36}\\
-    A pack contains \( m \) cards, labelled \( 1,2,\ldots ,m \). The cards are dealt out in a random order, one by one. Given that the label of the \( k \)th card dealt is the largest of the first \( k \) cards, waht is the probability that it is also the largest in the whole pack. 
-    \[
-      \frac{1}{m-k}
-    \]
+    A pack contains \( m \) cards, labelled \( 1,2,\ldots ,m \). The cards are dealt out in a random order, one by one. Given that the label of the \( k \)th card dealt is the largest of the first \( k \) cards, what is the probability that it is also the largest in the whole pack? \\
+    \\
+    Let \( A \) be the event that the \( k \)th card is the largest of the first \( k \) cards. Let \( B \) be the event that the \( k \)th card is the largest of all \( M \) cards. We wish to calculate \( \mathbb{P}(B|A) \). Per the the definition of conditional probability, 
+    \begin{equation}
+      \mathbb{P}(B|A) = \frac{\mathbb{P}(B \cap A)}{\mathbb{P}(A)}
+    \end{equation}
+    Note that \( \mathbb{P}(A) = 1/k \), since all of the first \( k \) cards are equally likely to have the highest value cards. For the same reason , \( \mathbb{P}(B) = 1/M \). \\
+    \\
+    Now, since the intersection operation is commutative,
+    \begin{equation}
+      \mathbb{P}(B \cap A)  = \mathbb{P}(A \cap B) = \mathbb{P}(A|B) \mathbb{P}(B) = (1)\frac{1}{M}
+    \end{equation}
+    Plugging \( (4) \) into \( (3) \), we see
+    \begin{equation*}
+      \mathbb{P}(B|A) = \frac{\frac{1}{M}}{\frac{1}{k}} = \frac{k}{M}
+    \end{equation*}
+
+  \item \textbf{Meester 1.7.38}
+    Let \( A_1, A_2, \ldots  \) be events. Show that
+    \begin{equation*}
+      \mathbb{P} \left( \bigcap_{i=1}^n A_i \right) \geq \sum_{i=1}^n \mathbb{P}(A_i) - (n-1)
+    \end{equation*}
+
+    \begin{proof}
+      \begin{align*}
+        \mathbb{P} \left( \bigcap_{i=1}^n A_i \right) &=  1 - \mathbb{P} \left( \bigcap_{i=1}^n A_i \right)^c & \mathbb{P}(A) = 1 - \mathbb{P}(A^c)\\
+                                                      &= 1 - \mathbb{P}\left(\bigcup_{i=1}^n (A_i)^c \right) & \text{DeMorgan's} \\
+                                                      &\geq 1 - \sum_{i=1}^n \mathbb{P}(A_i)^c & \text{Union probability bound} \\
+                                                      &= 1 - \sum_{i=1}^n (1 - \mathbb{P}(A_i)) & \mathbb{P}(A^c) = 1 - \mathbb{P}(A) \\
+                                                      &= 1-n + \sum_{i=1}^n \mathbb{P}(A_i) & \text{Split summation terms.} \sum_{i=1}^n 1 = n\\
+                                                      &= \sum_{i=1}^n \mathbb{P}(A_i) - (n-1)
+      \end{align*}
+      
+    \end{proof}
+
+
 
 \end{enumerate}
 \end{document}
