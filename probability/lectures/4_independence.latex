@@ -1,0 +1,139 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 4 (Independence)}
+\author{Asa Royal (ajr74)}
+\date{January 28, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection*{Intuition/definitions}
+
+\begin{remark}
+  Intuitively, we might call two events \( A \) and \( B \) independent if knowing that one happened gives you no additional information about whether the second will happen. I.e., \( A \) and \( B \) are independent if \( \mathbb{P}(A | B) = \mathbb{P}(A) \) and \( \mathbb{P})(B|A) = \mathbb{P}(B) \). The mathematical definition of independence follows from this. 
+\end{remark}
+
+\begin{definition}[Independence]
+  Events \( A \) and \( B \) are independent if 
+  \begin{equation*}
+    \mathbb{P}(A \cap B) = \mathbb{P}(A) \mathbb{P}(B)
+  \end{equation*}
+\end{definition}
+
+\begin{proof}
+  For two events \( A \) and \( B \), 
+  \begin{equation*}
+    \mathbb{P}(A|B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}
+  \end{equation*}
+  Which means 
+  \begin{equation*}
+    \mathbb{P}(A \cap B) = \mathbb{P}(A|B) * \mathbb{P}(B)
+  \end{equation*}
+  And since \( \mathbb{P}(A \cap B) = \mathbb{P}(A)  \) for independent events, \( \mathbb{P}(A \cap B) = \mathbb{P}(A) * \mathbb{P}(B) \). 
+\end{proof}
+
+\begin{remark}
+  \( \mathbb{P}(A|B) \) only makes sense to think about if \( \mathbb{P}(B) \neq 0 \). Otherwise, we're considering the probability of \( A \) given an event that cannot happen. 
+\end{remark}
+
+\begin{remark}
+  Conditional probabilities let us update our models with new information. For example, imagine we have some prior expectation about \( \mathbb{P}(A) \). If we know \( B \) has occurred, an updated forecast for \( A \) is \( \mathbb{P}(A|B) \). 
+\end{remark}
+
+\subsection{p/q-coins (repeated coin tosses)}
+
+\begin{definition}[p-coin]
+  A \textbf{p-coin} is a coin that lands head with probability \( p \). 
+\end{definition}
+
+\begin{theorem}[Independent coin tosses]
+  Consider a p-coin. Let \( A_k \) be the event that \( k \) heads are tossed among \( N \) independent tosses. 
+  \begin{equation*}
+    \mathbb{P}(A_k) = \sum_{\omega \in A_k} \rho(\omega) = {n \choose k} p^k (1-p)^{n-k}
+  \end{equation*}
+
+  In this formula, \( n \choose k \) is the number of sequences \( \omega \) with exactly \( k \) heads, \( p^k \) is the probability of seeing \( k \) heads, and \( (1-p)^{n-k} \) is the probability of seeing \( n-k \) heads. 
+\end{theorem}
+
+\begin{eg}
+Imagine we toss a fair coin three times. What's the chance we see two heads? \\
+\\
+The chance of seeing 2 heads in 2 tosses is \( 1/4 \). Now we need to factor in the outcome of the third toss and note that the chance of seeing a tails is \( 1/2 \). Why? If we simply said \( \mathbb{P}(\text{2 heads}) = 1/4 \), and we dont' care about the third toss, we'd be considering an experiment with two tosses. Instead, we consider the third tails toss another independent event and find that the probability of tossing, e.g., \( \{HHT\} \) = 1/4 * 1/2 = 1/8. \\
+Now we want to calculate not just the probability of seeing \( \omega = \{HHT\} \), but of any combination of tosses that has two heads. So we note that there are \( 3 \choose 2 \) ways to arrange the heads in an \( \omega \) here, so our probability is \( 1/8 \) * \( 3 \choose 2 \) = \( 3/8 \). 
+\end{eg}
+
+\begin{remark}
+  Note: The assumption of independence is embedded in our assertion that the probability of throwing \( k \) heads is \( p^k \), and that we can calculate the probability of seeing \( k \) heads and \( n-k \) tails by multiplying the probabilites of each individual event. 
+\end{remark}
+
+
+\end{document}
+
+

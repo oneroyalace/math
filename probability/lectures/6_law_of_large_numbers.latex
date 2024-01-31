@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 6 Big Ideas Journal (Law of large numbers)}
+\author{Asa Royal (ajr74)}
+\date{January 30, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{remark}
+  The law of small numbers and law of large numbers are both applied in the context of coin tossing when we study \( A_k \), the event where \( k \) heads are tossed. \textbf{The law of small numbers is applied when \( n \rightarrow \infty \) and \( p \) is very small}. (\( p \) equals \( \lambda n \) for a constant \( \lambda \), so it actually  approaches \( 0 \)). 
+\end{remark}
+\begin{remark}
+  \textbf{The law of large numbers is applied when \( p \) is fixed and \( n \rightarrow \infty \)}. It stems from the intitution is that we expect that when a fair coin is tossed \( n \) times, the average proportion of heads will be \( 1/2 \), and the average number of heads will be \( n/2 \). 
+\end{remark}
+
+\begin{theorem}[Law of large numbers (weak)]
+ For any \( \varepsilon > 0 \) and any \(  n \geq 1 \), the probability that more than \( (1/2 + \varepsilon)n \) heads are tossed (or that the proportion of heads is greater than \( 1/2 + \varepsilon \) is bounded by:
+ \begin{equation*}
+   \mathbb{P}\left( \bigcup_{k \geq (1/2 + \varepsilon)n} A_k \right) \leq e^{-\varepsilon^2 n}
+ \end{equation*} 
+\end{theorem}
+
+\begin{corollary}
+  We can use the law of large numbers to apply a lower bound, too. The probability that fewer than \( (1/2 = \varepsilon)n \) heads are tossed (or that the proportion of heads is less than \( 1/2 - \varepsilon \) is bounded by: 
+  \begin{equation*}
+     \mathbb{P}\left( \bigcup_{k \leq (1/2 - \varepsilon)n} A_k \right) \leq e^{-\varepsilon^2 n}
+  \end{equation*}
+\end{corollary}
+
+\begin{corollary}
+  Unifying the two and thinking about complements, we can bound the probability that we see a proportion or number of heads inside a given range:
+  \begin{equation*}
+  \mathbb{P}\left( \bigcup_{  (1/2 - \varepsilon)n  < k < (1/2 - \varepsilon)n} A_k \right) \geq 1 - 2e^{-\varepsilon^2 n}
+  \end{equation*}
+\end{corollary}
+
+\begin{corollary}
+  Consider \( \mathbb{P}(\frac{1}{2} - \delta \leq f \leq \frac{1}{2} + \beta) \) for \( \delta \neq \beta \). 
+  \begin{equation*}
+    \mathbb{P}(\frac{1}{2} - \delta \leq f \leq \frac{1}{2} + \beta) = 1 - \mathbb{P} \left( \bigcup_{k \geq (1/2 + \beta)n} A_k \cup \bigcup_{k \leq (1/2 - \delta)n} A_k \right)
+  \end{equation*}
+  Since both sets of events on either side of the union are disjoin, the probability of their union (call it \( H \)) is the sum of their probabilities, and is thus, per the law of large numbers, bounded by \( H \leq e^{- \beta^2 n} + e^{- \delta^2 n} \). Then 
+  \begin{align*}
+    \mathbb{P}(\frac{1}{2} - \delta \leq f \leq \frac{1}{2} + \beta) &=  1 - H \\
+                                                                     & \geq 1 - e^{- \beta^2 n} + e^{- \delta^2 n}
+  \end{align*}
+\end{corollary}
+
+
+
+\end{document}
+
