@@ -42,6 +42,7 @@
 \usepackage{pdfpages}
 \usepackage{transparent}
 \usepackage{graphicx}
+\usepackage{framed}
 
 % include figure stored at ./figures/name.pdf_tex
 \newcommand{\incfig}[1]{
@@ -57,9 +58,9 @@
 \makeatother
 
 
-\title{Math 340 HW 2}
+\title{Math 340 HW 3}
 \author{Asa Royal (ajr74) [collaborators: none]}
-\date{January 26, 2024}
+\date{February 2, 2024}
 
 \begin{document}
 \maketitle
@@ -80,7 +81,7 @@
         \mathbb{P}(<3 \text{ calls}) &= \frac{6^0}{0!}e^{-6} + \frac{6^1}{1!}e^{-6} + \frac{6^2}{2!}e^{-6} \\
                                      &= e^{-6} + 6e^{-6} + 16e^{-6}\\
                                      &=  23 e^{-6}\\
-                                     & \approx 0.057
+                                     & \framebox{ \( \approx 0.057 \)}
       \end{align*}
       
     \end{enumerate}
@@ -89,13 +90,13 @@
       \item What is the probability that after \( n \) tosses of a p-coin, you have not seen heads? \\
         This is the probability of seeing \( n \) tails in a row. Each p-coin flip is independent, so 
         \begin{align*}
-          \mathbb{P}(n \text{ tails}) = \prod_{k=1}^n \rho(T) = \prod_{k=1}^n (1-p) = (1-p)^n
+          \mathbb{P}(n \text{ tails}) = \prod_{k=1}^n \rho(\{T\}) = \prod_{k=1}^n (1-p) = \framebox{\((1-p)^n\)}
         \end{align*}
 
       \item What is the probability that you toss \( n-1 \) tails and then heads occurs for the first time on the \( n \)th toss. \\
         The first \( n-1 \) tosses are independent of the \( n \)th toss, so \( \mathbb{P}(A) \), where \( A \) is the event described above, is \( \mathbb{P}(n-1 \text{ tails}) * \mathbb{P}(\text{head}) \). Per 2a, \( \mathbb{P}(n-1 \text{ tails}) = (1-p)^{n-1} \). \( \mathbb{P}(\text{head}) = p \) by construction. Thus,
         \[
-          \mathbb{P}(A) = (1-p)^{n-1}*p  
+          \framebox{ \( \mathbb{P}(A) = (1-p)^{n-1}*p \) }
         \]
     \end{enumerate}
 
@@ -103,24 +104,31 @@
     \begin{enumerate}[label=(\roman*)]
       \item \( B_1 \) and \( B_2 \) are indeed independent. \( \mathbb{P}(B_1 \cap B_2) =  \)
       \item Suppose your coin lands heads \( k \) times (out of the \( n \) tosses). What is the probability that your coin is the \( j \)th coin. \\
-        Let \( X_i \) be the event that we have the \( i \)th coin. Let \( A_{k} \) be the event that we flip \( k \) heads . Per Bayes' Rule
+        Let \( X_j \) be the event that we have the \( j \)th coin. Let \( A_{k} \) be the event that we flip \( k \) heads. Per Bayes' Rule
         \begin{align*}
           \mathbb{P}(X_j|A_k) &= 
-          \frac{\mathbb{P}(A_k|X_j) * \mathbb{P}(X_j)}{\sum_{i=1}^M \mathbb{P}(A_{k}|X_i) * \mathbb{P}(X_i)}  
+          \frac{\mathbb{P}(A_k|X_j) * \mathbb{P}(X_j)}{\sum_{i=1}^M (\mathbb{P}(A_{k}|X_i) * \mathbb{P}(X_i))}  
           \\&= 
           \frac{
             \left[{n \choose k} (p_j)^k (1-p_j)^{n-k} \right] \frac{1}{M}
           }
           {
           \sum_{i=1}^M \left[ {n \choose k} (p_i)^k (1-p_i)^{n-k} \right] \frac{1}{M}
-          } \\
+          }  & \text{expand \( \mathbb{P}(A_k)\) for p-coins. Sub \( \mathbb{P}(X_j) = \frac{1}{M} \) } \\
           &= 
           \frac{
             {n \choose k} (p_j)^k (1-p_j)^{n-k} 
           }
           {
           \sum_{i=1}^M {n \choose k} (p_i)^k (1-p_i)^{n-k} 
+          } & \text{Cancel \( \frac{1}{M} \) terms} \\
+          &= 
+          \frac{
+            (p_j)^k (1-p_j)^{n-k} 
           }
+          {
+          \sum_{i=1}^M  (p_i)^k (1-p_i)^{n-k} 
+          }& \text{Cancel \( n \choose k \) terms} 
         \end{align*}
       \item Suppose your coin lands heads \( n \) times in a row. You suspect it is the most biased coin (i.e. with the largest \( p=p_M \). How large would \( n \) have to be in order that the probability of it being the most biased coin is at least ten times as large as the probability of it being the next most biased (i.e. the one with \( p=p_{M-1} \)? \\\\
         Note that 
@@ -128,7 +136,7 @@
           \mathbb{P}(A_n|X_m) &= {n \choose n} (p_m)^n (1-p_m)^0 = (p_m)^n\\
         \mathbb{P}(A_n|X_{m-1}) &= {n \choose n} (p_{m-1})^n (1-p_{m-1})^0 = (p_{m-1})^n
         \end{align}
-        If we are at least ten times likelier to have coin \( m \) vs coin \( m-1 \), we can set \( \mathbb{P}(A_n|X_m) \geq 10 * \mathbb{P}(A_n|X_{m-1}) \) and solve to find the minimum satisfying  \( n \). 
+        If we are at least ten times likelier to have coin \( m \) vs coin \( m-1 \), we can set \( \mathbb{P}(X_m|A_n) \geq 10 * \mathbb{P}(X_{m-1}|A_n) \) and solve to find the minimum satisfying  \( n \). 
         \begin{align*}
           \mathbb{P}(X_m|A_n) &\geq 10 * \mathbb{P}(X_{m-1}|A_n) & \text{problem setup} \\
           \frac{\mathbb{P}(A_n|X_m) * \mathbb{P} (X_m)}{\mathbb{P}(A_n)} & \geq 10 \left(\frac{\mathbb{P}(A_n|X_{m-1}) * \mathbb{P} (X_{m-1})}{\mathbb{P}(A_n)}\right) & \text{Bayes' Rule}\\
@@ -138,9 +146,10 @@
           n \ln(p_m) - n \ln(p_{m-1}) & \geq \ln(10)  \\
           n (\ln(p_m) - \ln(p_{m-1})) & \geq \ln(10)  & \text{factor out \( n \)} \\
           n & \geq \frac{ln(10)}{\ln(p_m) - \ln(p_{m-1})} \\
-            & \geq \frac{\ln(10)}{\ln(\frac{p_m}{p_{m-1}}) } & \text{diff of logs} \\ 
+            & \framebox{\( \geq \frac{\ln(10)}{\ln \left(\frac{p_m}{p_{m-1}} \right) }\)} & \text{diff of logs} \\ 
             % &\geq \ln \left(10 - \frac{p_m}{p_{m-1}} \right) & \text{diff of logs} 
         \end{align*}
+
     \end{enumerate}
 
   \item \textbf{Meester 1.7.36}\\
@@ -158,10 +167,10 @@
     \end{equation}
     Plugging \( (4) \) into \( (3) \), we see
     \begin{equation*}
-      \mathbb{P}(B|A) = \frac{\frac{1}{M}}{\frac{1}{k}} = \frac{k}{M}
+      \mathbb{P}(B|A) = \frac{\frac{1}{M}}{\frac{1}{k}} = \framebox{\(  \frac{k}{M}\)}
     \end{equation*}
 
-  \item \textbf{Meester 1.7.38}
+  \item \textbf{Meester 1.7.38.} \\
     Let \( A_1, A_2, \ldots  \) be events. Show that
     \begin{equation*}
       \mathbb{P} \left( \bigcap_{i=1}^n A_i \right) \geq \sum_{i=1}^n \mathbb{P}(A_i) - (n-1)
@@ -180,6 +189,67 @@
     \end{proof}
 
 
+  \item \textbf{Meester 1.7.23}. A fair coin is tossed \( n \) times. Let \( H_n \) and \( T_n \) denote the number of heads and tails among these \( n  \) tosses. Show that, for any \( \varepsilon > 0  \) we have 
+    \begin{equation} \label{eq:5}
+      P_n \left( - \varepsilon \leq \frac{H_n - T_n}{n} \leq \varepsilon \right) \rightarrow 1
+    \end{equation}
+    \begin{proof}
+      
+      We first note that \( H_n/n + T_n/n = 1 \), so \( T_n/n = 1 - H_n/n \). Thus \( H_n/n - T_n/n = H_n/n - (1 - H_n/n) = 2H_n/n - 1 \). Accordingly, we can rewrite the event in  \ref{eq:5} as 
+      \begin{align*}
+        & P_n \left( - \varepsilon \leq \frac{2H_n }{n} -1 \leq \varepsilon \right) \\
+        = &P_n \left( \left( \frac{2H_n}{n} - 1 \geq -\varepsilon \right) \bigcap \left( \frac{2H_n}{n} - 1 \leq \varepsilon \right) \right) \\
+        = &P_n \left( \left( \frac{2H_n}{n}  \geq 1 - \varepsilon \right) \bigcap \left( \frac{2H_n}{n}  \leq 1 + \varepsilon \right) \right) \\
+        = &P_n \left( \left( {H_n}  \geq \left( \frac{1}{2} - \frac{\varepsilon}{2} \right) n \right) \bigcap  \left( {H_n}  \leq \left( \frac{1}{2} + \frac{\varepsilon}{2} \right)n \right) \right)  \\
+        = &P_n \left( \left( {H_n}  \geq \left( \frac{1}{2} - \varepsilon ' \right) n \right) \bigcap  \left( {H_n}  \leq \left( \frac{1}{2} + \varepsilon ' \right)n \right) \right) & \text{where \( \varepsilon ' = \varepsilon/2 \)}
+      \end{align*}
+
+      But this is the probability of the union of all events where we see \( H_n \geq (1/2 - \varepsilon')n \) and \( H_n \leq (1/2 + \varepsilon')n \). That is, 
+      \begin{equation*}
+        \mathbb{P}\left( \bigcup_{(1/2 - \varepsilon)n < k < (1/2 + \varepsilon)n} A_k  \right)
+      \end{equation*}
+      And by the law of large numbers, 
+      \begin{equation*} \label{eq:6}
+        \mathbb{P}\left( \bigcup_{(1/2 - \varepsilon)n < k < (1/2 + \varepsilon)n} A_k  \right) \geq 1-2e^{- \varepsilon^2 n}
+      \end{equation*}
+      When \( n \rightarrow \infty \), \( 1-2e^{- \varepsilon^2 n} = 1-\frac{2}{\varepsilon^2 n} \rightarrow 1-0 = 1 \), so the probability in (\ref{eq:6}) \( \geq 1 \). But we also know that the probability of the union of events in (\ref{eq:6}) must be \( \leq 1 \), since no event can have a probability \( >1 \). Thus, when \( n \rightarrow \infty \)
+      \begin{align*}
+        1 \leq &\mathbb{P}\left( \bigcup_{(1/2 - \varepsilon)n < k < (1/2 + \varepsilon)n} A_k  \right)  \leq 1, \text{ and therefore,}\\
+               &\mathbb{P}\left( \bigcup_{(1/2 - \varepsilon)n < k < (1/2 + \varepsilon)n} A_k  \right) \rightarrow 1
+      \end{align*}
+    \end{proof}
+
+    \item
+    \item Suppose you are going to toss a fair coin 1000 times. What is the smallest value of \( m \) such that the probability of tossing fewer than \( m \) heads is at least \( 0.99 \). \\
+    \\
+    Consider one form of the law of large numbers, 
+    \begin{equation} \label{eq:7}
+      \mathbb{P} \left( \bigcup_{k \geq (\frac{1}{2} + \varepsilon)n} A_k \right) \leq e^{- \varepsilon ^2 n}
+    \end{equation}
+    Now substitute \( m =  (\frac{1}{2} + \varepsilon)n \) into \( (\ref{eq:7}) \),
+    \begin{equation}
+      \mathbb{P} \left( \bigcup_{k \geq m} A_k \right) \leq e^{- \varepsilon ^2 n}
+    \end{equation}
+    Note that the complement of the set of event described on the LHS of \( (\ref{eq:7}) \), where \( A_k \geq m \) is the set of events where \( A_k < m \). Thus \( (\ref{eq:7}) \) can be re-written as
+    \begin{equation}
+      \mathbb{P} \left( \bigcup_{k < m} A_k \right) \geq 1 - e^{- \varepsilon ^2 n}
+    \end{equation}
+    We now have on the LHS, the event (or union of events) described in the prompt. We wish to find \( m \) when the probability of that union is \( \geq 0.99 \), so we set \( 1  - e^{-\varepsilon ^2 n} = 0.99 \) and solve for \( \varepsilon \). 
+    \begin{align*}
+      1  - e^{-\varepsilon ^2 n} &= 0.99 \\
+      e^{- \varepsilon ^2 n} &= 0.01 & \text{algebra} \\
+      -1000 \varepsilon ^2 &= \ln(0.01) & \text{natural log both sides} \\
+      \varepsilon ^2 &= -\frac{\ln(0.01)}{1000} & \text{ algebra}\\
+      \varepsilon &= \sqrt{- \frac{\ln(0.01)}{1000}} & \varepsilon > 0 \text{ so ignore negative root of } \varepsilon ^2
+    \end{align*}
+
+    We can use this \( \varepsilon \) value to solve for \( m \), which we set equal to \( (\frac{1}{2} + \varepsilon)n \): 
+    \begin{align*}
+      m &= \left( \frac{1}{2} + \varepsilon \right) n \\
+        &= \left(\frac{1}{2} + \sqrt{ \frac{- \ln(0.01)}{1000}} \right) 1000 \\
+        &= 500 + \sqrt{ \frac{- \ln(0.01)}{1000}} 1000 \\
+        & \approx \framebox{567.8}
+    \end{align*}
 
 \end{enumerate}
 \end{document}
