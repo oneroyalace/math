@@ -276,11 +276,11 @@
     \begin{equation} \label{eq:7}
       \mathbb{P} \left( \bigcup_{k \geq (\frac{1}{2} + \varepsilon)n} A_k \right) \leq e^{- \varepsilon ^2 n}
     \end{equation}
-    Now substitute \( m =  (\frac{1}{2} + \varepsilon)n \) into \( (\ref{eq:7}) \),
+    Now substitute \( m =  (\frac{1}{2} + \varepsilon)n \) into \( (\ref{eq:7}) \), since we know we want to set up a calculation where \( \bigcup_{A_k} \) ranges up to \( k=m \).
     \begin{equation}
       \mathbb{P} \left( \bigcup_{k \geq m} A_k \right) \leq e^{- \varepsilon ^2 n}
     \end{equation}
-    Note that the complement of the set of event described on the LHS of \( (\ref{eq:7}) \), where \( A_k \geq m \) is the set of events where \( A_k < m \). Thus \( (\ref{eq:7}) \) can be re-written as
+    Note that the complement of the set of event described on the LHS of \( (6) \), where \( A_k \geq m \) is the set of events where \( A_k < m \). Thus, \( (6) \) can be re-written as
     \begin{equation}
       \mathbb{P} \left( \bigcup_{k < m} A_k \right) \geq 1 - e^{- \varepsilon ^2 n}
     \end{equation}
