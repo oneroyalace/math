@@ -102,7 +102,32 @@
 
   \item
     \begin{enumerate}[label=(\roman*)]
-      \item \( B_1 \) and \( B_2 \) are indeed independent. \( \mathbb{P}(B_1 \cap B_2) =  \)
+      \item  Let \( B_1  \) and \( B_2 \) be the events that your chosen coin lands heads on the 1st and 2nd tosses, respectively. Are these events independent?\\
+      \\
+      
+       Intuitively, we have reason to believe \( B_1 \) and \( B_2 \) are not independent. Assuming we have picked a coin with \( p \neq 0.5 \), seeing heads on the first toss slightly increases our expectation that \( p > 0.5 \), and makes us a bit more likely to expect heads on the next toss.  Below, we mathematically show \( B_1 \) and \( B_2 \) are not independent by showing \( \mathbb{P}(B_1 \cap B_2) \neq \mathbb{P}(B_1) \mathbb{P}(B_2) \). \\
+        
+        We first calculate the probability that the chosen coin lands heads by summing the "probability paths" that lead to heads. 
+      \begin{equation*}
+        \mathbb{P}(B_1) = \sum_{i=1}^k \mathbb{P}(B_1 | C_i) \mathbb{P} (C_i)
+      \end{equation*}
+      Here, \( \mathbb{P}(C_i) = 1/M \), since all coins are equally likely to be drawn. \( \mathbb{P}(B_1 | C_k) \) is given by \( p_k \), per the problem setup. Thus 
+      \begin{equation*}
+        \mathbb{P}(B_1) = \mathbb{P}(B_2) =  \frac{1}{M}\sum_{i=1}^k p_i
+      \end{equation*}
+      We calculate similarly \( \mathbb{P}(B_1 \cap B_2) \), the chance that for any given coin, we flip a heads on the first and second toss. Since tosses are independent, \( \mathbb{P}((B_1 \cap B_2) | C_i) = (p_i)^2 \). Thus,
+      \begin{align*}
+        \mathbb{P}(B_1 \cap B_2) &= \sum_{i=1}^M \mathbb{P}((B_1 \cap B_2) | C_i) \mathbb{P}(C_i) \\
+                                 &= \sum_{i=1}^M (p_i)^2 \frac{1}{M}
+      \end{align*}
+
+      We now compare \( \mathbb{P}(B_1 \cap B_2) \) to \( \mathbb{P}(B_1) * \mathbb{P}(B_2)\). 
+
+      \begin{equation*}
+        \sum_{i=1}^M (p_i)^2 \frac{1}{M} \neq  \frac{1}{M^2} \sum_{i=1}^M p_i  \sum_{i=1}^M p_i
+      \end{equation*}
+
+      So \framebox{\( B_1 \) and \( B_2 \) are not independent events.}
       \item Suppose your coin lands heads \( k \) times (out of the \( n \) tosses). What is the probability that your coin is the \( j \)th coin. \\
         Let \( X_j \) be the event that we have the \( j \)th coin. Let \( A_{k} \) be the event that we flip \( k \) heads. Per Bayes' Rule
         \begin{align*}
@@ -219,7 +244,32 @@
       \end{align*}
     \end{proof}
 
-    \item
+  \item \textbf{Meester 2.1.15. }Prove the following: Let \( B_1 \supseteq B_2 \supseteq B_3 \supseteq \ldots   \), and let \( B = \bigcap_{i=1}^{\infty} B_i\). Then \(\mathbb{P}(B) = \lim_{i \rightarrow \infty} \mathbb{P}(B_i) \) 
+    \begin{proof}
+      
+      Since \( \mathbb{P}(A^c) = 1 - \mathbb{P}(A) \) for an event \( A \), 
+      \begin{align}
+        \mathbb{P} \left( \bigcap_{i=1}^{\infty} B_i \right) &= 1 - \mathbb{P} \left[ \left( \bigcap_{i=1}^{\infty} B_i \right)^c \right] \label{eq:8} \\
+                                                             &= 1 - \mathbb{P} \left( \bigcup_{i=1}^{\infty} {B_i}^c \right) \label{eq:9}
+      \end{align}
+
+      Note that since \( B_1 \supseteq B_2 \supseteq B_3 \supseteq \ldots \), it follows that 
+      \begin{equation}
+        {B_1}^c \subseteq {B_2}^c \subseteq {B_3}^c \subseteq \ldots  \label{eq:10}
+      \end{equation}
+      We can thus apply Lemma 2.1.14 to \( (\ref{eq:9}) \) under the condition of \( (\ref{eq:10}) \), deducing that
+      \begin{equation}
+        \mathbb{P} \left( \bigcup_{i=1}^{\infty} {B_i}^c \right) = \lim_{i \rightarrow \infty} \mathbb{P}({B_i}^c) \label{eq:11}
+      \end{equation}
+      Plugging \( ( \ref{eq:11} ) \) into \( ( \ref{eq:8})/(\ref{eq:9} ) \), we find
+      \begin{align*}
+        \mathbb{P}(B) &= \mathbb{P} \left( \bigcap_{i=1}^{\infty} B_i \right) \\
+                      &= 1 - \lim_{i \rightarrow \infty} \mathbb{P}({B_i}^c) \\
+                                                             &= 1 - \lim_{i \rightarrow \infty} (1 - \mathbb{P}({B_i})) \\
+                                                             &= \lim_{i \rightarrow \infty} \mathbb{P}(B_i)
+      \end{align*}
+
+    \end{proof}
     \item Suppose you are going to toss a fair coin 1000 times. What is the smallest value of \( m \) such that the probability of tossing fewer than \( m \) heads is at least \( 0.99 \). \\
     \\
     Consider one form of the law of large numbers, 
