@@ -155,8 +155,8 @@
           \sum_{i=1}^M  (p_i)^k (1-p_i)^{n-k} 
           }& \text{Cancel \( n \choose k \) terms} 
         \end{align*}
-      \item Suppose your coin lands heads \( n \) times in a row. You suspect it is the most biased coin (i.e. with the largest \( p=p_M \). How large would \( n \) have to be in order that the probability of it being the most biased coin is at least ten times as large as the probability of it being the next most biased (i.e. the one with \( p=p_{M-1} \)? \\\\
-        Note that 
+      \item Suppose your coin lands heads \( n \) times in a row. You suspect it is the most biased coin (i.e. with the largest \( p=p_M \). How large would \( n \) have to be in order that the probability of it being the most biased coin is at least ten times as large as the probability of it being the next most biased (i.e. the one with \( p=p_{M-1} \))? \\\\
+        Let \( A_n \) be the event that we flip \( n \) heads in no tosses. Let \( X_j \) be the event we have selected the \( j \)th coin. Note that 
         \begin{align}
           \mathbb{P}(A_n|X_m) &= {n \choose n} (p_m)^n (1-p_m)^0 = (p_m)^n\\
         \mathbb{P}(A_n|X_{m-1}) &= {n \choose n} (p_{m-1})^n (1-p_{m-1})^0 = (p_{m-1})^n
@@ -184,9 +184,9 @@
     \begin{equation}
       \mathbb{P}(B|A) = \frac{\mathbb{P}(B \cap A)}{\mathbb{P}(A)}
     \end{equation}
-    Note that \( \mathbb{P}(A) = 1/k \), since all of the first \( k \) cards are equally likely to have the highest value cards. For the same reason , \( \mathbb{P}(B) = 1/M \). \\
+    Note that \( \mathbb{P}(A) = 1/k \), since each of the first \( k \) cards is equally likely to have the highest value. For the same reason , \( \mathbb{P}(B) = 1/M \). \\
     \\
-    Now, since the intersection operation is commutative,
+    Note further that \( \mathbb{P}(A|B) = 1 \), because if a card has a larger value than all other \( M-1 \) cards, it certainly has the largest value of the first \( k \). Now, since the intersection operation is commutative,
     \begin{equation}
       \mathbb{P}(B \cap A)  = \mathbb{P}(A \cap B) = \mathbb{P}(A|B) \mathbb{P}(B) = (1)\frac{1}{M}
     \end{equation}
@@ -203,7 +203,7 @@
 
     \begin{proof}
       \begin{align*}
-        \mathbb{P} \left( \bigcap_{i=1}^n A_i \right) &=  1 - \mathbb{P} \left( \bigcap_{i=1}^n A_i \right)^c & \mathbb{P}(A) = 1 - \mathbb{P}(A^c)\\
+      \mathbb{P} \left( \bigcap_{i=1}^n A_i \right) &=  1 - \mathbb{P} \left[ \left( \bigcap_{i=1}^n A_i \right) \right]^c & \mathbb{P}(A) = 1 - \mathbb{P}(A^c)\\
                                                       &= 1 - \mathbb{P}\left(\bigcup_{i=1}^n (A_i)^c \right) & \text{DeMorgan's} \\
                                                       &\geq 1 - \sum_{i=1}^n \mathbb{P}(A_i)^c & \text{Union probability bound} \\
                                                       &= 1 - \sum_{i=1}^n (1 - \mathbb{P}(A_i)) & \mathbb{P}(A^c) = 1 - \mathbb{P}(A) \\
