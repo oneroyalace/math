@@ -79,9 +79,9 @@
       * Per the probability mass function of the Poisson distribution, \( \mathbb{P}(A_k) = \frac{\lambda^k}{k!}e^{- \lambda} \), so 
       \begin{align*}
         \mathbb{P}(<3 \text{ calls}) &= \frac{6^0}{0!}e^{-6} + \frac{6^1}{1!}e^{-6} + \frac{6^2}{2!}e^{-6} \\
-                                     &= e^{-6} + 6e^{-6} + 16e^{-6}\\
-                                     &=  23 e^{-6}\\
-                                     & \framebox{ \( \approx 0.057 \)}
+                                     &= e^{-6} + 6e^{-6} + 18e^{-6}\\
+                                     &=  25 e^{-6}\\
+                                     & \framebox{ \( \approx 0.062 \)}
       \end{align*}
       
     \end{enumerate}
