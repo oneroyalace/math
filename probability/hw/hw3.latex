@@ -226,21 +226,21 @@
         = &P_n \left( \left( \frac{2H_n}{n} - 1 \geq -\varepsilon \right) \bigcap \left( \frac{2H_n}{n} - 1 \leq \varepsilon \right) \right) \\
         = &P_n \left( \left( \frac{2H_n}{n}  \geq 1 - \varepsilon \right) \bigcap \left( \frac{2H_n}{n}  \leq 1 + \varepsilon \right) \right) \\
         = &P_n \left( \left( {H_n}  \geq \left( \frac{1}{2} - \frac{\varepsilon}{2} \right) n \right) \bigcap  \left( {H_n}  \leq \left( \frac{1}{2} + \frac{\varepsilon}{2} \right)n \right) \right)  \\
-        = &P_n \left( \left( {H_n}  \geq \left( \frac{1}{2} - \varepsilon ' \right) n \right) \bigcap  \left( {H_n}  \leq \left( \frac{1}{2} + \varepsilon ' \right)n \right) \right) & \text{where \( \varepsilon ' = \varepsilon/2 \)}
+        = &P_n \left( \left( {H_n}  \geq \left( \frac{1}{2} - \varepsilon ' \right) n \right) \bigcap  \left( {H_n}  \leq \left( \frac{1}{2} + \varepsilon ' \right)n \right) \right) & \text{where \( \varepsilon ' = \varepsilon/2 > 0\)}
       \end{align*}
 
       But this is the probability of the union of all events where we see \( H_n \geq (1/2 - \varepsilon')n \) and \( H_n \leq (1/2 + \varepsilon')n \). That is, 
       \begin{equation*}
-        \mathbb{P}\left( \bigcup_{(1/2 - \varepsilon)n < k < (1/2 + \varepsilon)n} A_k  \right)
+        \mathbb{P}\left( \bigcup_{(1/2 - \varepsilon')n < k < (1/2 + \varepsilon')n} A_k  \right)
       \end{equation*}
       And by the law of large numbers, 
       \begin{equation*} \label{eq:6}
-        \mathbb{P}\left( \bigcup_{(1/2 - \varepsilon)n < k < (1/2 + \varepsilon)n} A_k  \right) \geq 1-2e^{- \varepsilon^2 n}
+        \mathbb{P}\left( \bigcup_{(1/2 - \varepsilon')n < k < (1/2 + \varepsilon')n} A_k  \right) \geq 1-2e^{- \varepsilon'^2 n}
       \end{equation*}
-      When \( n \rightarrow \infty \), \( 1-2e^{- \varepsilon^2 n} = 1-\frac{2}{\varepsilon^2 n} \rightarrow 1-0 = 1 \), so the probability in (\ref{eq:6}) \( \geq 1 \). But we also know that the probability of the union of events in (\ref{eq:6}) must be \( \leq 1 \), since no event can have a probability \( >1 \). Thus, when \( n \rightarrow \infty \)
+      When \( n \rightarrow \infty \), \( 1-2e^{- \varepsilon'^2 n} = 1-\frac{2}{\varepsilon'^2 n} \rightarrow 1-0 = 1 \), so the probability in (\ref{eq:6}) \( \geq 1 \). But we also know that the probability of the union of events in (\ref{eq:6}) must be \( \leq 1 \), since no event can have a probability \( >1 \). Thus, when \( n \rightarrow \infty \)
       \begin{align*}
-        1 \leq &\mathbb{P}\left( \bigcup_{(1/2 - \varepsilon)n < k < (1/2 + \varepsilon)n} A_k  \right)  \leq 1, \text{ and therefore,}\\
-               &\mathbb{P}\left( \bigcup_{(1/2 - \varepsilon)n < k < (1/2 + \varepsilon)n} A_k  \right) \rightarrow 1
+        1 \leq &\mathbb{P}\left( \bigcup_{(1/2 - \varepsilon')n < k < (1/2 + \varepsilon')n} A_k  \right)  \leq 1, \text{ and therefore,}\\
+               &\mathbb{P}\left( \bigcup_{(1/2 - \varepsilon')n < k < (1/2 + \varepsilon')n} A_k  \right) \rightarrow 1
       \end{align*}
     \end{proof}
 
