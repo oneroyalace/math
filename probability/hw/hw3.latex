@@ -107,17 +107,17 @@
       
        Intuitively, we have reason to believe \( B_1 \) and \( B_2 \) are not independent. Assuming we have picked a coin with \( p \neq 0.5 \), seeing heads on the first toss slightly increases our expectation that \( p > 0.5 \), and makes us a bit more likely to expect heads on the next toss.  Below, we mathematically show \( B_1 \) and \( B_2 \) are not independent by showing \( \mathbb{P}(B_1 \cap B_2) \neq \mathbb{P}(B_1) \mathbb{P}(B_2) \). \\
         
-        We first calculate the probability that the chosen coin lands heads by summing the "probability paths" that lead to heads. 
+        We first calculate the probability that the chosen coin lands heads by summing the "probability paths" that lead to heads. Let \( X_i \) represent the event that we draw coin \( i \).
       \begin{equation*}
-        \mathbb{P}(B_1) = \sum_{i=1}^k \mathbb{P}(B_1 | C_i) \mathbb{P} (C_i)
+        \mathbb{P}(B_1) = \sum_{i=1}^k \mathbb{P}(B_1 | X_i) \mathbb{P} (X_i)
       \end{equation*}
-      Here, \( \mathbb{P}(C_i) = 1/M \), since all coins are equally likely to be drawn. \( \mathbb{P}(B_1 | C_k) \) is given by \( p_k \), per the problem setup. Thus 
+      Here, \( \mathbb{P}(X_i) = 1/M \), since all coins are equally likely to be drawn. \( \mathbb{P}(B_1 | X_i) \) is given by \( p_i \), per the problem setup. Thus 
       \begin{equation*}
         \mathbb{P}(B_1) = \mathbb{P}(B_2) =  \frac{1}{M}\sum_{i=1}^k p_i
       \end{equation*}
-      We calculate similarly \( \mathbb{P}(B_1 \cap B_2) \), the chance that for any given coin, we flip a heads on the first and second toss. Since tosses are independent, \( \mathbb{P}((B_1 \cap B_2) | C_i) = (p_i)^2 \). Thus,
+      We calculate similarly \( \mathbb{P}(B_1 \cap B_2) \), the chance that for any given coin, we flip a heads on the first and second toss. Since tosses are independent, \( \mathbb{P}((B_1 \cap B_2) | X_i) = (p_i)^2 \). Thus,
       \begin{align*}
-        \mathbb{P}(B_1 \cap B_2) &= \sum_{i=1}^M \mathbb{P}((B_1 \cap B_2) | C_i) \mathbb{P}(C_i) \\
+        \mathbb{P}(B_1 \cap B_2) &= \sum_{i=1}^M \mathbb{P}((B_1 \cap B_2) | X_i) \mathbb{P}(X_i) \\
                                  &= \sum_{i=1}^M (p_i)^2 \frac{1}{M}
       \end{align*}
 
