@@ -298,8 +298,10 @@
       m &= \left( \frac{1}{2} + \varepsilon \right) n \\
         &= \left(\frac{1}{2} + \sqrt{ \frac{- \ln(0.01)}{1000}} \right) 1000 \\
         &= 500 + \sqrt{ \frac{- \ln(0.01)}{1000}} 1000 \\
-        & \approx \framebox{567.8}
+        & \approx 567.8
     \end{align*}
+
+    We conclude that the smallest value of \( m \) such that \( \mathbb{P}(A_k<m) \geq 0.99 \) is \framebox{568}. 
 
 \end{enumerate}
 \end{document}
