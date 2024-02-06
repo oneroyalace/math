@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{2.5: Properties of Derivatives (Lec 6)}
+\author{Asa Royal (ajr74)}
+\date{January 31, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{theorem}[Chain rule]
+  Let \( U \subset \mathbb{R}^n \) and \( V \subset \mathbb{R}^m \) be open setse. Let \( g: U \subset \mathbb{R}^n \mapsto \mathbb{R}^m \) and \( f: V \subset \mathbb{R}^m \mapsto \mathbb{R}^p \) be functions such that \( f \circ g  \) is defined. Suppose \( g \) is differentiable at \( \vec{x_0} \) and \( f \) is differentiable at \( \vec{y_0} = g(\vec{x_0}) \). Then \(  f \circ g  \) is differentiable at \(  \vec{x_0} \) and
+  \begin{equation*}
+    \textbf{D}( f \circ g)(\vec{x_0}) = \textbf{D}f(\vec{y_0}) \textbf{D}g(\vec{x_0})
+  \end{equation*}
+  Where 
+\end{theorem}
+
+\begin{theorem}[Special case of chain rule, with function of path]
+ Imagine we have 
+ \begin{align*}
+   \mathbb{R} &\mapsto \mathbb{R}^3 \mapsto \mathbb{R} \\
+   t &\mapsto \vec{c}(t) \mapsto f(\vec{c}(t))
+ \end{align*}
+ Where path \( \vec{c}(t) = (x(t), y(t), z(t) \). Let \( h(t) = f(\vec{c}(t)) \). Then 
+ \begin{equation*}
+   \frac{dh}{dt} = \frac{\partial f}{\partial x} \frac{dx}{dt} + \frac{\partial f}{\partial y} \frac{ dy}{dt} +  \frac{\partial f}{\partial z} \frac{dy}{dt}
+ \end{equation*}
+\end{theorem}
+
+\begin{remark}
+  We can intuitively think about this as describing the change in \( h \) as the change in \( f \) w.r.t \( x \) times how much \( x \) varies with \( t \), and so on for each of the component functions of \( f \). Note that another way to state the chain rule above is: 
+  \begin{equation*}
+    \frac{dh}{dt} = \nabla f(\vec{c}(t)) \cdot \pvec{c}'(t)
+  \end{equation*}
+ Which is a special case of the chain rule as enumerated in theorem 1 above, where \( \vec{c} = g \) and \( m = 3 \) : 
+ \begin{equation*}
+   \nabla(f( \vec{c}(t)) \cdot \pvec{c}'(t) = \textbf{D} f(\vec{c}(t)) \textbf{D} \vec{c}(t)
+ \end{equation*}
+ Note that \( \textbf{D}f \) is a \( 1 \times 3 \) matrix, because it has a single output and three inputs (\( m = 3) \), while \( \textbf{D}c \) is a \( 3 \times 1 \) matrix, because it has one input (\( (t) \) and three outputs. 
+\end{remark}
+
+\end{document}
+
+

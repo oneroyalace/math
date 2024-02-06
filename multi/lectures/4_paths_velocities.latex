@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{Math 222 Lec 4}
+\author{Asa Royal (ajr74)}
+\date{January 24, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection*{epsilon-delta proofs of limits}
+
+\begin{definition}[vector-valued function]
+  Multivariate functions involving real numbers are generally \( \mathbb{R}^n \mapsto \mathbb{R}^m \). \textbf{Vector-valued functions} are a special case where n=1. I.e. vector valued functions are \( f: \mathbb{R} -> \mathbb{R}^m \). E.g. \( f: t \mapsto f(t_0=(x(t), y(t), z(t_)) \). They take real numbers as an input (parameter) and output a vector. 
+\end{definition}
+
+\begin{definition}[path/curve]
+  Consider 
+  \begin{align*}
+    \vec{c}: A \subset \mathbb{R} &\mapsto \mathbb{R}^m \\
+    t &\mapsto \vec{c}(t)
+  \end{align*}
+  If \( \vec{c} = [a,b] \mapsto \mathbb{R}^3 \), \( C=\{ \vec{c}(t) | a \leq t \leq b\} \) is the curve traced out by \( \vec{c} \). 
+\end{definition}
+
+\begin{definition}[velocity/speed/acceleration]
+  If \( \vec{c} \) is a differentiable path, then the \textbf{velocity} of \( \vec{c} \) at time \( t \) is 
+  \begin{equation*}
+    \pvec{c}'(t) = \lim_{h \rightarrow 0} \frac{\vec{c}(t+h) - \vec{c}(h)}{h}
+  \end{equation*}
+  The speed of of \( \vec{c} \) is \( {\lVert \pvec{c}'(t) \rVert} \), and the acceleration of \( \pvec{c} \) is \( \pvec{c}''(t) \)
+\end{definition}
+
+\begin{remark}
+  The derivative of a differntiable path at time \( t \) is an \( n \times 1 \) matrix containig the derivative of each component of the path. 
+  \begin{equation*}
+    \pvec{c}'(t) = \begin{bmatrix} dx_1/dt \\ dx_2/dt \\ \vdots \\ dx_n/dt  \end{bmatrix}
+  \end{equation*}
+\end{remark}
+
+\subsection*{Circular orbits}
+
+\begin{remark}
+  Consider a particle of mass \( m \) moving at constant speed \( s \) in a circular path of radius \( r_0 \). Assuming it moves in the \( xy \) plane, we can ignore the z component of its path and write its location as 
+  \begin{equation*}
+    \vec{c}(t) = \left(r_0 \cos \frac{st}{r_0}, r_0 \sin \frac{st}{r_0}\right)
+  \end{equation*}
+  Note that \( \theta \) in radians is \( \frac{arclength}{radius} \). The particle's \textbf{frequency} is defined as 
+  \[
+    \omega = \frac{s}{r_0}
+  \]
+  which means we can also express its location as 
+  \begin{equation*}
+  \vec{c}(t) = r_0 \cos{\omega t}, r_0 \sin {\omega t}
+  \end{equation*}
+  and its acceleratino as 
+  \begin{equation*}
+    \vec{a}(t) = \pvec{c}''(t) = \left(- \frac{s ^2}{r_0} \cos \frac{st}{r_0}, -\frac{s ^2}{r_0} \sin \frac{st}{r_0} \right) = - \frac{s ^2}{ r_0 ^2} \vec{c}(t) = - \omega^2 \vec{c}(t)
+  \end{equation*}
+\end{remark}
+
+\begin{remark}
+  When a particle is moving at a constant speed in a circle, acceleration is in a direction opposite to \( \vec{c}(t) \): towards the center of the circle. (This is perpendicular to \( \pvec{c}'(t) \)). Acceleration times mass here = \textbf{centripetal force}. 
+\end{remark}
+
+\begin{definition}[frequency]
+\end{definition}
+
+\end{document}
+

@@ -1,0 +1,172 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{2.6: Gradients and directional derivatives (Lec 7)}
+\author{Asa Royal (ajr74)}
+\date{February 2, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[gradient]
+  If \( f: U \subset \mathbb{R}^3 \mapsto \mathbb{R} \) is differentiable, the \textbf{gradient} of \( f \) at \( (x, y, z)  \) is the vector in space given by 
+  \begin{equation*}
+    \nabla f = \left( \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z} \right)
+  \end{equation*}
+  The gradient is denoted \( \nabla f(x, y, z) \). It is really just the matrix of the derivative \( \textbf{D}f \) written as a vector ( \( f \)  is a real-valued function). 
+\end{definition}
+
+\begin{remark}
+  The gradient is a tool for computing directional derivatives. 
+\end{remark}
+
+\begin{definition}[directional derivative]
+  \( D_{\vec{v}} \) is the directional derivative in a direction \( \vec{v} \). It quantifies how the output of \( f \) changes with a nudge in the direction of \( \vec{v} \). 
+  \begin{equation*}
+    D_{\vec{v}}(f) = \nabla f \cdot \vec{v}
+  \end{equation*}
+  We can express the same idea using limits: 
+  \begin{equation*}
+    D_{\vec{v}} f(\vec{a}) = \lim_{h \rightarrow 0} \frac{f(\vec{a} + h\vec{v})  - f(\vec{a}) }{h}
+  \end{equation*}
+  The directional derivative is sometimes written as \( \nabla_{\vec{v}} f \) or \( \frac{\partial f}{\partial \vec{v}} \)
+\end{definition}
+
+\begin{remark}
+  Note that because scaling \( \vec{v} \) by \( c \) changes the output of our formula for \( D_{\vec{v}} f \) by \( c \), to calculate the precise amount \( f  \) changes with a nudge in \( \vec{v} \), we must ensure \( \vec{v} \) is a unit vector. 
+\end{remark}
+\begin{remark}
+  For some real-valued function \( f: \mathbb{R}^2 \mapsto \mathbb{R} \), we can visualize the directional derivative by slicing the surface of the function along the plane containing \( v \), then looking at the slope of the resulting slice function. 
+\end{remark}
+\begin{remark}
+  For some \( f(x_1, x_2, \ldots , x_n) \), \( \frac{\partial f}{\partial x_1} \) = \( D_{\vec{e_1}} \). This tells us how much a nudge in the \( x_1 \) direction moves \( f \). 
+\end{remark}
+
+\begin{theorem}[Direction of gradient]
+  The gradient points in the direction of steepest ascent. 
+\end{theorem}
+
+\begin{proof}
+  Consider some unit vector \( \vec{v} \) and real-valued function \( f \). 
+  \begin{align*}
+    D_{\vec{v}} f &= \nabla f \cdot \vec{v} \\
+                  &= {\lVert \nabla f \rVert} {\lVert \vec{v} \rVert}\cos \theta \\
+                  &= {\lVert \nabla f \rVert} \cos \theta
+  \end{align*}
+  \( D_{\vec{v}} \) is maximized when \( \cos \theta = 1 \), which occurs when \( \vec{v} \) points in the same direction as \( \nabla f \). \( D_{\vec{v}}  \) is minimized when \( \vec{v} \) points in the negative gradient direction. 
+\end{proof}
+
+\begin{prop}
+  The magnitude of the gradient tells us how quickly the function increases in the direction of steepest ascent. 
+\end{prop}
+
+\begin{proof}
+  Let \( f \) be a real valued function, and let \( \vec{w} = \nabla f \). 
+  \begin{align*}
+    D_{\vec{w}}f &= \nabla f \cdot \vec{w} \\
+                 &= \frac{\nabla f \cdot \nabla f}{{\lVert \nabla f \rVert}} \\ 
+                 &= \frac{{\lVert \nabla f  \rVert} ^2}{{\lVert \nabla f \rVert}} \\
+                 &= {\lVert \nabla f \rVert}
+  \end{align*}
+\end{proof}
+
+\begin{theorem}[Gradient is normal to level curve/surface]
+  Let \( f: \mathbb{R}^3 \mapsto \mathbb{R} \) be a map. Consider some \( x_0, y_0, z_0 \) on a level surface of \( f \). The tangent vector to the path of the level surface, \( \vec{v} \) tells us which direction to go in to follow the level surface. But all points on the level surface have the same value of \( f(x,y,z) = c \), which means \( D_{\vec{v}} = 0 = \nabla f \cdot v \), so \( \vec{v} \) is orthogonal to \( \nabla f \), and thus \( \nabla f \) is normal to the level surface. 
+\end{theorem}
+
+\begin{remark}
+  Think of the graph of \( f(x,y) = x^2 + y^2 \). \( \nabla f = \begin{bmatrix} 2x & 2y \end{bmatrix} \). Vectors in the direction of the gradient will always be orthogonal to the tangent vectors of level curves \( f(x,y) = c \), circles centered at the origin. 
+\end{remark}
+
+\begin{remark}
+  Or think of hiking with a contour map. If you want to reach the highest elevation as quickly as possible, you walk in the direction perpendicular to the contours. 
+\end{remark}
+
+\begin{definition}[tangent planes to level surfaces]
+  Let \( S \) be the surfacer consisting of \( (x,y,z) \) s.t. \( f(x,y,z) = k \) for some constant \( k \). The \textbf{tangent plane} of S at a point \( (x_0, y_0, z_0 \) of \( S \) is defined by the equation 
+  \begin{equation*}
+    \nabla f(x_0, y_0, z_0) \cdot (x-x_0, y-y_0, z-z_0) = 0
+  \end{equation*}
+\end{definition}
+
+
+\begin{remark}
+  Resources: 
+  \begin{enumerate}
+    \item Khan gradient/directional derivative videos: explanation of limit definition, illustration of "steepest" ascent. 
+  \end{enumerate}
+\end{remark}
+  
+
+\end{document}
+
+
+
