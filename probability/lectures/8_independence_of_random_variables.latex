@@ -1,0 +1,141 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 8 Big Ideas Journal (Independence of random variables)}
+\author{Asa Royal (ajr74)}
+\date{February 6, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[Independence of random variables]
+  Two discrete random variables \( X \) and \( Y \) are independent if \( \forall a \in \text{range}(X), \forall b \in \text{Range}(Y) \), 
+  \begin{equation*}
+    \mathbb{P}(X=a, Y=b) = \mathbb{P}(X=a)\mathbb{P}(Y=b)
+  \end{equation*}
+  Or, assuming \( \mathbb{P}(Y=b)\neq 0 \), 
+  \begin{equation*}
+    \mathbb{P}(X=a|Y=b) = \mathbb{P}(X=a)
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  If \( X \) and \( Y \) are independent random variables, the event that \( X \) takes on some value \( a \) should give us no information about the value \( Y \) takes on. 
+\end{remark}
+
+\begin{theorem}[Independence of many random variables]
+  Discrete random variables \( X_1, X_2, \ldots , X_n \) are independent iff
+  \begin{equation*}
+    \mathbb{P}(X_1 = a_1, X_2 = a_2, \ldots , X_n = a_n) = \mathbb{P}(X_1 = a_1) * \mathbb{P}(X_2 = a_2) * \ldots * \mathbb{P}(X_n = a_n)
+  \end{equation*}
+  where \( a_k \in \text{Range}(X_k) \). 
+\end{theorem}
+
+\begin{corollary}
+  TFAE:
+  \begin{enumerate}
+    \item \( X_1, X_2, \ldots , X_n \) are independent random variables
+    \item For any intervals \( I_1, \ldots , I_n \subset R \), 
+      \begin{equation*}
+        \mathbb{P}(X_1 \in I_1, X_2 \in I_2, \ldots, X_n \in I_n) = \mathbb{P}(X_1 \in I_1) * \mathbb{P}(X_2 \in I_2) * \ldots  * \mathbb{P}(X_n \in I_n)
+      \end{equation*}
+    \item For any \( a_1, \ldots , a_n \)
+      \begin{equation*}
+        \mathbb{P}(X_1 \leq a_1, X_2 \leq a_2, \ldots , X_n \leq a_n) = \mathbb{P}(X_1 \leq a_1) * \mathbb{P}(X_2 \leq a_2) * \ldots  * \mathbb{P}(X_n \leq a_n)
+      \end{equation*}
+  \end{enumerate}
+\end{corollary}
+
+\begin{proof}
+  \(  2 \iff 3 \) is trivial. Proved \( 2 \implies 1 \) in hw. 
+\end{proof}
+
+\subsection*{Independence when N is chosen randomly}
+\begin{eg}[Trivial non-independence of t/f in N flips]
+  Imagine we toss \( N \) p-coins. Let \( X = \text{\# heads}, Y = \text{\# tails} \). Clearly \( X+Y=N \), so we imagine the two r.v.s are not independent. Indeed, observe \( \mathbb{P}(X=N, Y=N) = 0 \), since we cannot flip \( n \) heads and \( n \) tails in \( n \) tosses. But \( \mathbb{P}(X=n) * \mathbb{P}(Y=n) \neq 0 \). 
+\end{eg}
+
+\begin{eg}[Independence of t/f counts when N is Poisson random]
+  Let \( N \sim \text{Poisson}(\lambda) \). If we toss \( N \) p-coins and let \( X = \text{\# heads}, Y = \text{\# tails} \), then: 
+  \begin{enumerate}
+    \item \( X \) and \( Y \) are independent
+    \item \( X \sim \text{Poisson}(\lambda p), Y \sim \text{Poisson}(\lambda(1-p)) \)
+  \end{enumerate}
+\end{eg}
+
+\begin{proof}
+  Proofs are a bitch. Check notes. 
+\end{proof}
+\begin{remark}
+  The difference between the two examples above where \( X, Y \) are dependent/independent is that in example 2, \( N \) is randomly chosen, so knowing \( X=a \) doesn't give us information about \( Y \). 
+\end{remark}
+\end{document}
+
+
+
