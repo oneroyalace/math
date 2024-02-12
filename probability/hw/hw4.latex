@@ -1,0 +1,234 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 5mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+
+\title{Math 340 HW 4}
+\author{Asa Royal (ajr74) [collaborators: none]}
+\date{February 12, 2024}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+  \item p-coin graph
+  \item \textbf{2.7.6}: An urn contains \( 8 \) white, \( 4 \) black, and \( 2 \) red balls. We win 2 euro for each black ball we draw and lose 1 euro for each white ball we draw. We choose three balls from the urn. Let \( X \) denote our winnings. Write down the probability mass function of \( X \). \\
+  \\
+  We begin by noting that the random variable \( X \) ranges across integers in \( [-3,6] \). The minimum value of \( X \) occurs when we draw \( 3 \) white balls; the maximum when we draw \( 3 \) black balls. We now identify the outcomes that lead to the event where \( X \) takes on each value in its range. Using those outcomes, we derive the probability of each event (i.e. the PMF). \\
+  \( X=-3 \): We draw 3 white balls. \\
+  \begin{equation*}
+  \mathbb{P}(X=-3) = \frac{{8 \choose 3}}{{14 \choose 3}} = \frac{2}{13}
+  \end{equation*}
+  \( X=-2 \): We draw 2 white balls and a red ball. \\
+  \begin{equation*}
+    \mathbb{P}(X=-2) = \frac{{8 \choose 2} {2 \choose 1}}{{14 \choose 3}} = \frac{2}{13}
+  \end{equation*}
+  \( X=-1 \): We draw a white ball and 2 red balls. \\
+  \begin{equation*}
+    \mathbb{P}(X=-1) = \frac{{8 \choose 1} {2 \choose 2}}{{14 \choose 3}} = \frac{2}{91}
+  \end{equation*}
+  \( X = 0 \) : We draw a black ball and 2 white balls. 
+  \begin{equation*}
+    \mathbb{P}(X=0) = \frac{{4 \choose 1} {8 \choose 2}}{{14 \choose 3}} = \frac{4}{13} 
+  \end{equation*}
+  \( X=1 \): We draw a white ball, a black ball, and a red ball. \\
+  \begin{equation*}
+    \mathbb{P}(X=1) = \frac{{4 \choose 1} {8 \choose 1} { 2 \choose 1}}{{14 \choose 3}} = \frac{16}{91}
+  \end{equation*}
+  \( X=2 \): We draw a black ball and 2 red balls. \\
+  \begin{equation*}
+    \mathbb{P}(X=2) = \frac{{4 \choose 1} {2 \choose 2}}{{14 \choose 3}} = \frac{1}{91}
+  \end{equation*}
+  \( X=3 \): We draw 2 black balls and a white ball. \\
+  \begin{equation*}
+    \mathbb{P}(X=3) = \frac{{4 \choose 2} {8 \choose 1}}{{14 \choose 3}} = \frac{12}{91}
+  \end{equation*}
+  \( X=4 \): We draw 2 black balls and a red ball. \\
+  \begin{equation*}
+    \mathbb{P}(X=4) = \frac{{4 \choose 2} {2 \choose 1}}{{14 \choose 3}} = \frac{3}{91}
+  \end{equation*}
+  \( X=5 \): This event cannot occur. \\
+  \begin{equation*}
+    \mathbb{P}(X=5) = 0
+  \end{equation*}
+   \(X=6\) :  We draw 3 black balls.  
+  \begin{equation*}
+    \mathbb{P}(X=6) = \frac{{4 \choose 3}}{{14 \choose 3}} = \frac{1}{91}
+  \end{equation*}
+
+  \item Let \( Xn \sim \text{Geometric}(p) \) with \( p= \lambda/n \). Let \( \lambda > 0  \) and \( n \rightarrow \infty \). Let \( Tn = \frac{1}{n}X_n \). Prove that for any \( t > 0 \), 
+    \begin{equation*}
+      \lim_{n \rightarrow \infty} \mathbb{P}(T_n > t) = e^{-\lambda t}
+    \end{equation*}
+
+    \begin{proof}
+      \( \mathbb{P}(T_n > t) = \mathbb{P}(\frac{1}{n}X_n > t)  = \mathbb{P}(X_n > nt)\). For a geometric distribution, this is 
+      \begin{align}
+        \mathbb{P}(X_n > nt) &= \sum_{j=nt+1}^{\infty} p(1-p)^{j-1} \\
+                             &= p(1-p)^{nt} + p(1-p)^{nt+1} + p(1-p)^{nt+2}+\ldots \\
+                             &= p(1-p)^{nt} \sum_{k=0}^{\infty} (1-p)^k \\
+                             &= p(1-p)^{nt} \frac{1}{p} & \text{geo. series convergence} \\
+                             &= (1-p)^{nt} \label{eqn:3.5}
+      \end{align}
+      \( p = \lambda/n \), so \( (\ref{eqn:3.5}) \) is equivalent to  \( \left( 1 - \frac{\lambda}{n}\right)^{nt} \), which converges to \( e^{-\lambda t} \) when \( n \rightarrow \infty \). 
+    \end{proof}
+
+  \item Let \( F_X \) be the CDF of \( X \). Since \( X \) is the max of all the \( Y \) random variables, for \( y \in R \), \( X \leq y \) iff the greatest of the \( Y_k \) random variables is less than \( y \). This is guaranteed to occur when \( Y_1 \leq y, Y_2 \leq y, \ldots  Y_n \leq y \). Relating this to \( F_X \), 
+    \begin{equation}
+      F_X(y) = \mathbb{P} \left(\bigcap_{i=1}^n Y_i \leq y \right) \label{eqn:4.1}
+    \end{equation}
+    Since \( Y_1, \ldots , Y_n \) are independent random variables, \( ( \ref{eqn:4.1} ) \) is equivalent to 
+    \begin{align*}
+      \prod_{i=1}^n \mathbb{P}(Y_i \leq y)
+    \end{align*}
+    Which is \framebox{\( F^n \)}. 
+
+  \item Prove that Proposition \( 0.1.ii \) from the independence notes implies \( 0.1.i \). 
+    \begin{proof}
+      Let 
+      \begin{equation}
+        a_1 \in R(X_1), a_2 \in R(x_2), \ldots , a_n \in R(X_n)
+      \end{equation}
+      Now let 
+      \begin{equation}
+        I_1^{k} = (a_1 - \frac{1}{k}, a_1 + \frac{1}{k}),  I_2^{k} = (a_2 - \frac{1}{k}, a_2 + \frac{1}{k}), \ldots , I_n^{k} = (a_n - \frac{1}{k}, a_n + \frac{1}{k})  \label{eqn:5.2}
+      \end{equation}
+      Let \( B_k = \{\omega | X_1(\omega) \in I_1^k, X_2(\omega) \in I_2^k, \ldots , X_n(\omega) \in I_n^k \} \).
+
+      Now note that for \( n > k \), \( B_n \subset B_k \) since \( B_n \) represents the random variables falling into a smaller window than \( B_k \) (see \( (\ref{eqn:5.2}) \)).  So per lemma 2.1.14b, 
+      \begin{equation}
+        \mathbb{P}\left(\bigcap_{i=1}^n B_i \right) = \mathbb{P}(B_n)
+      \end{equation}
+      Proposition 0.1.ii states that
+      \begin{equation}
+        \mathbb{P}(X_1 \in I_1^k, X_2 \in I_2^k, \ldots, X_n \in I_n^k) = \prod_{i=1}^n \mathbb{P}(X_i \in I_i^{k})
+      \end{equation}
+      Consequently, 
+      \begin{equation}
+        \mathbb{P}(B_n) = \prod_{i=1}^n \mathbb{P}(X_i \in I_i^n) = \prod_{i=1}^n \mathbb{P}(X_i \in I_i^n)
+      \end{equation}
+      Since the \( X_i \) variables are all independent, this is the same as 
+      \begin{align}
+        &\mathbb{P}(X_i \in I_1^n, X_2 \in I_2^n, \ldots , X_n \in I_n^n )  \\
+        = &\mathbb{P}(X_1 \in \left( a_1 - \frac{1}{n}, a_1 + \frac{1}{n} \right), X_2 \in \left( a_2 - \frac{1}{n}, a_1 + \frac{1}{n} \right), \ldots , X_n \in \left(a_n - \frac{1}{n}, a_n + \frac{1}{n} \right)
+      \end{align}
+      As \( n \rightarrow \infty \), this probability approaches
+      \begin{equation}
+        \mathbb{P}(X_1 = a_1, X_2 = a_2, \ldots , X_n = a_n) = \prod_{i=1}^n \mathbb{P}(X_i = a_i)
+      \end{equation}
+    \end{proof}
+  \item .
+  \item Consider the following game: Roll a standard six-sided die. If the number rolled is \( 1,2,3, \) you win nothing. If the number rolled is \( 4,5, \) or \( 6 \), you win \$1 plus twice the value rolled. What is the expected amount you win in a single roll? \\
+  \\
+  Let the random variable \( X \) represent winnings from playing a round of the game. We can directly calculate \( \mathbb{E}[X] \) by taking the sum of its range of values by the probability those values occur. 
+  \begin{align*}
+    \mathbb{E}[X] = \sum_{i=1}^6 x \mathbb{P}(X=x) = \frac{1}{6}(0 + 0 + 0 + 9 + 11  +13) = \frac{33}{6} = \framebox{\$5.50}
+  \end{align*}
+  \item Suppose \( X \) is a random variable, uniformly distributed on \( \{ 1, \ldots , n \} \). Compute \( \mathbb{E} [X ^2] \) in terms of \( n \). \\
+  \\
+  Given an r.v. \( X \) and some \( g: \mathbb{R} \mapsto \mathbb{R} \), \( \mathbb{E} [g(X)] = \sum_{x \in R(X)} \mathbb{P}(X = x) g(X) \). In this case, \( g(X) = X^2 \), so 
+  \begin{align*}
+    \mathbb{E}[X ^2] &= \mathbb{E}[g(X)] \\
+                     &= \sum_{x \in R(X)} \left(\frac{1}{n}\right) x^2 \\
+                     &= \frac{1}{n} \sum_{i=1}^n i^2 \\
+                     &= \frac{1}{n} \frac{n(n+1)(2n+1)}{6} & \text{per series convergence rules} \\
+                     &= \frac{(n+1)(2n+1)}{6}
+  \end{align*}
+
+  \item .
+  \item .
+    \begin{enumerate}[label=(\roman*)]
+      \item What is the probability that you have not drawn red after \( n \) attempts. \\
+      \\
+      Let \( {NR}_k \) represent the event of not drawing red by the \( k \)th attempt. Then \( \mathbb{P}({NR}_k) = \mathbb{P}({NR}_k | {NR}_{k-1}) * \mathbb{P}({NR}_{k-1}) \). This is a recursive definition. Observe for \( k = 2 \), \( \mathbb{P}({NR}_2) = \mathbb{P}({NR}_2 | {NR}_1) * \mathbb{P}({NR}_1) \). \( \mathbb{P}({NR}_2 | {NR}_1) \) is the chance of not drawing a red on the second draw given (obviously) we haven't drawn a red on the first draw. On the second draw, there are \( 2 \) blue marbles and \( 1 \) red marble in the box, so \( \mathbb{P}({NR}_2|{NR}_1) = 2/3 \). \( \mathbb{P}({NR}_1) \) is the chance that we didn't draw a red on the first trial: \( 1/2 \). Thus \( \mathbb{P}({NR}_2) = (2/3)*(1/2) \). More generally, 
+      \begin{align*}
+        \mathbb{P}({NR}_{n}) &= \prod_{i=1}^n \frac{n}{n+1}\\
+                           &= \frac{1}{n+1}
+      \end{align*}
+
+      \item What is the probability that you never draw the red marble? \\
+      \\
+      This is 
+      \begin{align*}
+        \lim_{n \rightarrow \infty} \mathbb{P}({NR}_n) &= \lim_{n \rightarrow \infty} \frac{1}{n+1} \\
+                                                     &= 0
+      \end{align*}
+
+    \item Let \( T \) be the number of draws until you draw a red. What is the distribution of \( T \)? Is \( \mathbb{E}[T] \) finite? \\
+    \\
+      \textbf{Distribution of \( T \)}: The random variable \( T \) is akin to an r.v. from the geometric distribution, but with a varying \( p \). E.g., \( \mathbb{P}(T=2) \) is the probability that the second draw is red \( (1/3) \) times the probability that the previous draw(s) were not red: \( {NR}_{1} = 1/2 \). This product is \( \mathbb{P}(T=2) = (1/3)(1/2) = 1/6 \). More generally, the distribution of \( T \) is given by:
+      \begin{align*}
+        \mathbb{P}(T=k) &= \left( \frac{1}{k+1} \right) NR_{k-1} \\
+                        &= \frac{1}{k(k+1)}
+      \end{align*}
+
+      \textbf{Expected value of T}: Generally, 
+      \begin{equation*}
+        \mathbb{E}[T] = \sum_{k \in R(T)} (k * T(k))
+      \end{equation*}
+      In this case, the range of \( T \) is the natural numbers, so 
+      \begin{align*}
+        \mathbb{E}[T] &= \sum_{i=1}^{\infty} k \left( \frac{1}{k(k+1)} \right) \\
+                      &= \sum_{i=1}^{\infty} \frac{1}{k+1}
+      \end{align*}
+      \framebox{This series does not converge, so \( \mathbb{E}[T] \) is not finite.}
+    \end{enumerate}
+
+\end{enumerate}
+\end{document}
+
+
+
