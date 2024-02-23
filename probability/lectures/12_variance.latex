@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 12 Big Ideas Journal (Variance)}
+\author{Asa Royal (ajr74)}
+\date{February 20, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[Variance]
+  For a random variable \( X \), the variance of \( X \) is 
+  \begin{equation}
+    \mathrm{Var}(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2
+  \end{equation}
+  or alternatively, if \( \mathbb{E}[X] = \mu \),
+  \begin{equation}
+    \mathrm{Var}(X) = \mathbb{E}[(X-\mu)^2]
+  \end{equation}
+\end{definition}
+\begin{remark}
+  We can think of variance as quantifying deviation from or closeness to the mean. 
+\end{remark}
+
+\subsubsection*{Properties of variance}
+\begin{enumerate}
+  \item \( \mathrm{Var}(x) \geq 0 \)
+  \item \( \mathrm{Var}(X) \) can be \( \infty \) even if \( \exists[X] < \infty \)
+  \item \( \mathrm{Var}(X) < \infty \iff \mathbb{E}[X^2] < \infty \)
+  \item Scaling: For any \( \alpha, \beta \in \mathbb{R}, \mathrm{Var}(\alpha X + \beta) = \alpha ^2 \mathrm{Var}(X) \)
+\end{enumerate}
+
+\subsection*{Variance of an indicator variable}
+
+\begin{prop}
+  Let \( A \subset \Omega  \) be any event. Consider \( X = \chi_A \). \( \mathrm{Var}(X) \leq 1/4 \)
+\end{prop}
+
+\begin{proof}
+  Generally, \( \mathrm{Var}(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2 \). Because \( X \) is an indicator variable, \( X^2 = X \) and \( \mathbb{E}[X] = \mathbb{P}(X) \). Thus \( \mathrm{Var}(X) = \mathbb{P}(X) - \mathbb{P}(X) ^2 = \mathbb{P}(X)[1 - \mathbb{P}(X)] \). \( \mathrm{Var}(X) \) is clearly maximized when \( \mathbb{P}P(X) = 1/2 \), so \( \mathrm{Var}(X) \leq 1/4 \). 
+\end{proof}
+
+\subsection*{Covariance}
+\begin{definition}[Covariance]
+  The covariance of two random variables \( X \) and \( Y \) is defined as 
+  \begin{equation}
+    \mathrm{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y] = \mathbb{E}[(X-\mathbb{E}[X])(Y - \mathbb{E}[Y])]
+  \end{equation}
+  Correlation is a normalized measure of covariance. 
+\end{definition}
+
+\begin{prop}
+  \( \mathrm{Cov} \) is bilinear because it is an inner product on certain vector spaces (see endof notes). Thus
+  \begin{enumerate}
+    \item \( \mathrm{Cov}(cX, Y) = c \mathrm{Cov}(X,Y) \)
+    \item \( \mathrm{Cov}(X, Y+Z) = \mathrm{Cov}(X,Y) + \mathrm{Cov}(X,Z) \)
+    \item \( \mathrm{Cov}(X, X) = \mathrm{Var}(X) \)
+    \item \( \mathrm{Cov}( \sum_{i=1}^m a_i X_i, \sum_{j=1}^n b_j Y_j) = \sum_{i,j} a_i b_j \mathrm{Cov}(X_i, Y_j) \)
+  \end{enumerate}
+\end{prop}
+
+  \begin{proof}
+    \( \mathrm{Cov}(X, Y+Z) = \mathbb{E}[X(Y+Z)] - \mathbb{E}[X] \mathbb{E}[Y+Z]  = \mathbb{E}[XY] + \mathbb{E}[XZ] - \mathbb{E}[X]\mathbb{E}[Y] - \mathbb{E}[X] \mathbb{E}[Z] = \mathrm{Cov}(X,Y) + \mathrm{Cov}(X,Z) \) 
+  \end{proof}
+
+\subsection*{Variance of sums}
+
+\begin{prop}
+  \begin{equation}
+    \mathrm{Var}(X_1 + X_2 + \ldots  + X_n) = \sum_{i=1}^n \mathrm{Var}(X_i) + 2 \sum_{j < k} \mathrm{Cov}(X_j, X_k)
+  \end{equation}
+\end{prop}
+
+\begin{remark}
+  Note that 
+  \begin{align*}
+    \mathrm{Var}(X_1 + X_2) &= \mathrm{Cov}(X_1 + X_2, X_1 + X_2) \\
+                            &= \mathrm{Cov}(X_1, X_1) + \mathrm{Cov}(X_1, X_2) + \mathrm{Cov}(X_2, X_1) + \mathrm{Cov}(X_2, X_2) \\
+                            &= \mathrm{Var}(X_1) + \mathrm{Var}(X_2) + 2 \mathrm{Cov}(X_1, X_2)
+  \end{align*}
+\end{remark}
+
+\begin{proof}
+  Applying prop 4.4, 
+  \begin{align*}
+    Var(X_1 + \ldots  + X_n) &= \mathrm{Cov}(X_1 + \ldots + X_n, X_1 + \ldots  + X_n) \\
+                             &= \mathrm{Cov}(X_1 + X_1) + \mathrm{Cov} (X_2 + X_2) + \ldots  + \mathrm{Cov}(X_n + X_n) + \mathrm{Cov}(X_1, X_2) + \mathrm{Cov}(X_2, X_1) + \ldots  \\
+                             &= \sum_{i=1}^n \mathrm{Var}(X_i) + 2 \sum_{j < k} \mathrm{Cov}(j,k)
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  If \( X_1, \ldots , X_n \) are independent (or just uncorrelated)
+  \begin{equation*}
+    \mathrm{Var}(X_1 + \ldots  + X_n) = \sum_{i=1}^n \mathrm{Var}(X_i)
+  \end{equation*}
+\end{corollary}
+
+\subsection*{Vector spaces of random variables}
+
+\begin{remark}
+  Given \( \Omega, \mathbb{P} \), let \( S \) be the set of all random variables \( X \) on \( \Omega \) s.t. \( \mathbb{E}[X] = 0 \) and \( \mathbb{E}[X^2] < \infty \) (which means \( \mathrm{Var}(X) < \infty \)). Then \( S \) is a vector space. Thus, \( X_1, X_2 \in S \implies \alpha X_1 + \beta X_2 \in S \) for any \( \alpha, \beta \in R \). 
+\end{remark}
+
+\begin{remark}
+  We can think of \( \mathrm{Cov} \) as an inner product on \( S \). \( {\lVert X_1 \rVert} = \mathrm{Cov}(X_1, X_1) = \sqrt{\mathrm{Var}(X)} \), so \( {\lVert X_1 \rVert}^2 = \mathrm{Var}(X) \). 
+\end{remark}
+
+\begin{remark}
+  Independent vectors in \( S \) are orthogonal to each other, so for independent vectors \( X_1, X_2 \), \( {\lVert X_1 + X_2 \rVert} = {\lVert X_1 \rVert} + {\lVert X_2 \rVert}\). This makes sense, because the \( \cos \theta \) term we'd see when calculating out \( {\lVert X_1 + X_2 \rVert} \) would be obliterated for orthogonal vectors. 
+\end{remark}
+\end{document}
