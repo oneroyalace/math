@@ -36,7 +36,6 @@
 \usepackage{tikz-cd}
 
 
-
 \usepackage{import}
 \usepackage{xifthen}
 \usepackage{pdfpages}
@@ -64,7 +63,7 @@
 \begin{document}
 \maketitle
 \begin{enumerate}
-  \item p-coin graph
+  \item Appended to pdf. 
   \item \textbf{2.7.6}: An urn contains \( 8 \) white, \( 4 \) black, and \( 2 \) red balls. We win 2 euro for each black ball we draw and lose 1 euro for each white ball we draw. We choose three balls from the urn. Let \( X \) denote our winnings. Write down the probability mass function of \( X \). \\
   \\
   We begin by noting that the random variable \( X \) ranges across integers in \( [-3,6] \). The minimum value of \( X \) occurs when we draw \( 3 \) white balls; the maximum when we draw \( 3 \) black balls. We now identify the outcomes that lead to the event where \( X \) takes on each value in its range. Using those outcomes, we derive the probability of each event (i.e. the PMF). \\
@@ -148,7 +147,7 @@
       \end{equation}
       Let \( B_k = \{\omega | X_1(\omega) \in I_1^k, X_2(\omega) \in I_2^k, \ldots , X_n(\omega) \in I_n^k \} \).
 
-      Now note that for \( n > k \), \( B_n \subset B_k \) since \( B_n \) represents the random variables falling into a smaller window than \( B_k \) (see \( (\ref{eqn:5.2}) \)).  So per lemma 2.1.14b, 
+      Now note that for \( N > k \), \( B_n \subset B_k \) since \( B_N \) represents the random variables falling into a smaller window than \( B_k \) (see \( (\ref{eqn:5.2}) \)).  So per lemma 2.1.14b, 
       \begin{equation}
         \mathbb{P}\left(\bigcap_{i=1}^n B_i \right) = \mathbb{P}(B_n)
       \end{equation}
@@ -158,19 +157,48 @@
       \end{equation}
       Consequently, 
       \begin{equation}
-        \mathbb{P}(B_n) = \prod_{i=1}^n \mathbb{P}(X_i \in I_i^n) = \prod_{i=1}^n \mathbb{P}(X_i \in I_i^n)
+        \mathbb{P}(B_N)  = \prod_{i=1}^n \mathbb{P}(X_i \in I_i^n)
       \end{equation}
-      Since the \( X_i \) variables are all independent, this is the same as 
-      \begin{align}
-        &\mathbb{P}(X_i \in I_1^n, X_2 \in I_2^n, \ldots , X_n \in I_n^n )  \\
-        = &\mathbb{P}(X_1 \in \left( a_1 - \frac{1}{n}, a_1 + \frac{1}{n} \right), X_2 \in \left( a_2 - \frac{1}{n}, a_1 + \frac{1}{n} \right), \ldots , X_n \in \left(a_n - \frac{1}{n}, a_n + \frac{1}{n} \right)
-      \end{align}
-      As \( n \rightarrow \infty \), this probability approaches
+      Recalling \( (\ref{eqn:5.2}) \), this means
       \begin{equation}
-        \mathbb{P}(X_1 = a_1, X_2 = a_2, \ldots , X_n = a_n) = \prod_{i=1}^n \mathbb{P}(X_i = a_i)
+        \mathbb{P}(B_N) =  \prod_{i=1}^n \mathbb{P} \left(X_i \in \left(a_i - \frac{1}{N}, a_i + \frac{1}{N} \right) \right)
+      \end{equation}
+      As \( N \rightarrow \infty \) (equivalent to \( \varepsilon \rightarrow 0 \) in the problem setup), this probability approaches
+      \begin{equation}
+        \prod_{i=1}^n \mathbb{P} \left(X_i \in \left(a_i - 0, a_i + 0 \right) \right) = \prod_{i=1}^n \mathbb{P}(X_i = a_i)
       \end{equation}
     \end{proof}
-  \item .
+  \item Suppose that \( X_1, \ldots , X_n \) are independent random variables, each having the Geometric(p) distribution for some fixed \( p \in (0,1) \). Define a new random variable: 
+    \begin{equation}
+      Y(\omega) = min(X_1(\omega), X_2(\omega), \ldots , X_n(\omega))
+    \end{equation}
+    Show that \( Y \) has the Geometric(\( \alpha \)) distribution for some \( \alpha \). Commpute \( \mathbb{E}[Y] \) in terms of \( p \) and \( n \).  \\
+    \\
+    \textbf{First we show that \( Y \sim \text{Geo}(\alpha) \) for some \( \alpha \) } \\
+    Since \( Y \) is min of \( X \)'s, we can express the CDF of \( Y \) as 
+    \begin{equation}
+      \mathbb{P}(Y \leq k) = 1 - \mathbb{P}(Y > k) = 1 - \mathbb{P}(X_1 > k, \ldots , X_n > k) \label{eqn:6.1} = 1 - \mathbb{P} \left( \bigcap_{i=1}^n X_i > k \right)
+    \end{equation}
+    \( X_1, \ldots , X_n \) are independent random variables, so continuing from \( (\ref{eqn:6.1}) \),
+    \begin{equation}
+      1 - \mathbb{P} \left( \bigcap_{i=1}^n X_i > k \right) = 1 - \prod_{i=1}^n \mathbb{P}(X_i > k) \label{eqn:6.2}
+    \end{equation}
+    \( X_1, \ldots , X_n \) are indentical random variables, so the RHS of \( (\ref{eqn:6.2}) \) is equivalent to
+    \begin{equation}
+      1 - \mathbb{P}(X_1 > k)^n \label{eqn:6.3}
+    \end{equation}
+    For \(  X \sim \text{Geo}(p) \), \( \mathbb{P}(X > k) = (1 - p)^k \), so \( (\ref{eqn:6.3}) \) is equivalent to
+    \begin{equation}
+      1 - ((1-p)^k)^n = 1 - ((1 - p)^n)^k
+    \end{equation}
+    Generally, the CDF of an r.v. \( Y \sim \text{Geo}(\alpha) \) has the form \( (1 - (1 - \alpha)^k) \), so we can see in our case that \( Y \sim \text{Geo}(\alpha) \) for \framebox{\( \alpha = 1 - (1-p)^n \)}
+
+    \textbf{We now find \( \mathbb{E}[Y] \)}: \\
+    For \( Y \sim \text{Geo}(\alpha) \), \( \mathbb{E}[Y] = 1/\alpha \). In our case, this is 
+    \begin{equation*}
+      \mathbb{E}[Y] = \frac{1}{1 - (1-p)^n}
+    \end{equation*}
+    
   \item Consider the following game: Roll a standard six-sided die. If the number rolled is \( 1,2,3, \) you win nothing. If the number rolled is \( 4,5, \) or \( 6 \), you win \$1 plus twice the value rolled. What is the expected amount you win in a single roll? \\
   \\
   Let the random variable \( X \) represent winnings from playing a round of the game. We can directly calculate \( \mathbb{E}[X] \) by taking the sum of its range of values by the probability those values occur. 
@@ -188,7 +216,26 @@
                      &= \frac{(n+1)(2n+1)}{6}
   \end{align*}
 
-  \item .
+  \pagebreak
+  \item . \\
+    \textbf{Compute} \( \mathbb{E}[X] \) \\
+    \\
+    Let \( H_k \) be the event that we first see heads on our \( k \)th toss. Let \( W  \) be the event that we win \$1. Since \( W \) represents winning a single dollar, \( \mathbb{P}(W) = E[X] \). We only win if \( H_k \) occurs, so applying the partition rule,
+    \begin{equation*}
+      \mathbb{P}(W) = \sum_{k=1}^{\infty} \mathbb{P}(W|H_k) * \mathbb{P}(H_k)
+    \end{equation*}
+
+    \( \mathbb{P}(W|H_k) \) is either \( 1 \) or \( 0 \). If we've thrown heads on toss \( k \), we win if \( a_k = 1 \) and lsoe if \( a_k = 0 \). Thus \( \mathbb{P}(W|H_K) = a_k \). \( \mathbb{P}(H_k) \) is the probability that we failed to toss heads on our first \( k-1 \) tosses, then tossed heads on our \( k \)th toss. We are tossing the fair coin, so \( \mathbb{P}(H_k) \) is \( (1/2)^{k-1} * (1/2) = (1/2)^k \). Thus,
+    \begin{equation*}
+      \mathbb{P}(W) = \sum_{k=1}^{\infty} a_k \left( \frac{1}{2} \right)^k
+    \end{equation*} 
+    And since \( W \) is the event that we win a dollar, it is also true that
+    \begin{equation*}
+      E[X] = \sum_{k=1}^{\infty} a_k \left( \frac{1}{2} \right)^k
+    \end{equation*}
+
+    \textbf{How to set \( \mathbb{E}[X] \) to any arbitrary \( \alpha \in (0,1) \)} \\
+    \( E[X] \) is a binary expansion function. Given a sequence \( a=b_1 b_2 b_3 \ldots \) (representing a number in base 2), \( \mathbb{E}[X] \) will expand it to a base ten decimal. Given that there exists a bijection between binary sequences and decimal sequences, this allows us to tune \( \mathbb{E}[X] \) to any decimal  number. 
   \item .
     \begin{enumerate}[label=(\roman*)]
       \item What is the probability that you have not drawn red after \( n \) attempts. \\
@@ -225,6 +272,20 @@
                       &= \sum_{i=1}^{\infty} \frac{1}{k+1}
       \end{align*}
       \framebox{This series does not converge, so \( \mathbb{E}[T] \) is not finite.}
+    \item Instead of adding just one more blue marble each time you draw a blue, suppose you double the number of blue. Is the answer to parts ii and iii different in this case?  \\
+    \\
+    If we double the number of blue marbles each time we pick one, the probability that we haven't drawn red after \( n \) attempts is
+      \begin{equation*}
+        \mathbb{P}(NR_{n}) = \prod_{i=1}^n \frac{2^{i-1}}{2^{i-1}+1}
+      \end{equation*}
+      So
+      \begin{align*}
+        \log \mathbb{P}(NR_{n}) &= \log \left(\prod_{i=1}^n \frac{2^{i-1}}{2^{i-1}+1} \right) \\
+                                &= \sum_{i=1}^n \log \left(\frac{2^{i-1}}{2^{i-1}+1} \right) \\
+                                &= \sum_{i=1}^n \left(\log(2^{i-1}) - \log(2^{i-1}+1) \right)
+      \end{align*}
+
+      I wasn't sure where to proceed from here. I've clearly messed something up. The \( \log(1+x) \approx x \) approximation can't be used here given \( 2^{i-1} \) is a large quantity. If I do apply the approximation, I find that \( \mathbb{P}(NR_n) = 1 \), which doesn't make sense. 
     \end{enumerate}
 
 \end{enumerate}
