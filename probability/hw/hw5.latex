@@ -101,6 +101,120 @@
     \mathbb{P}(|X - \mathbb{E}[X]| \geq a)  \leq \frac{1}{a^2} \mathrm{Var}(X)
     \end{equation}
     \end{proof}
+
+  \item Meester 2.7.15
+  \item Suppose \( X \) is a discrete random variable. 
+    \begin{enumerate}[label=(\roman*)]
+      \item Prove that \( \forall x f(x), \geq g(x) \implies \mathbb{E}[f(X)] \geq \mathbb{E}[g(X)] \), assuming these are well-defined. 
+        \begin{proof}
+          \( \mathbb{E}[f(X)] = \sum_{x \in R(X)} f(x) \mathbb{P}(X = x)\)  and \( \mathbb{E}[g(X)] = \sum_{x \in R(X)} g(x) \mathbb{P}(X = x)\). So the following are equivalent. 
+          \begin{align}
+            \mathbb{E}[f(X)] &\stackrel{?}{=} \mathbb{E}[g(X)] \\
+            \sum_{x \in R(X)} f(x) \mathbb{P}(X = x) &\stackrel{?}{=} \sum_{x \in R(X)} g(x) \mathbb{P}(X = x) \\
+            \sum_{x \in R(X)} f(x)  &\stackrel{?}{=} \sum_{x \in R(X)} g(x) 
+          \end{align}
+          We know that \( \forall x, f(x) \geq g(x) \), so the operator in \( (1), (2), \) and \( (3) \) must be \( \geq \). 
+        \end{proof}
+      \item Suppose that \( f(x): \mathbb{R} \mapsto \mathbb{R} \) is differentiable. Supose \( \mathbb{E}[X] = ;u \). Let
+
+      \item ...
+        \begin{proof}
+          \( \mathbb{E}[f(X)] \) is given by the tangent line approximation to \( f \), \( l \); \( \mathbb{E}[X] = \mu \), so \( f(\mathbb{E}[X]) = f(\mu) \). Thus, the following are equivalent 
+          \begin{align}
+            \mathbb{E}[f(X)] &\geq f(\mathbb{E}[X]) \\
+            \ell(x) &\geq f(\mu) \\
+            f(\mu) + f'(\mu)(x - \mu) & \geq f(\mu) \\
+            f'(\mu) (x - \mu) \geq 0
+          \end{align}
+        \end{proof}
+        We assumed that \(  f(x) > \ell(x) \) except at \( ;u \), which means the tangent line must be downward sloping at \( \mu \). Equivalent, \( f'(\mu) < 0 \). 
+    \end{enumerate}
+  \item In a box there are \( n \) identical marbles, labeled \( 1, \ldots , n  \). There are \( n \) people who take turns drawing a marble from the box, with replacement. Let \( X_n \) be the nubmer of marbles that were not drawn by anyone. 
+  \begin{enumerate}[label=(\roman*)]
+    \item Compute \( \mathbb{E}[\frac{1}{n}X_n \), the expected fraction of marbles not chosen. \\
+    \\
+    Let \( \chi_i \) represent an indictaor function for the event that marble \( i \) was not drawn by anyone. Then by linearity and the method of indicators, 
+    \begin{equation*}
+      \mathbb{E}\left[\frac{1}{n} X_n\right] = \frac{1}{n} \mathbb{E}\left[X_n\right] = \frac{1}{n} \mathbb{E}\left[\sum_{i=1}^n \chi_i\right] = \left(\frac{1}{n} \right) ( n )  \left(\mathbb{E}\left[\chi_i\right] \right) = \mathbb{E}[\chi_i]
+    \end{equation*}
+    The expected value of an indicator fuction is the probability of its underlying event. Since each marble is equally likely to be drawn and rwas are independent, the probability that any given marble was not drawn is \( (n-1/n)^n \). So
+    \begin{equation*}
+      \mathbb{E} \left[ \frac{1}{n} X_n \right] = \left(\frac{n-1}{n}\right)^n
+    \end{equation*}
+
+    \item What is \( \lim_{n \rightarrow \infty} \mathbb{E} \left[ \frac{1}{n} X_n \right] \)?
+      \begin{align*}
+        \lim_{n \rightarrow \infty} \mathbb{E} \left[\frac{1}{n} X_n \right] = \lim_{n \rightarrow \infty} \left(\frac{n-1}{n} \right)^n = \lim_{n \rightarrow \infty} \left(1 - \frac{1}{n} \right) ^n = e^{-1}
+      \end{align*}
+       
+    \item \textcolor{red}{What is \( \mathrm{Var} \left(\frac{1}{n} X_n \right) \)? }
+      The \( \chi_i \) are not independent, because if we know that marble \( j \) was not chosen, that reduces the likelihood that marble \( k \) was not chosen. Thus,w e need to take into account covariance when calculating the variance of the sum. \textcolor{red}{How do I think about calculating covariance between the indicators, though?}
+  \end{enumerate}
+  \begin{align*}
+    \mathrm{Var} \left( \frac{1}{n} X_n \right) &= \left( \frac{1}{n} \right) ^2 \mathrm{Var}(\chi_1 + \ldots  \chi_n) & \text{linearity, inner product} \\
+                                                &= \frac{1}{n ^2} \left( \sum_{i=1}^n \mathrm{Var}( \chi_i) + 2 \sum_{\substack{i < j \\ j < n}} \mathrm{Cov}(\chi_i, \chi_j) \right) & \text{var of sum}
+  \end{align*}
+  \item ..
+    \textbf{Using Chebychev's inequality:} \\
+    \\
+    Chebychev's inequality states that 
+    \begin{equation*}
+      \mathbb{P}(|X - \mathbb{E}[X] | \geq a) \leq \frac{1}{a ^2 } \mathrm{Var}(X)
+    \end{equation*}
+
+    Let \( Y \) be a random variable denoting the number of heads we toss in \( 10,000 \) trials. We wish to bound the probability that \( Y \geq 5000 \). \( \mathbb{E}[Y] = 5,000 \), so we can express \( \mathbb{P}(Y \geq 5000) \) as \( \mathbb{P}(Y - \mathbb{E}[Y] \geq 500 \). Per Chebychev's inequality,
+    \begin{equation}
+      \mathbb{P}(|Y - \mathbb{E}[Y]| \geq  500 \leq \frac{1}{500^2} \mathrm{Var}(Y) \label{eqn:5.1}
+    \end{equation}
+
+    \( Y \) can be represented as the sum of \( 10,000 \) indicator functions for the event of each coin flip. Thus, by linearity \( \mathrm{Var}(Y) = np(1-p) \). For a fair coin with \( 10000 \) flips, \( \mathrm{Var}(Y) = (0.5)(0.5)(10000) = 2500 \). Plugging this into \( ( \ref{eqn:5.1} ) \), we see
+    \begin{align}
+      \mathbb{P}(Y \geq 5000) &= \mathbb{P}(|Y - \mathbb{E}[Y] \geq 500) \\
+                              &\leq \left(\frac{1}{500^2}\right) 2500 = 0.01 
+    \end{align}
+
+    \textbf{Using the law of large numbers} \\
+    \\
+    One version of the law of large numbers states that
+    \begin{equation}
+      \mathbb{P} \left( \bigcup_{k \geq n \left( \frac{1}{2} + \varepsilon \right)} A_{k,n} \right) \leq e^{- \varepsilon ^2 n}
+    \end{equation}
+    In our 10,000 fair coin toss case, we use \( \varepsilon = 1/10 \) to find that 
+    \begin{equation}
+      \mathbb{P}(Y \geq 5500) = \mathbb{P} \left( \bigcup_{k \geq 5500  A_{k,10000}} \right) \leq e^{- (0.1) ^2 10000} = e^{-100}
+    \end{equation}
+
+    The law of large numbers provides an upper probability bound of \( \mathbb{P}(Y \geq 500) \leq e^{-100} \). Chebychev's inequality provides a probability bound of \( \mathbb{P}(Y \geq 500) \leq 0.01 \). Clearly, the law of large numbers provides a tighter bound. 
+  \item Suppose that every timme you shop at a certain store, there is a small randomly selected prize that comes with you rpurchase. Suppose there are \( n \) different prizes that you could win, all equally likely. It is possible that you get the same prize multiple times. Let \( X_n \) be the number of visits you make until you have won all \( n \) distinct prizes. Calculate \( \mathbb{E}[X_n] \) by
+    \begin{enumerate}[label=(\roman*)]
+      \item How many visits \( N_1 \) are needed to win one prize? \\
+      \( 1 \). 
+    \item Let \( N_2 \) be the number of add'l visits until you get a second unique prize. What is the distribution of \( N_2 \)? 
+      \begin{equation*}
+        N_2 \sim \text{Geo} \left(\frac{n-1}{n} \right)
+      \end{equation*}
+    \item What is the distribution of \( N_{k+1} \)? 
+      \( k \) prizes have already been picked, so the probability of "success" on any given visit to the shop is \( (n-k)/(n) \), since there are \( n-k \) unique prizes we still need to collect. Thus
+      \begin{equation*}
+        N_{k+1} \sim \text{Geo} \left( \frac{n-k}{n} \right)
+      \end{equation*}
+    \item \textcolor{red}{How is \( X_n \) related to the random variables \( N_k \)? }
+      \begin{equation*}
+        X_n = \sum_{k=1}^n N_k
+      \end{equation*}
+    \end{enumerate}
+    \textbf{Calculating} \( \mathbb{E}[X_n] \): \\
+    \\
+    Per part iv, 
+    \begin{align*}
+      \mathbb{E}[X_n] &= \mathbb{E} \left[\sum_{k=1}^n N_k \right]  \\
+                      &= \sum_{k=1}^n \mathbb{E} \left[ N_k \right]  & \text{by linearity} \\
+                      &= \mathbb{E}[N_1] + \sum_{k=2}^n \mathbb{E} \left[ N_k \right] & \text{split up sum} \\
+                      &= \mathbb{E}[N_1] + \sum_{k=1}^{n-1} \mathbb{E} \left[ N_{k+1} \right] & \text{adjust summation bounds}\\
+                      &= 1 + \sum_{k=1}^{n-1} \frac{1}{\left(\frac{n-k}{n} \right) } & \text{\( \mathbb{E} \) of geo r.v.} \\
+                      &= 1 + \sum_{k=1}^{n-1} \frac{n}{n-k}
+    \end{align*}
+    
 \end{enumerate}
 \end{document}
 
