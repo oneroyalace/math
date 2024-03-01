@@ -84,7 +84,6 @@
 
 \begin{remark}
   There are a few ways to interpret \( \mathbb{E}(X) \). 
-  \begin{enumerate}
     \item \( \mathbb{E}(X) \) is a \textbf{weighted average} of the outcomes of \( X \) or the "center of probability mass". \( \mathbb{E}(X) \) would be the the position of the fulcrum if you graphed the distribution of \( X \)) with the x-axis as a lever
     \item \( \mathbb{E}(X) \) is a \textbf{long-run average}. Suppose \( X_1, X_2, \ldots , X_n \) are independent random variables with the same distribution as some random variable \( X \). For large \( n  \), \( \frac{1}{n}(X_1 + \ldots  + X_n) \approx \mathbb{E}(X) \). Imagine you play \( n \) slot machines. Let \( X_j \) be your winnings from a slot machine \( j \). \( \frac{1}{n} (X_1 + \ldots  + X_n) \) is your average slot machine winnings over \( n \) plays. We expect this sum will \(  \approx \mathbb{E}(X) \). 
       \begin{remark}
