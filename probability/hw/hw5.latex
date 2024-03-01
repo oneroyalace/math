@@ -58,7 +58,7 @@
 
 \title{Math 340 HW 4}
 \author{Asa Royal (ajr74) [collaborators: none]}
-\date{February 29, 2024}
+\date{March 1, 2024}
 
 \begin{document}
 \maketitle
@@ -115,23 +115,15 @@
           \end{align}
           We know that \( \forall x, f(x) \geq g(x) \), so the operator in \( (1), (2), \) and \( (3) \) must be \( \geq \). 
         \end{proof}
-      \item Suppose that \( f(x): \mathbb{R} \mapsto \mathbb{R} \) is differentiable. Supose \( \mathbb{E}[X] = ;u \). Let
-
-      \item ...
+      \item Suppose that \( f(x): \mathbb{R} \mapsto \mathbb{R} \) is differentiable. Supose \( \mathbb{E}[X] = \mu \). Let \( \ell(x) \) be the line tangent to the graph of \( f \) at \( (\mu, f(\mu) \). Suppose the graph of \( f \) lies above the graph of \( \ell \) everywhere except the point of tangency. Prove that \( \mathbb{E}[f(X)] \geq f(\mathbb{E}[X]) \). 
         \begin{proof}
-          \( \mathbb{E}[f(X)] \) is given by the tangent line approximation to \( f \), \( l \); \( \mathbb{E}[X] = \mu \), so \( f(\mathbb{E}[X]) = f(\mu) \). Thus, the following are equivalent 
-          \begin{align}
-            \mathbb{E}[f(X)] &\geq f(\mathbb{E}[X]) \\
-            \ell(x) &\geq f(\mu) \\
-            f(\mu) + f'(\mu)(x - \mu) & \geq f(\mu) \\
-            f'(\mu) (x - \mu) \geq 0
-          \end{align}
+          Since the graph of \( f \) lies above the graph of \( l \) everywhere except where they touch ( at \( x=\mu) \), \( f \) is a convex function, and \( (\mu, f(\mu)) \) is its global minimum. Thus for all values \( x \in R(X), \mathbb{E}[f(X)] \geq f(\mu) = f(\mathbb{E}[X] \). 
         \end{proof}
-        We assumed that \(  f(x) > \ell(x) \) except at \( ;u \), which means the tangent line must be downward sloping at \( \mu \). Equivalent, \( f'(\mu) < 0 \). 
+        In particular, this conclusion applies to \( f(x)=e^x \), implying that \( \mathbb{E}[e^X] \geq e^{\mathbb{E}[X]} \). 
     \end{enumerate}
   \item In a box there are \( n \) identical marbles, labeled \( 1, \ldots , n  \). There are \( n \) people who take turns drawing a marble from the box, with replacement. Let \( X_n \) be the nubmer of marbles that were not drawn by anyone. 
   \begin{enumerate}[label=(\roman*)]
-    \item Compute \( \mathbb{E}[\frac{1}{n}X_n \), the expected fraction of marbles not chosen. \\
+    \item Compute \( \mathbb{E}[\frac{1}{n}X_n] \), the expected fraction of marbles not chosen. \\
     \\
     Let \( \chi_i \) represent an indictaor function for the event that marble \( i \) was not drawn by anyone. Then by linearity and the method of indicators, 
     \begin{equation*}
@@ -139,7 +131,7 @@
     \end{equation*}
     The expected value of an indicator fuction is the probability of its underlying event. Since each marble is equally likely to be drawn and rwas are independent, the probability that any given marble was not drawn is \( (n-1/n)^n \). So
     \begin{equation}
-      \mathbb{E} \left[ \frac{1}{n} X_n \right] = \left(\frac{n-1}{n}\right)^n \label{eqn:4.1}
+      \mathbb{E} \left[n \left( \frac{n-1}{n} \right) ^gn{1}{n} X_n \right] = \left(\frac{n-1}{n}\right)^n \label{eqn:4.1}
     \end{equation}
 
     \item What is \( \lim_{n \rightarrow \infty} \mathbb{E} \left[ \frac{1}{n} X_n \right] \)?
@@ -187,7 +179,7 @@
     \end{equation}
 
     The law of large numbers provides an upper probability bound of \( \mathbb{P}(Y \geq 500) \leq e^{-100} \). Chebychev's inequality provides a probability bound of \( \mathbb{P}(Y \geq 500) \leq 0.01 \). Clearly, the law of large numbers provides a tighter bound. 
-  \item Suppose that every timme you shop at a certain store, there is a small randomly selected prize that comes with you rpurchase. Suppose there are \( n \) different prizes that you could win, all equally likely. It is possible that you get the same prize multiple times. Let \( X_n \) be the number of visits you make until you have won all \( n \) distinct prizes. Calculate \( \mathbb{E}[X_n] \) by
+  \item Suppose that every timme you shop at a certain store, there is a small randomly selected prize that comes with you purchase. Suppose there are \( n \) different prizes that you could win, all equally likely. It is possible that you get the same prize multiple times. Let \( X_n \) be the number of visits you make until you have won all \( n \) distinct prizes. Calculate \( \mathbb{E}[X_n] \) by
     \begin{enumerate}[label=(\roman*)]
       \item How many visits \( N_1 \) are needed to win one prize? \\
       \( 1 \). 
@@ -200,7 +192,7 @@
       \begin{equation*}
         N_{k+1} \sim \text{Geo} \left( \frac{n-k}{n} \right)
       \end{equation*}
-    \item \textcolor{red}{How is \( X_n \) related to the random variables \( N_k \)? }
+    \item How is \( X_n \) related to the random variables \( N_k \)?
       \begin{equation*}
         X_n = \sum_{k=1}^n N_k
       \end{equation*}
@@ -217,8 +209,289 @@
                       &= 1 + n\sum_{k=1}^{n-1} \frac{1}{n-k} & \text{factor, rearrange frac} \\
                       &= 1 + n \left( \frac{1}{n-1} + \frac{1}{n-2} + \ldots + \frac{1}{3} + \frac{1}{2} + \frac{1}{1}  \right)
     \end{align*}
-    The term inside the parentheses is a harmonic series. 
-    
+    The term inside the parentheses is a harmonic series bounded by \( ln(n) + 1 \), so \( \mathbb{E}[X_n] \) in fact grows logarithmically--more slowly as \( n \rightarrow \infty \). 
+
+  \item \textbf{Meester 2.7.21}. Let \( (X,Y) \) be a random vector with probability mass function \( \mathbb{P}(X=i,Y=j) = 1/10 \) for \( 1 \leq i \leq j \leq 4 \). 
+    \begin{enumerate}
+      \item Show that this is a probability mass function. 
+        Let \( \Omega = (x,y) \), pairs of outcomes of the random variables with probability mass \( > 0 \). \( |\Omega| = 10: \Omega = \{ \omega | \omega \in \{(1,1), (1, 2), (1,3), (1, 4), (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4) \} \} \). Per the problem setup, each outcome has mass \( 1/10 \), so the entire probability space has mass \( (1/10)*10 \) as required. 
+      \item Compute the marginal distributions of \( X \) and \( Y \). \\
+        Per the partition rule, 
+        \begin{align*}
+          \mathbb{P}(X=1) &= \sum_{y \in Y} \mathbb{P}(X=1,Y=y)  = (1/10) + (1/10) + (1/10) + (1/10) =  4/10 \\
+          \mathbb{P}(X=2) &= \sum_{y \in Y} \mathbb{P}(X=1,Y=y)  = 0 (1/10) + (1/10)  + (1/10) + (1/10) = 3/10 \\
+          \mathbb{P}(X=3) &= \sum_{y \in Y} \mathbb{P}(X=1,Y=y)  = 0 (1/10) + 0(1/10)  + (1/10) + (1/10) = 2/10 \\
+          \mathbb{P}(X=4) &= \sum_{y \in Y} \mathbb{P}(X=1,Y=y)  = 0 (1/10) + 0(1/10)  + 0(1/10) + (1/10) = 1/10 \\
+          % \mathbb{P}(X=1) &= \sum_{y \in Y} \mathbb{P}(X=1|Y=y) \mathbb{P}(Y=y) = \frac{1}{4} \sum_{y \in Y} \mathbb{P}(X=1|Y=y) = \frac{1}{4}(1 + 1/2 + 1/3 + 1/4) = 25/48 \\
+          % \mathbb{P}(X=2) &= \sum_{y \in Y} \mathbb{P}(X=2|Y=y) \mathbb{P}(Y=y) = \frac{1}{4} \sum_{y \in Y} \mathbb{P}(X=2|Y=y) = \frac{1}{4}(0 + 1/2 + 1/3 + 1/4) = 13/48 \\
+          % \mathbb{P}(X=3) &= \sum_{y \in Y} \mathbb{P}(X=3|Y=y) \mathbb{P}(Y=y) = \frac{1}{4} \sum_{y \in Y} \mathbb{P}(X=3|Y=y) = \frac{1}{4}(0 + 0 + 1/3 + 1/4) = 7/48 \\
+          % \mathbb{P}(X=4) &= \sum_{y \in Y} \mathbb{P}(X=4|Y=y) \mathbb{P}(Y=y) = \frac{1}{4} \sum_{y \in Y} \mathbb{P}(X=4|Y=y) = \frac{1}{4}(0 + 0 + 0 + 1/4) = 1/16 \\
+        \end{align*}
+        As expected,
+        \begin{equation*}
+          \sum_{i=1}^4 \mathbb{P}(X=i) = 1
+        \end{equation*}
+        \begin{align*}
+          \mathbb{P}(Y=1) &= \sum_{x \in x} \mathbb{P}(X=x,Y=1)  =  (1/10) + 0(1/10)  + 0(1/10) + 0(1/10) = 1/10 \\
+          \mathbb{P}(Y=2) &= \sum_{x \in x} \mathbb{P}(X=x,Y=2)  =  (1/10) + (1/10)  + 0(1/10) + 0(1/10) = 2/10 \\
+          \mathbb{P}(Y=3) &= \sum_{x \in x} \mathbb{P}(X=x,Y=3)  =  (1/10) + (1/10)  + (1/10) + 0(1/10) = 3/10 \\
+          \mathbb{P}(Y=4) &= \sum_{x \in x} \mathbb{P}(X=x,Y=4)  =  (1/10) + (1/10)  + (1/10) + (1/10) = 4/10 \\
+          % \mathbb{P}(Y=1) &= \sum_{x \in X} \mathbb{P}(Y=1|X=x) \mathbb{P}(X=x) = (1/4)(25/48) + 0 + 0  =25/192\\
+          % \mathbb{P}(Y=2) &= \sum_{x \in X} \mathbb{P}(Y=2|X=x) \mathbb{P}(X=x) = (1/4)(25/48) + (1/3)(13/48) + 0 + 0 = 127/576  \\
+          % \mathbb{P}(Y=3) &= \sum_{x \in X} \mathbb{P}(Y=3|X=x) \mathbb{P}(X=x) = (1/4)(25/48) + (1/3)(13/48) + (1/2)(7/48) + 0 = 169/576  \\
+          % \mathbb{P}(Y=4) &= \sum_{x \in X} \mathbb{P}(Y=4|X=x) \mathbb{P}(X=x) = (1/4)(25/48) + (1/3)(13/48) + (1/2)(7/48) + 1(1/16) = 205/576
+        \end{align*}
+        As expected, 
+        \begin{equation*}
+          \sum_{i=1}^4 \mathbb{P}(Y=i) = 1
+        \end{equation*}
+      \item Are \( X \) and \( Y \) independent? \\
+        \textbf{No}. Counterexample: 
+        \begin{align*}
+          \mathbb{P}(X=4, Y=1) = 0 \\
+          \mathbb{P}(X=4)\mathbb{P}(Y=1) = (1/16)(25/192) \neq 0
+        \end{align*}
+
+      \item Compute \( \mathbb{E}[XY] \) \\
+        \begin{align*}
+          \mathbb{E}[XY] &= \sum_{\substack{x,y \in (R(X),R(Y)) \\ x \leq y}} XY \mathbb{P}(X=x,Y=y) \\
+                         &= \frac{1}{10} \sum_{x,y} XY \\
+                         &= \frac{1}{10} [(1 * 1) + (1 * 2) + (1 * 3) + (1 * 4) + (2*2) + (2*3) + (2*4)  + (3*3) + (3*4) + (4*4)] \\
+                         &= 6.5
+        \end{align*}
+    \end{enumerate}
+
+  \item \textbf{Meester 2.7.24}. We roll two fair dice. Find the joint probability mass function of \( X \) and \( Y \) when 
+    \begin{enumerate}
+      \item \( X \) is the largest value obtained and \( Y \) is the sum of the values \\ \\
+        Consider the event \( Y=3 \). All combinations of two dice occur with equal probability, and two such outcomes lead to \( Y=3 \): \( (1,2) \) and \( (2,1) \). The probability of seeing either of these outcomes is \( \mathbb{P}(Y) = 2/36 \). If \( Y = 2 \), we know intuitively that the only possible value of \( X \) is \( 1 \). Thus \( \mathbb{P}(X=1|Y=2) = 1 \). To find \( \mathbb{P}(Y=2,X=1) \), we apply the definition of conditional probability and see \( \mathbb{P}(Y=2,X=1) = \mathbb{P}(Y=2|X=1) \mathbb{P}(Y=1) = 1/36 \).  We can replicate this approach to find the joint probability for all values with non-zero probability mass in the ranges of \( X \) and \( Y \). 
+        \\ \\
+        The following table enumerates \( \mathbb{P}(X=x,Y=y) \) for \(  x \in R(X), y \in R(Y) \). Blank cells represent events with probability 0. 
+        \begin{center}
+          \begin{tabular}{ |c|c|c|c|c|c|c|c| }
+            \hline
+            & X=1 & X=2 & X=3 & X=4 & X=5 & X=6  \\
+            \hline
+            Y=2 & 1/36 &&&&&\\
+            \hline 
+            Y=3 & & 2/36 &&&&\\
+            \hline
+            Y=4 & & 1/36 & 2/36 &&&\\
+            \hline
+            Y=5 & & & 2/36 & 2/36 &&\\
+            \hline
+            Y=6 & & & 1/36 & 2/36 & 2/36 &\\
+            \hline
+            Y=7 & & & & 2/36 & 2/36 & 2/36 \\
+            \hline
+            Y=8 & & & & 1/36 & 2/36 & 2/36  \\
+            \hline
+            Y=9 & & & &  & 2/36 & 2/36  \\
+            \hline
+            Y=10 & & & &  & 1/36 & 2/36  \\
+            \hline
+            Y=11 & & & &  &  & 2/36  \\
+            \hline
+            Y=12 & & & &  & & 1/36 \\
+            \hline
+          \end{tabular}
+        \end{center}
+      \item \( X \) is the value on the first die and \( Y \) is the largest value \\
+        \( \forall x \in R(X), \mathbb{P}(X=x) = 1/6 \). Thus, \( \mathbb{P}(Y=y,X=x) = \mathbb{P}(Y=y|X=x) \mathbb{P}(X=x) = (1/6) \mathbb{P}(Y=y|X=x) \). \\
+        \\
+        The following table enumerates \( \mathbb{P}(X=x,Y=y) \) for \( x \in R(X), y \in R(Y) \). Blank cells represent events with probability 0. 
+        \begin{center}
+          \begin{tabular}{ |c|c|c|c|c|c|c|c| }
+            \hline
+            & X=1 & X=2 & X=3 & X=4 & X=5 & X=6  \\
+            \hline
+            Y=1 & 1/36 &&&&&\\
+            \hline
+            Y=2 & 1/36 & 1/18 &&&&\\
+            \hline 
+            Y=3 & 1/36 & 1/36 & 1/12 &&&\\
+            \hline
+            Y=4 & 1/36& 1/36 & 1/36 & 1/9&&\\
+            \hline
+            Y=5 & 1/36 & 1/36 & 1/36 & 1/36 & 5/36 &\\
+            \hline
+            Y=6 & 1/36 & 1/36 & 1/36 & 1/36 & 1/36 & 1/6\\
+            \hline
+          \end{tabular}
+        \end{center}
+      \item \( X \) is the smallest value and \( Y \) is the largest \\
+        Note that \( \mathbb{P}(Y=y|X=x) = 0  \) if \( y < x \) and that \( \mathbb{P}(Y=y|X=x) = 2/36 \)  \( \forall y > x \) since there are two ways to roll  the values \( \{x,y\} \).  \\\\
+        The following table enumerates \( \mathbb{P}(X=x,Y=y) \) for \( x \in R(X), y \in R(Y) \). Blank cells represent events with probability 0. 
+        \begin{center}
+          \begin{tabular}{ |c|c|c|c|c|c|c|c| }
+            \hline
+            & X=1 & X=2 & X=3 & X=4 & X=5 & X=6  \\
+            \hline
+            Y=1 & 1/36 &&&&&\\
+            \hline
+            Y=2 & 2/36 & 1/36 &&&&\\
+            \hline 
+            Y=3 & 2/36 & 2/36 & 1/36 &&&\\
+            \hline
+            Y=4 & 2/36& 2/36 & 2/36 & 1/36 &&\\
+            \hline
+            Y=5 & 2/36 & 2/36 & 2/36 & 2/36 & 1/36 &\\
+            \hline
+            Y=6 & 2/36 & 2/36 & 2/36 & 2/36 & 2/36 & 1/36\\
+            \hline
+          \end{tabular}
+        \end{center}
+    \end{enumerate}
+
+  \item \textbf{Meester 2.7.25}
+    Note that
+    \begin{equation*}
+      \mathbb{E}[Y|X=x] = \sum_{y \in R(Y)} y \mathbb{P}(Y=y|X=x) = \sum_{y \in R(Y)} y \frac{\mathbb{P}(Y=y, X=x)}{\mathbb{P}(X=x)}
+    \end{equation*}
+    So to calculate \( \mathbb{E}[Y|X=x] \), we can calculate the weighted average of the conditional \( Y \) values, then normalize that weighted average by dividing by the probability that \( X=x \). 
+    \begin{enumerate}
+      \item \( X \) is the largest value obtained and \( Y \) is the sum of the values 
+      \\
+     \begin{align*}
+       \mathbb{E}[Y|X=1] &= \frac{2(1/36)}{1/36} = 2 \\
+       \mathbb{E}[Y|X=2] &= \frac{3(2/36) + 4(1/36)}{3/36} = 10/3 \\
+       \mathbb{E}[Y|X=3] &= \frac{4(2/36) + 5(2/36) + 6(1/36)}{3/36} = 24/5 \\
+       \mathbb{E}[Y|X=4] &= \frac{5(2/36) + 6(2/36) + 7(2/36) + 8(1/36)}{7/36} = 44/7 \\
+       \mathbb{E}[Y|X=5] &= \frac{6(2/36) + 7(2/36) + 7(2/36) + 8(2/36) + 9(2/36) + 10(1/36) }{9/36} = 84/9 \\
+       \mathbb{E}[Y|X=6] &= \frac{7(2/36) + 8(2/36) + 9(2/36) + 10(2/36) + 11(2/36) + 12(1/36) }{11/36} = 102/11 \\
+     \end{align*} 
+
+    \item \( X \) is the value on the first die and \( Y \) is the largest value 
+     \begin{align*}
+       \mathbb{E}[Y|X=1] &= \frac{(1/36)[1+2+3+4+5+6]}{6/36} = 21/6 \\
+       \mathbb{E}[Y|X=2] &= \frac{2(2/36) + 3(1/36) + 4(1/36) + 5(1/36) + 6(1/36)}{6/36} = 22/6 \\
+       \mathbb{E}[Y|X=3] &= \frac{3(3/36) + 4(1/36) + 5(1/36) + 6(1/36)}{6/36} = 4 \\
+       \mathbb{E}[Y|X=4] &= \frac{4(4/36) + 5(1/36) + 6(1/36) }{6/36} = 27/6 \\
+       \mathbb{E}[Y|X=5] &= \frac{5(5/36) + 6(1/36) }{6/36} = 31/6 \\
+       \mathbb{E}[Y|X=6] &= \frac{6(6/36)}{6/36} = 1 \\
+     \end{align*} 
+    \item \( X \) is the smallest value and \( Y \) is the largest \\
+     \begin{align*}
+       \mathbb{E}[Y|X=1] &= \frac{1(1/36)+2(2/36)+3(2/36)+4(2/36)+5(2/36)+6(2/36)}{11/36} = 41/11 \\
+       \mathbb{E}[Y|X=2] &= \frac{2(1/36) + 3(2/36) + 4(2/36) + 5(2/36) + 6(2/36)}{9/36} = 38/9 \\
+       \mathbb{E}[Y|X=3] &= \frac{3(1/36) + 4(2/36) + 5(2/36) + 6(2/36)}{7/36} = 33/7 \\
+       \mathbb{E}[Y|X=4] &= \frac{1(4/36) + 5(2/36) + 6(2/36) }{5/36} = 26/5 \\
+       \mathbb{E}[Y|X=5] &= \frac{5(1/36) + 6(2/36) }{3/36} = 17/3 \\
+       \mathbb{E}[Y|X=6] &= \frac{6(1/36)}{1/36} = 6 \\
+     \end{align*} 
+    \end{enumerate}
+  \item \textbf{Meester 2.7.32} Let \( X \) and \( Y \) be independent and geometrically distributed with the same parameter \( p \). Compute the probability mass function of \( X-Y \). Can you also compute \( P(X=Y) \) now? \\
+  \\
+  \textbf{Compute probability mass function}
+  \begin{equation*}
+    \mathbb{P}(X-Y=k) =\sum_{x \in R(X)} \mathbb{P}(X-Y=k | X=x) \mathbb{P}(X=x)
+  \end{equation*}
+  So rearranging the random variables,
+  \begin{align*}
+    \mathbb{P}(X-Y=k) &= \sum_{ x \in R(X)} \mathbb{P}(Y=X-k|X=x) \mathbb{P}(X=x) \\
+                      &= \sum_{x \in R(X)} (1-p)^{x-k-1} p (1-p)^{x-1}p & \text{marginal of geo r.v.} \\
+                      &= \sum_{x \in R(X)} (1-p)^{2x-k-2} p^2 & \text{combine terms} \\
+                      &= p^2(1-p)^{-k-2} \sum_{x \in R(X)} (1-p)^{2x} & \text{factor} \\
+                      &= p^2(1-p)^{-k-2} \sum_{x=1}^{\infty} \left[(1-p)^2\right]^x & \text{separate exponents} \\
+                      &= \frac{p^2(1-p)^{-k-2} }{1-(1-p)^2} & \text{evaluate geo series}
+  \end{align*}
+  \textbf{Compute} \( \mathbb{P}(X=Y) \) \\
+  \\
+  \( X=Y \) occurs when when \( X-Y = 0 \). Per the probability mass function occurs, the probability of this event is
+  \begin{equation*}
+    \mathbb{P}(X-Y=0) = \frac{p^2(1-p)^{-2} }{1-(1-p)^2} 
+  \end{equation*}
+  \item A bag has \( 14 \) marbles: 10 are red, 4 are blue. Consider the following two-stage experiment: I roll a standard 6-sided die one time. Let \( Y \) be the value rolled. Then I draw \( Y \) marbles randomly from the bag without replacement. 
+    \begin{enumerate}[label=(\roman*)]
+      \item What is the probability that all 4 blue marbles are drawn? \\
+        Per the partition rule, 
+
+        \begin{equation}
+          \mathbb{P}(X=4) = \sum_{y \in R(Y)} \mathbb{P}(X=4|Y=y) \mathbb{P}(Y=y) \label{eqn:11.1}
+        \end{equation}
+        If we draw \( 4 \) blue marbles, \( Y \) must have been \( \geq 4 \), so \( (\ref{eqn:11.1}) \) can be refined to:
+        \begin{equation}
+          \mathbb{P}(X=4) = \sum_{y=4}^6 \mathbb{P}(X=4|Y=y) \mathbb{P}(Y=y) \label{eqn:11.2}
+        \end{equation}
+
+        We can count the conditional probability that \( X=4|Y=k \): 
+        \begin{align}
+          \mathbb{P}(X=4|Y=4) &= \frac{{4 \choose 4}}{{14 \choose 4}} \label{eqn:11.3} \\
+          \mathbb{P}(X=4|Y=5) &= \frac{{4 \choose 4}{10 \choose 1}}{{14 \choose 5}}  \label{eqn:11.4}\\
+          \mathbb{P}(X=4|Y=6) &= \frac{{4 \choose 4}{10 \choose 2}}{{14 \choose 6}} \label{eqn:11.5}
+        \end{align}
+        \( \mathbb{P}(Y=y) \) for any \( y \in \{4,5,6\} \) is \( 1/6 \). Plugging this information and \( (\ref{eqn:11.3}), (\ref{eqn:11.4}), (\ref{eqn:11.5}) \) into \( (\ref{eqn:11.2}) \), we find that
+        \begin{equation*}
+          \mathbb{P}(X=4) = \frac{1}{6} \left[ \frac{{4 \choose 4}}{{14 \choose 4}}  + \frac{{4 \choose 4}{10 \choose 1}}{{14 \choose 5}} + \frac{{4 \choose 4}{10 \choose 2}}{{14 \choose 6}} \right] = \frac{1}{286}
+        \end{equation*}
+
+      \item What is the expected number of red marbles drawn?
+        Let \( R \) be a random variable denoting how many red marbles are drawn. Applying the standard formula for expected value,
+        \begin{equation}
+          \mathbb{E}[R] = \sum_{r \in \text{Range}(R)} r \mathbb{P}(R=r) = \sum_{r} r \sum_{y \in \text{Range}(y)}  \mathbb{P}(R=r|Y=y) \mathbb{P}(Y=y)
+        \end{equation}
+        \( R \) is naturally limited by \( Y \) and \( 1 \leq Y \leq 6 \), so  
+        \begin{equation*}
+          \mathbb{E}[R] = \sum_{y=1}^6  \sum_{r=1}^y r  \mathbb{P}(R=r|Y=y) \mathbb{P}(Y=y) = \frac{1}{6} \sum_{y=1}^6  \sum_{r=1}^y r  \mathbb{P}(R=r|Y=y)
+        \end{equation*}
+
+        For each combination of \( r,y \), we can determine \( \mathbb{P}(R=r|Y=y) \) through counting principles. E.g., if \( r=3, y=4 \), we are trying to find the probability that we draw three red marbles given we draw four marbles in total. There are \( {4 \choose 3} \) ways to choose 3 red marbles and \( {10 \choose 1} \) ways to choose the last marble, so there are, in total, \( {4 \choose 3} {10 \choose 1} \) ways to choose three red marbles in a draw of four. In comparison, there are \( {14 \choose 4} \) ways to draw any four marbles, so \( \mathbb{P}(R=3|Y=4) = \frac{{4 \choose 3} {10 \choose 1}}{{14 \choose 4}} \). Applying this to all, cases, 
+        \begin{align*}
+          \mathbb{E}[R] = \frac{1}{6} \Bigg[ &1 \frac{{10 \choose 1}}{{14 \choose 1}} \\
+          + &1 \frac{{10 \choose 1} {4 \choose 1}}{{14 \choose 2}} + 2 \frac{{10 \choose 2} }{{14 \choose 3}} \\
+          + &1 \frac{{10 \choose 1} {4 \choose 2}}{{14 \choose 3}} + 2 \frac{{10 \choose 2} {4 \choose 1}}{{14 \choose 3}} +  3 \frac{{10 \choose 3} }{{14 \choose 3}}\\
+          + &1 \frac{{10 \choose 1} {4 \choose 3}}{{14 \choose 4}} + 2 \frac{{10 \choose 2} {4 \choose 2}}{{14 \choose 2}} +  3 \frac{{10 \choose 3} { 4 \choose 1 }}{{14 \choose 4}} + 4 \frac{{10 \choose 4} }{{14 \choose 4}}\\
+          + &1 \frac{{10 \choose 1} {4 \choose 4}}{{14 \choose 5}} + 2 \frac{{10 \choose 2} {4 \choose 3}}{{14 \choose 5}} +  3 \frac{{10 \choose 3} { 4 \choose 2 }}{{14 \choose 5}} + 4 \frac{{10 \choose 4} { 4 \choose 1 }}{{14 \choose 5}} +  5\frac{{10 \choose 5} }{{14 \choose 5}}\\
+          + &1 \cancel{\frac{{10 \choose 1} {4 \choose 5}}{{14 \choose 6}}} + 2 \frac{{10 \choose 2} {4 \choose 4}}{{14 \choose 6}} +  3 \frac{{10 \choose 3} { 4 \choose 3 }}{{14 \choose 6}} + 4 \frac{{10 \choose 4} { 4 \choose 2 }}{{14 \choose 6}} + 5 \frac{{10 \choose 5} { 4 \choose 1 }}{{14 \choose 6}} +  6\frac{{10 \choose 6} }{{14 \choose 6}} \Bigg]
+        \end{align*}
+    \end{enumerate}
+  \item Roll two fair 6-sided dice, one aftere the other. Let \( X \) be the number on the first roll. Let \( Y \) be the number on the second roll. Let \( Z = X - Y \). 
+    \begin{enumerate}[label=(\roman*)]
+      \item What is \( \mathbb{P}(X > Y) \)?  \\
+        \begin{equation*}
+          \mathbb{P}(X > Y) = \sum_{y=1}^5 \sum_{\substack{ x \leq 6 \\ x > y \\ x \in \mathbb{Z}}} \mathbb{P}(X=x, Y=y) = (5 + 4 + 3 + 2 + 1) \mathbb{P}(X=x,Y=y) = 15 \mathbb{P}(X=x,Y=y
+        \end{equation*}? 
+        Since all events \( X = k \) and \( Y=j \) for \( k, j \in \{1,2,\ldots , 6\} \) are equally likely and there are 36 such events, \( \mathbb{P}(X=k,Y=j) = 1/36 \) and \framebox{\( \mathbb{P}(X > Y) = 15/36 \)}. 
+      \item What is the joint distribution of \( X \) and \( Z \)? \\ 
+        This question is essentnially asking how likely it is that we see \( X=k \) and some \( Y=y \) that is exactly \( Z=j \) smaller than \( k \). All events \(( X=k) \cap (Y=y) \) are equally likely so long as \( k \) and \( y \) are valid dice values. Thus, so long as \( k - j > 0 \) (i.e. \( Y > 0 \)) and \( k-j \leq 6\) (i.e. \( Y \leq 6) \), \( \mathbb{P}(X=k,Z=j) = 1/36 \). Succinctly, 
+        \[
+        \mathbb{P}(X=k,Z=j) = \begin{cases}
+          1/36, & 0 < k-j  \\
+          0, & \text{otherwise}
+        \end{cases}
+        \]
+      \item What is the distribution of \( Z \)?  \\
+        Per the partition rule,
+        \begin{equation*}
+          \mathbb{P}(Z=k) = \sum_{j=1}^6 \mathbb{P}(Z=k,X=j)
+        \end{equation*}
+        We can find \( \mathbb{P}(Z=1) \) by thinking about \( \mathbb{P}(Z=k,X=j) \), for each \( j \in R(X) \). When \( j=1 \),  to fulfill k=1, \( 1 = 1-Y \), so \( Y=0 \) which is impossible. Thus \( \mathbb{P}(Z=1,X=1) = 0 \). If \( j=2 \), to fulfill \( k=2 \), \( 1 = 2-Y \), so \( Y=1 \). \( \mathbb{P}(X=2,Y=1) = \mathbb{P}(X=2,Z=1) = 1/36 \). Continuing to evaluate joint probabilities in this way, we find
+        \begin{align*}
+          \mathbb{P}(Z=1) = \mathbb{P}(Z=-1) = 5/36 \\
+          \mathbb{P}(Z=2) = \mathbb{P}(Z=-2) = 4/36 \\
+          \mathbb{P}(Z=3) = \mathbb{P}(Z=-3) = 3/36 \\
+          \mathbb{P}(Z=4) = \mathbb{P}(Z=-4) = 2/36 \\
+          \mathbb{P}(Z=5) = \mathbb{P}(Z=-5) = 1/36 \\
+        \end{align*}
+      \item What is the conditional distribution of \( X \) given \( Z=2 \)?  \\
+        We first note that \( \mathbb{P}(Z=2) = 4/36 \). Now since \( \mathbb{P}(X=k,Z=j) \) occurs with equal probability for each valid \( k,j \), and \( k > j \) given the construction of \( Z \), 
+        \begin{align*}
+          \mathbb{P}(Z=2,X=3) &= \mathbb{P}(Z=2,X=4) = \mathbb{P}(Z=2, X=5) = \mathbb{P}(Z=2, X=6) = 1/36 \\
+          \mathbb{P}(Z=2, X=1) &= \mathbb{P}(Z=2, X=2) = 0/36
+        \end{align*}
+        Normalizing these probabilities using \( \mathbb{P}(Z=2) \), we find
+        \[
+          \mathbb{P}(X|Z=2) = 
+          \begin{cases}
+            1/4, & x \in \{3,4,5 ,6 \}\\
+            0, & \text{otherwise}
+          \end{cases}
+        \]
+
+      \item Are \( X \) and \( Z \) independent? \\
+        No. For a counterexample, consider \( X=1, Z=2 \). \( \mathbb{P}(X=1,Z=2) = 0 \) since \( Z < X \) by construction. But \( \mathbb{P}(X=1)\mathbb{P}(Z=2) = (1/6)(4/36) \neq 0 \). 
+    \end{enumerate}
+
 \end{enumerate}
 \end{document}
 
