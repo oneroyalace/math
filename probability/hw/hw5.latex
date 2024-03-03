@@ -56,7 +56,7 @@
 \makeatother
 
 
-\title{Math 340 HW 4}
+\title{Math 340 HW 5}
 \author{Asa Royal (ajr74) [collaborators: none]}
 \date{March 1, 2024}
 
@@ -103,6 +103,52 @@
     \end{proof}
 
   \item Meester 2.7.15
+    \begin{enumerate}
+      \item What is the probability that a mixture of \( k \) samples contains the antibody? \\
+      \\
+      The event of any given sample testing negative \( (1-p) \) is independent of the result of the other samples. Thus the probability that \( k \) samples all test negative is \( (1-p)^k \), and the probability that the \( k \) samples yield a positive test is \( 1-(1-p)^k \). 
+    \item Let \( S \) be the total number of tests that need to be performed when the original number of samples is \( n=mk \). Compute \( \mathbb{E}[S] \) and \( \mathrm{Var}(S) \).  \\
+    \\
+    \textbf{Compute \( \mathbb{E}[S] \)} \\
+    \\
+    The chance that a group tests postitive is \( 1-(1-p)^k \), as calculated in part \( a \). Since the results of each group test are independent of each other, the number of groups that test positive is a random variable \( N \sim \text{Binomial}(m,1-(1-p)^k) \). Thus, \( \mathbb{E}[N] = m(1-(1-p)^k) \). \( \mathbb{E}[S] \) is a function of \( \mathbb{E}[N] \). In particular, \( \mathbb{E}[S] = k \mathbb{E}[N] + m \), since we will need \( m \) tests for the initial group tests, then an additional \( k \) tests  for each group that tests positive. Thus, 
+    \begin{align*}
+      \mathbb{E}[S] = mk(1-(1-p)^k) + m
+    \end{align*} 
+    And since \( m = n/k \), 
+    \begin{equation*}
+      \framebox{\(\mathbb{E}[S] = n(1-(1-p)^k) + n/k\)}
+    \end{equation*}
+    \textbf{Compute \( \mathrm{Var}(S) \)} \\
+    \\
+    As discussed above, \(S = kN + m \), so noting that the variance of a binomially distributed r.v. is \( np(1-p) \), 
+    \begin{align*}
+      \mathrm{Var}(S) &= \mathrm{Var}(kN + m) = k^2 \mathrm{Var}(N) = mk^2 (1-p)^k[1-(1-p)^k]
+    \end{align*}
+    And since \( m=n/k \), we can simplify the above to
+    \begin{equation*}
+      \framebox{\(\mathrm{Var}(S) = nk (1-p)^k[1-(1-p)^k]\)}
+    \end{equation*}
+
+  \item  For what values of \( p \) does this method give an improvement for suitable \( k \) when we compare this to individual tests right from the beginning? Find the optimal value of \( k \) as a function of \( p \). 
+    We wish to maximize \( n - \mathbb{E}[S] \), the "savings" from batch testing. This is equivalent to minimizing \( \mathbb{E}[S] \). We find the value of \( k \) that minimizes \( \mathbb{E}[S] \) by finding \( \frac{\partial \mathbb{E}[S]}{\partial k} \). Expanded out, \( \mathbb{E}[S] = n - n(1-p)^k + n/k \). So
+    \begin{align*}
+      \frac{\partial \mathbb{E}[S]}{\partial k} &= \frac{\partial }{\partial k} (n - n(1-p)^k + nk^{-1} ) \\
+                                                &= -n (1-p)^k \ln(1-p) -nk^{-2}
+    \end{align*}
+    We set this expression equal to 0 to find critical points. 
+
+    \begin{align*}
+      -n (1-p)^k \ln(1-p) -nk^{-2} &= 0  \\
+      k^2 (1-p)^k \ln(1-p) + 1 &= 0 & \text{multiply both sides by \( -k^2/n \)} \\
+      k^2 (1-p)^k &= \frac{-1}{\ln(1-p)} & \text{move constant terms}\\
+      \ln(k^2 (1-p)^k) &= \ln \left( \frac{-1}{\ln(1-p)} \right) & \text{log both sides} \\
+      2 \ln k + k \ln(1-p) &= \ln \left( \frac{-1}{\ln(1-p)} \right)
+    \end{align*}
+
+    
+    \framebox{Unfortunately, I can't figure out how to solve this equation for \( k \)}. 
+    \end{enumerate}
   \item Suppose \( X \) is a discrete random variable. 
     \begin{enumerate}[label=(\roman*)]
       \item Prove that \( \forall x f(x), \geq g(x) \implies \mathbb{E}[f(X)] \geq \mathbb{E}[g(X)] \), assuming these are well-defined. 
@@ -117,7 +163,7 @@
         \end{proof}
       \item Suppose that \( f(x): \mathbb{R} \mapsto \mathbb{R} \) is differentiable. Supose \( \mathbb{E}[X] = \mu \). Let \( \ell(x) \) be the line tangent to the graph of \( f \) at \( (\mu, f(\mu) \). Suppose the graph of \( f \) lies above the graph of \( \ell \) everywhere except the point of tangency. Prove that \( \mathbb{E}[f(X)] \geq f(\mathbb{E}[X]) \). 
         \begin{proof}
-          Since the graph of \( f \) lies above the graph of \( l \) everywhere except where they touch ( at \( x=\mu) \), \( f \) is a convex function, and \( (\mu, f(\mu)) \) is its global minimum. Thus for all values \( x \in R(X), \mathbb{E}[f(X)] \geq f(\mu) = f(\mathbb{E}[X] \). 
+          Since the graph of \( f \) lies above the graph of \( l \) everywhere except where they touch ( at \( x=\mu) \), \( f \) is a convex function, and \( (\mu, f(\mu)) \) is its global minimum. Thus for all values \( x \in R(X), \mathbb{E}[f(X)] \geq f(\mu) = f(\mathbb{E}[X]) \). 
         \end{proof}
         In particular, this conclusion applies to \( f(x)=e^x \), implying that \( \mathbb{E}[e^X] \geq e^{\mathbb{E}[X]} \). 
     \end{enumerate}
@@ -125,29 +171,43 @@
   \begin{enumerate}[label=(\roman*)]
     \item Compute \( \mathbb{E}[\frac{1}{n}X_n] \), the expected fraction of marbles not chosen. \\
     \\
-    Let \( \chi_i \) represent an indictaor function for the event that marble \( i \) was not drawn by anyone. Then by linearity and the method of indicators, 
+    Let \( \chi_i \) represent an indicator function for the event that marble \( i \) was not drawn by anyone. Then by linearity and the method of indicators, 
     \begin{equation*}
-      \mathbb{E}\left[\frac{1}{n} X_n\right] = \frac{1}{n} \mathbb{E}\left[X_n\right] = \frac{1}{n} \mathbb{E}\left[\sum_{i=1}^n \chi_i\right] = \left(\frac{1}{n} \right) ( n )  \left(\mathbb{E}\left[\chi_i\right] \right) = \mathbb{E}[\chi_i]
+      \mathbb{E}\left[\frac{1}{n} X_n\right] = \frac{1}{n} \mathbb{E}\left[X_n\right] = \frac{1}{n} \mathbb{E}\left[\sum_{i=1}^n \chi_i\right] = \left(\frac{1}{n} \right) ( n )  \left(\mathbb{E}\left[\chi_i\right] \right) = \mathbb{E}[\chi_i] = \left( \frac{n-1}{n} \right)^n
     \end{equation*}
-    The expected value of an indicator fuction is the probability of its underlying event. Since each marble is equally likely to be drawn and rwas are independent, the probability that any given marble was not drawn is \( (n-1/n)^n \). So
-    \begin{equation}
-      \mathbb{E} \left[n \left( \frac{n-1}{n} \right) ^gn{1}{n} X_n \right] = \left(\frac{n-1}{n}\right)^n \label{eqn:4.1}
-    \end{equation}
+    Since the expected value of an indicator fuction is the probability of its underlying event. 
 
     \item What is \( \lim_{n \rightarrow \infty} \mathbb{E} \left[ \frac{1}{n} X_n \right] \)?
       \begin{align*}
-        \lim_{n \rightarrow \infty} \mathbb{E} \left[\frac{1}{n} X_n \right] = \lim_{n \rightarrow \infty} \left(\frac{n-1}{n} \right)^n = \lim_{n \rightarrow \infty} \left(1 - \frac{1}{n} \right) ^n = e^{-1}
+        \lim_{n \rightarrow \infty} \mathbb{E} \left[\frac{1}{n} X_n \right] = \lim_{n \rightarrow \infty} \left(\frac{n-1}{n} \right)^n = \lim_{n \rightarrow \infty} \left(1 - \frac{1}{n} \right) ^n = e^{-1} \label{eqn:4.1}
       \end{align*}
-      Per \( (\ref{eqn:4.1}) \), \( \mathbb{E}[X_n] = n \left( \frac{n-1}{n} \right) ^n \), so \( \mathbb{E}[X_n] ^2 = n^2 \left( \frac{n-1}{n} \right) ^{2n} \)
        
-    \item \textcolor{red}{What is \( \mathrm{Var} \left(\frac{1}{n} X_n \right) \)? }
-      The \( \chi_i \) are not independent, because if we know that marble \( j \) was not chosen, that reduces the likelihood that marble \( k \) was not chosen. Thus,w e need to take into account covariance when calculating the variance of the sum. \textcolor{red}{How do I think about calculating covariance between the indicators, though?}
+    \item What is \( \mathrm{Var} \left(\frac{1}{n} X_n \right) \)? 
   \end{enumerate}
   \begin{align}
     \mathrm{Var} \left( \frac{1}{n} X_n \right) &= \left( \frac{1}{n} \right) ^2 \mathrm{Var}(X_n)  \\
-                                                &= \frac{1}{n^2} \mathbb{E}[X ^2] - \mathbb{E}[X]^2
+                                                &= \frac{1}{n^2}( \mathbb{E}[X ^2] - \mathbb{E}[X]^2 )
   \end{align}
-                                                % &= \frac{1}{n ^2} \left( \sum_{i=1}^n \mathrm{Var}( \chi_i) + 2 \sum_{\substack{i < j \\ j < n}} \mathrm{Cov}(\chi_i, \chi_j) \right) & \text{var of sum}
+  We can calculate the square of the mean of \( X \) by multiplying our result from 4i by \( n \) and squaring it: 
+  \begin{equation}
+    \mathbb{E}[X_n]^2 = \left( n \mathbb{E} \left[\frac{1}{n} X_n \right]\right)^2 = n^2 \left( 1 - \frac{1}{n} \right)^{2n}
+  \end{equation}
+  We can calculate the second moment of \( X_n \) by observing:
+  \begin{align*}
+    \mathbb{E}[{X_n} ^2] = \mathbb{E} \left[ \left( \sum_{k=1}^n \chi_{A_1} \right)^2 \right] &= \mathbb{E} \left[ \sum_{k=1}^n \sum_{j=1}^n \chi_{A_j} \chi_{A_k} \right] \\
+                                                                                            &= \sum_{k} \sum_{j} \mathbb{P}(A_k \cap A_j) & \mathbb{E}[\chi_A] = P(A) \\
+                                                                                            &= \sum_{k=1}^n \mathbb{P}(A_k) + 2 \sum_{k < j} \mathbb{P}(A_k \cap A_j) & \text{Count events} \\
+  \end{align*}
+  \( \mathbb{P}(A_k) \) is the chance that marble \( k \) is not chosen. \( \mathbb{P}(A_k \cap A_j) \) is the probability that neither marble \( k \) nor \( j \) was drawn.  The later quantity will be summed \( (n)(n-1)/2 \) times by the summation to account for the intersections of all \( A_k < A_j \). So continuing, 
+  \begin{equation*}
+    \mathbb{E}[{X_n} ^2] = n \left(1 - \frac{1}{n} \right)^n + 2 \left( \frac{n(n-1)}{2} \right) \left( \frac{n-2}{n} \right) ^n = n \left(1 - \frac{1}{n} \right)^n + n(n-1) \left( \frac{n-2}{n} \right)^n
+  \end{equation*}
+  Plugging these quantities into \( (2) \), we see that 
+  \begin{align*}
+    \mathrm{Var} \left( \frac{1}{n} X_n \right) &= \frac{1}{n^2} \left[ \left[ n \left(1 - \frac{1}{n} \right)^n + n(n-1) \left( \frac{n-2}{n} \right)^n \right] -  n^2 \left( 1 - \frac{1}{n} \right)^{2n} \right] \\
+                                                &= \frac{1}{n} \left( 1 - \frac{1}{n} \right)^n + \left(1 - \frac{1}{n} \right) \left( \frac{n-2}{n} \right)^n - \left(1 - \frac{1}{n} \right)^{2n}
+  \end{align*}
+  \pagebreak
   \item ..
     \textbf{Using Chebychev's inequality:} \\
     \\
@@ -175,10 +235,10 @@
     \end{equation}
     In our 10,000 fair coin toss case, we use \( \varepsilon = 1/10 \) to find that 
     \begin{equation}
-      \mathbb{P}(Y \geq 5500) = \mathbb{P} \left( \bigcup_{k \geq 5500  A_{k,10000}} \right) \leq e^{- (0.1) ^2 10000} = e^{-100}
+      \mathbb{P}(Y \geq 5500) = \mathbb{P} \left( \bigcup_{k \geq 5500  A_{k,10000}} \right) \leq e^{- (0.05) ^2 10000} = e^{-25}
     \end{equation}
 
-    The law of large numbers provides an upper probability bound of \( \mathbb{P}(Y \geq 500) \leq e^{-100} \). Chebychev's inequality provides a probability bound of \( \mathbb{P}(Y \geq 500) \leq 0.01 \). Clearly, the law of large numbers provides a tighter bound. 
+    The law of large numbers provides an upper probability bound of \( \mathbb{P}(Y \geq 500) \leq e^{-25} \). Chebychev's inequality provides a probability bound of \( \mathbb{P}(Y \geq 500) \leq 0.01 \). Clearly, the law of large numbers provides a tighter bound. 
   \item Suppose that every timme you shop at a certain store, there is a small randomly selected prize that comes with you purchase. Suppose there are \( n \) different prizes that you could win, all equally likely. It is possible that you get the same prize multiple times. Let \( X_n \) be the number of visits you make until you have won all \( n \) distinct prizes. Calculate \( \mathbb{E}[X_n] \) by
     \begin{enumerate}[label=(\roman*)]
       \item How many visits \( N_1 \) are needed to win one prize? \\
@@ -192,6 +252,7 @@
       \begin{equation*}
         N_{k+1} \sim \text{Geo} \left( \frac{n-k}{n} \right)
       \end{equation*}
+    \pagebreak
     \item How is \( X_n \) related to the random variables \( N_k \)?
       \begin{equation*}
         X_n = \sum_{k=1}^n N_k
@@ -209,7 +270,7 @@
                       &= 1 + n\sum_{k=1}^{n-1} \frac{1}{n-k} & \text{factor, rearrange frac} \\
                       &= 1 + n \left( \frac{1}{n-1} + \frac{1}{n-2} + \ldots + \frac{1}{3} + \frac{1}{2} + \frac{1}{1}  \right)
     \end{align*}
-    The term inside the parentheses is a harmonic series bounded by \( ln(n) + 1 \), so \( \mathbb{E}[X_n] \) in fact grows logarithmically--more slowly as \( n \rightarrow \infty \). 
+    The term inside the parentheses is a harmonic series bounded by \( ln(n) + 1 \), so \( \mathbb{E}[X_n] \) grows at a logarithmic rate, and will thus grow more slowly as \( n \rightarrow \infty \). 
 
   \item \textbf{Meester 2.7.21}. Let \( (X,Y) \) be a random vector with probability mass function \( \mathbb{P}(X=i,Y=j) = 1/10 \) for \( 1 \leq i \leq j \leq 4 \). 
     \begin{enumerate}
@@ -296,6 +357,7 @@
             \hline
           \end{tabular}
         \end{center}
+        \pagebreak
       \item \( X \) is the value on the first die and \( Y \) is the largest value \\
         \( \forall x \in R(X), \mathbb{P}(X=x) = 1/6 \). Thus, \( \mathbb{P}(Y=y,X=x) = \mathbb{P}(Y=y|X=x) \mathbb{P}(X=x) = (1/6) \mathbb{P}(Y=y|X=x) \). \\
         \\
@@ -387,9 +449,12 @@
     \mathbb{P}(X-Y=k) =\sum_{x \in R(X)} \mathbb{P}(X-Y=k | X=x) \mathbb{P}(X=x)
   \end{equation*}
   So rearranging the random variables,
+  \begin{equation}
+    \mathbb{P}(X-Y=k) = \sum_{ x \in R(X)} \mathbb{P}(Y=X-k|X=x) \mathbb{P}(X=x) \label{eqn:10.1} 
+  \end{equation}
+  We can evaluate the expression above by noting that \( \mathbb{P}(Y=X-k|X=x) = \mathbb{P}(Y=x-k) \). Since \( Y \sim \text{Geo}(p) \), this is the chance of seeing \( x-k-1 \) failures and then a success: \( (1-p)^{x-k-1} * p \). By identical reasoning, \(  \mathbb{P}(X=x) = (1-p)^{x-1}*p \). Thus, the expression in \(  ( \ref{eqn:10.1}) \) evaluates to:
   \begin{align*}
-    \mathbb{P}(X-Y=k) &= \sum_{ x \in R(X)} \mathbb{P}(Y=X-k|X=x) \mathbb{P}(X=x) \\
-                      &= \sum_{x \in R(X)} (1-p)^{x-k-1} p (1-p)^{x-1}p & \text{marginal of geo r.v.} \\
+                      &\sum_{x \in R(X)} (1-p)^{x-k-1} p (1-p)^{x-1}p & \text{marginal of geo r.v.} \\
                       &= \sum_{x \in R(X)} (1-p)^{2x-k-2} p^2 & \text{combine terms} \\
                       &= p^2(1-p)^{-k-2} \sum_{x \in R(X)} (1-p)^{2x} & \text{factor} \\
                       &= p^2(1-p)^{-k-2} \sum_{x=1}^{\infty} \left[(1-p)^2\right]^x & \text{separate exponents} \\
@@ -397,7 +462,7 @@
   \end{align*}
   \textbf{Compute} \( \mathbb{P}(X=Y) \) \\
   \\
-  \( X=Y \) occurs when when \( X-Y = 0 \). Per the probability mass function occurs, the probability of this event is
+  \( X=Y \) occurs when when \( X-Y = 0 \). Per the probability mass function calculated above, the probability of this event is
   \begin{equation*}
     \mathbb{P}(X-Y=0) = \frac{p^2(1-p)^{-2} }{1-(1-p)^2} 
   \end{equation*}
@@ -426,32 +491,33 @@
         \end{equation*}
 
       \item What is the expected number of red marbles drawn?
-        Let \( R \) be a random variable denoting how many red marbles are drawn. Applying the standard formula for expected value,
-        \begin{equation}
+        Let \( R \) be a random variable denoting how many red marbles are drawn. Applying the standard formula for expected value, then the partition rule, 
+        \begin{equation*}
           \mathbb{E}[R] = \sum_{r \in \text{Range}(R)} r \mathbb{P}(R=r) = \sum_{r} r \sum_{y \in \text{Range}(y)}  \mathbb{P}(R=r|Y=y) \mathbb{P}(Y=y)
-        \end{equation}
+        \end{equation*}
         \( R \) is naturally limited by \( Y \) and \( 1 \leq Y \leq 6 \), so  
         \begin{equation*}
           \mathbb{E}[R] = \sum_{y=1}^6  \sum_{r=1}^y r  \mathbb{P}(R=r|Y=y) \mathbb{P}(Y=y) = \frac{1}{6} \sum_{y=1}^6  \sum_{r=1}^y r  \mathbb{P}(R=r|Y=y)
         \end{equation*}
 
-        For each combination of \( r,y \), we can determine \( \mathbb{P}(R=r|Y=y) \) through counting principles. E.g., if \( r=3, y=4 \), we are trying to find the probability that we draw three red marbles given we draw four marbles in total. There are \( {4 \choose 3} \) ways to choose 3 red marbles and \( {10 \choose 1} \) ways to choose the last marble, so there are, in total, \( {4 \choose 3} {10 \choose 1} \) ways to choose three red marbles in a draw of four. In comparison, there are \( {14 \choose 4} \) ways to draw any four marbles, so \( \mathbb{P}(R=3|Y=4) = \frac{{4 \choose 3} {10 \choose 1}}{{14 \choose 4}} \). Applying this to all, cases, 
+        For each combination of \( r\) and \(y \), we can determine \( \mathbb{P}(R=r|Y=y) \) through counting principles. E.g., if \( r=3, y=4 \), we are trying to find the probability that we draw three red marbles given we draw four marbles in total. There are \( {4 \choose 3} \) ways to choose 3 red marbles and \( {10 \choose 1} \) ways to choose the last marble, so there are, in total, \( {4 \choose 3} {10 \choose 1} \) ways to choose three red marbles in a draw of four. In comparison, there are \( {14 \choose 4} \) ways to draw any four marbles, so \( \mathbb{P}(R=3|Y=4) = \frac{{4 \choose 3} {10 \choose 1}}{{14 \choose 4}} \). Applying this to each case, 
         \begin{align*}
           \mathbb{E}[R] = \frac{1}{6} \Bigg[ &1 \frac{{10 \choose 1}}{{14 \choose 1}} \\
-          + &1 \frac{{10 \choose 1} {4 \choose 1}}{{14 \choose 2}} + 2 \frac{{10 \choose 2} }{{14 \choose 3}} \\
+          + &1 \frac{{10 \choose 1} {4 \choose 1}}{{14 \choose 2}} + 2 \frac{{10 \choose 2} }{{14 \choose 2}} \\
           + &1 \frac{{10 \choose 1} {4 \choose 2}}{{14 \choose 3}} + 2 \frac{{10 \choose 2} {4 \choose 1}}{{14 \choose 3}} +  3 \frac{{10 \choose 3} }{{14 \choose 3}}\\
-          + &1 \frac{{10 \choose 1} {4 \choose 3}}{{14 \choose 4}} + 2 \frac{{10 \choose 2} {4 \choose 2}}{{14 \choose 2}} +  3 \frac{{10 \choose 3} { 4 \choose 1 }}{{14 \choose 4}} + 4 \frac{{10 \choose 4} }{{14 \choose 4}}\\
+          + &1 \frac{{10 \choose 1} {4 \choose 3}}{{14 \choose 4}} + 2 \frac{{10 \choose 2} {4 \choose 2}}{{14 \choose 4}} +  3 \frac{{10 \choose 3} { 4 \choose 1 }}{{14 \choose 4}} + 4 \frac{{10 \choose 4} }{{14 \choose 4}}\\
           + &1 \frac{{10 \choose 1} {4 \choose 4}}{{14 \choose 5}} + 2 \frac{{10 \choose 2} {4 \choose 3}}{{14 \choose 5}} +  3 \frac{{10 \choose 3} { 4 \choose 2 }}{{14 \choose 5}} + 4 \frac{{10 \choose 4} { 4 \choose 1 }}{{14 \choose 5}} +  5\frac{{10 \choose 5} }{{14 \choose 5}}\\
-          + &1 \cancel{\frac{{10 \choose 1} {4 \choose 5}}{{14 \choose 6}}} + 2 \frac{{10 \choose 2} {4 \choose 4}}{{14 \choose 6}} +  3 \frac{{10 \choose 3} { 4 \choose 3 }}{{14 \choose 6}} + 4 \frac{{10 \choose 4} { 4 \choose 2 }}{{14 \choose 6}} + 5 \frac{{10 \choose 5} { 4 \choose 1 }}{{14 \choose 6}} +  6\frac{{10 \choose 6} }{{14 \choose 6}} \Bigg]
+          + &1 \cancel{\frac{{10 \choose 1} {4 \choose 5}}{{14 \choose 6}}} + 2 \frac{{10 \choose 2} {4 \choose 4}}{{14 \choose 6}} +  3 \frac{{10 \choose 3} { 4 \choose 3 }}{{14 \choose 6}} + 4 \frac{{10 \choose 4} { 4 \choose 2 }}{{14 \choose 6}} + 5 \frac{{10 \choose 5} { 4 \choose 1 }}{{14 \choose 6}} +  6\frac{{10 \choose 6} }{{14 \choose 6}} \Bigg] \\
+            &= \framebox{2.5}
         \end{align*}
     \end{enumerate}
   \item Roll two fair 6-sided dice, one aftere the other. Let \( X \) be the number on the first roll. Let \( Y \) be the number on the second roll. Let \( Z = X - Y \). 
     \begin{enumerate}[label=(\roman*)]
       \item What is \( \mathbb{P}(X > Y) \)?  \\
         \begin{equation*}
-          \mathbb{P}(X > Y) = \sum_{y=1}^5 \sum_{\substack{ x \leq 6 \\ x > y \\ x \in \mathbb{Z}}} \mathbb{P}(X=x, Y=y) = (5 + 4 + 3 + 2 + 1) \mathbb{P}(X=x,Y=y) = 15 \mathbb{P}(X=x,Y=y
-        \end{equation*}? 
-        Since all events \( X = k \) and \( Y=j \) for \( k, j \in \{1,2,\ldots , 6\} \) are equally likely and there are 36 such events, \( \mathbb{P}(X=k,Y=j) = 1/36 \) and \framebox{\( \mathbb{P}(X > Y) = 15/36 \)}. 
+          \mathbb{P}(X > Y) = \sum_{y=1}^5 \sum_{\substack{ x \leq 6 \\ x > y \\ x \in \mathbb{Z}}} \mathbb{P}(X=x, Y=y) = (5 + 4 + 3 + 2 + 1)* \mathbb{P}(X=x,Y=y) = 15 * \mathbb{P}(X=x,Y=y)
+        \end{equation*}
+        Since each event \( (X = k) \cap (Y=j) \) for \( k, j \in \{1,2,\ldots , 6\} \) is equally likely and there are 36 such events, \( \mathbb{P}(X=k,Y=j) = 1/36 \) and \framebox{\( \mathbb{P}(X > Y) = 15/36 \)}. 
       \item What is the joint distribution of \( X \) and \( Z \)? \\ 
         This question is essentnially asking how likely it is that we see \( X=k \) and some \( Y=y \) that is exactly \( Z=j \) smaller than \( k \). All events \(( X=k) \cap (Y=y) \) are equally likely so long as \( k \) and \( y \) are valid dice values. Thus, so long as \( k - j > 0 \) (i.e. \( Y > 0 \)) and \( k-j \leq 6\) (i.e. \( Y \leq 6) \), \( \mathbb{P}(X=k,Z=j) = 1/36 \). Succinctly, 
         \[
@@ -467,19 +533,21 @@
         \end{equation*}
         We can find \( \mathbb{P}(Z=1) \) by thinking about \( \mathbb{P}(Z=k,X=j) \), for each \( j \in R(X) \). When \( j=1 \),  to fulfill k=1, \( 1 = 1-Y \), so \( Y=0 \) which is impossible. Thus \( \mathbb{P}(Z=1,X=1) = 0 \). If \( j=2 \), to fulfill \( k=2 \), \( 1 = 2-Y \), so \( Y=1 \). \( \mathbb{P}(X=2,Y=1) = \mathbb{P}(X=2,Z=1) = 1/36 \). Continuing to evaluate joint probabilities in this way, we find
         \begin{align*}
+          \mathbb{P}(Z=0) = 6/36 \\
           \mathbb{P}(Z=1) = \mathbb{P}(Z=-1) = 5/36 \\
           \mathbb{P}(Z=2) = \mathbb{P}(Z=-2) = 4/36 \\
           \mathbb{P}(Z=3) = \mathbb{P}(Z=-3) = 3/36 \\
           \mathbb{P}(Z=4) = \mathbb{P}(Z=-4) = 2/36 \\
           \mathbb{P}(Z=5) = \mathbb{P}(Z=-5) = 1/36 \\
         \end{align*}
+        \pagebreak
       \item What is the conditional distribution of \( X \) given \( Z=2 \)?  \\
-        We first note that \( \mathbb{P}(Z=2) = 4/36 \). Now since \( \mathbb{P}(X=k,Z=j) \) occurs with equal probability for each valid \( k,j \), and \( k > j \) given the construction of \( Z \), 
+        We note that \( \mathbb{P}(Z=2) = 4/36 \). Now since \( \mathbb{P}(X=x,Z=z) \) occurs with equal probability for each pair \( (x,z) \) with \( 0 \leq z < x \leq 6 \), 
         \begin{align*}
           \mathbb{P}(Z=2,X=3) &= \mathbb{P}(Z=2,X=4) = \mathbb{P}(Z=2, X=5) = \mathbb{P}(Z=2, X=6) = 1/36 \\
           \mathbb{P}(Z=2, X=1) &= \mathbb{P}(Z=2, X=2) = 0/36
         \end{align*}
-        Normalizing these probabilities using \( \mathbb{P}(Z=2) \), we find
+        Normalizing these probabilities using \( \mathbb{P}(Z=2) = 4/36 \), we find
         \[
           \mathbb{P}(X|Z=2) = 
           \begin{cases}
