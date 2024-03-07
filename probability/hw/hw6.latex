@@ -1,0 +1,244 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 5mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+
+\title{Math 340 HW 6}
+\author{Asa Royal (ajr74) [collaborators: none]}
+\date{March 8, 2024}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+  \item \textbf{Meester 2.7.29}. Suppose that a given experiment has \( k \) possible outcomes, the \( i \)th outcome having probability \( p_i \). Denote the number of occurrences of the \( i \)th outcome having probability \( p_i \). Denote the number of occurences of the \( i \)th outcome in \( n \) independent experiments by \( N_i \). Show that 
+    \begin{equation*}
+      \mathbb{P}(N_i = n_1, \ldots N_k = n_k) = \frac{n!}{n_1! n_2! \ldots  n_k !} p_1^{n_1} p_2^{n_2}\ldots  p_k^{n_k}
+    \end{equation*}
+    \begin{proof}
+      Since the experiments are independent, \( \mathbb{P}(N_i=k) \) = \( {p_i}^{k} \) and the chance of seeing a specific ordering of outcomes where \( N_1=1, N_2=2,\ldots N_k=k \) is \( \prod_{i=1}^k {p_i}^{n_k} \). But we are asked for an order-independent probability, so we must multiply that quantity by the total number of ways this could happen. That number is given in the counting writeup on canvas: the number of ways to partition \( n \) distinct results of an experiment to \( k \) possible outcomes is \( n!/(n_1! n_2!\ldots n_k!) \). Thus, 
+      \begin{equation*}
+        \mathbb{P}(N_i = n_1, \ldots N_k = n_k) = \frac{n!}{n_1! n_2! \ldots  n_k !} p_1^{n_1} p_2^{n_2}\ldots  p_k^{n_k}
+      \end{equation*}
+    \end{proof}
+
+
+  \item Let \( p \in (0,1) \). Suppose the random variables \( X_1, X_2, \ldots, X_n \) are independent adn ahve the Bernoulli(\( p) \)) distribution.
+    \begin{enumerate}[label=(\roman*)]
+      \item Compute the function
+        \begin{equation*}
+          \mu(\lambda) = \ln \mathbb{E}[e^{\lambda X_1}], \lambda \in \mathbb{R}
+        \end{equation*}
+        in terms of \( p \) and \( \lambda \). In particular, what are \( \mu(0) \) and \( \mu'(0) \)?  \\
+        \\
+        \textbf{Compute \( \mu(\lambda) \)}: \\
+        Per the definition of expected value, 
+        \begin{equation}
+          \mu(\lambda) = \ln \sum_{x \in R(X)} e^{\lambda x} \mathbb{P}(X_1=x) \label{eqn:2.1}
+        \end{equation}
+        Since \( X_1 \) is a Bernoulli random variable, it can only take on the values \( 0 \) and \( 1 \). Thus \( (\ref{eqn:2.1}) \) is equivalent to 
+        \begin{align*}
+          \mu(\lambda) &= \ln \left(  \sum_{x=0}^1 e^{\lambda x} \mathbb{P}(X_1=x)  \right) \\
+                       &= \ln \left( e^{0*\lambda} * \mathbb{P}(X_1=0) + e^{1*\lambda} * \mathbb{P}(X_1=1) \right) \\
+                       &= \framebox{ \(\ln(1-p + pe^{\lambda}) \) }
+        \end{align*}
+        \textbf{Evaluate \( \mu(0), \mu'(0) \)}: \\
+        Plugging \( \lambda=0 \) into \( \mu(\lambda) \), we see 
+        \begin{equation*}
+          \mu(0) = \ln(1-p + pe^{0}) = \ln(1) = \framebox{0}
+        \end{equation*}
+        Taking the derivative of \( \mu(\lambda) \), we find 
+        \begin{equation*}
+          \mu'(\lambda) = \frac{pe^{\lambda}}{e^{\lambda} p + (1-p)}
+        \end{equation*}
+        So
+        \begin{equation*}
+          \mu'(0) = \frac{pe^0}{e^0p + 1-p} = \framebox{ \(p\) }
+        \end{equation*}
+
+      \pagebreak
+
+      \item Compute the function 
+        \begin{equation*}
+          h(\lambda) = \ln \mathbb{E} \left[e^{\lambda(X_1+\ldots +X_n)} \right]
+        \end{equation*}
+        in terms of \( \mu(\lambda) \) and \( n \). 
+        \begin{align*}
+          h(\lambda) &= \ln \mathbb{E} \left[e^{\lambda(X_1+\ldots +X_n)} \right] \\
+                     &= \ln \mathbb{E} \left[ e^{\lambda X_1} e^{\lambda X_2} \ldots  e^{\lambda X_n} \right] &\text{split exponential term} \\
+                     &= \ln \left( \mathbb{E} \left[e^{\lambda X_1} \right] \mathbb{E} \left[e^{\lambda X_2} \right] \ldots  \mathbb{E} \left[e^{\lambda X_n} \right] \right) & \text{because the \( X_j \) are indep.} \\ 
+                     &= \ln \mathbb{E} \left[ e^{\lambda X_1} \right] + \ln \mathbb{E} \left[ e^{\lambda X_2} \right] + \ldots + \ln \mathbb{E} \left[ e^{\lambda X_n} \right] & \text{log of product \( \rightarrow \) sum of logs} \\
+                     &= n \ln \mathbb{E} \left[e^{\lambda X_1} \right] & \text{because the \( X_j \) have same dist.} \\
+                     &= n \mu(\lambda)
+        \end{align*}
+    \end{enumerate}. 
+
+  \item ..
+    \begin{enumerate}[label=(\roman*)]
+      \item What are the marginal distributions of \( X \) and \( Y \)? 
+        \begin{align*}
+          \mathbb{P}(X=0) &= \sum_{y \in Y} \mathbb{P}(X=0,Y=y) = 0 + 1/4 + 1/4 = 1/2 \\
+          \mathbb{P}(X=1) &= \sum_{y \in Y} \mathbb{P}(X=1,Y=y) = 1/4 \\
+          \mathbb{P}(X=-1) &= \sum_{y \in Y} \mathbb{P}(X=-1,Y=y) = 1/4 \\\\
+          \mathbb{P}(Y=0) &= \sum_{x \in X} \mathbb{P}(X=x,Y=0) = 0 + 1/4 + 1/4 = 1/2 \\
+          \mathbb{P}(Y=1) &= \sum_{x \in X} \mathbb{P}(X=x,Y=1) = 1/4  \\
+          \mathbb{P}(Y=-1) &= \sum_{x \in X} \mathbb{P}(X=x,Y=-1) = 1/4
+        \end{align*}
+
+
+      \item Are \( X \) and \( Y \) independent? \\
+        \\
+        \textbf{No}. As a counterexample of independence, note that \( \mathbb{P}(X=0,Y=0) = 0 \) but \( \mathbb{P}(X=0) * \mathbb{P}(Y=0) = (1/2)*(1/2) = 1/4 \). 
+    \item Compute the covariance \( \mathrm{Cov}(X,Y) \) \\
+    \\
+    Generally, \( \mathrm{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y] \). In this case, the joint probability of \( X \) and \( Y \) is only nonzero when \( XY=0 \), so \( \mathbb{E}[XY]=0 \). In addition, 
+    \begin{equation*}
+      \mathbb{E}[X] = \sum_{x \in R(X)} x \mathbb{P}(X=x) = -1(1/4) + 1(1/4) + 0(1/2)=0 
+    \end{equation*}
+    And symmetricaly, \( \mathbb{E}[Y] = 0 \). Thus, because \( \mathbb{E}[XY] = \mathbb{E}[X]\mathbb{E}[Y] = 0\), \framebox{\(\mathrm{Cov}(X,Y) = 0 \)}. 
+    \end{enumerate}
+
+  \item 
+    \begin{enumerate}[label=(\roman*)]
+      \item What is the joint distribution of \( B \) and \( X_l \)? \\
+        By the definition of conditional probability, 
+        \begin{equation}
+          \mathbb{P}(B=b, X_L = x) = \mathbb{P}(X_L=x | B=b) * \mathbb{P}(B=b) \label{eqn:4.1}
+        \end{equation}
+        If we are drawing from box \( b \), \( b/n \) balls are red. The number of red balls we select in \( L \) draws with replacement is thus a binomial random \( X_L|B=b \sim \text{Binomial}(m, b/n )\). 
+        \begin{equation}
+          \mathbb{P}(X_l=x|B=b) = {L \choose x} \left(\frac{b}{n} \right)^x \left(1 - \frac{b}{n} \right)^{L-x} \label{eqn:4.2}
+        \end{equation}
+        Noting that \( \mathbb{P}(B=b) = 1/n \) and plugging \( (\ref{eqn:4.2}) \) into \( (\ref{eqn:4.1}) \), we conclude
+        \begin{equation*}
+          \mathbb{P}(B=b, X_L=x) = \frac{1}{n} {L \choose x} \left(\frac{b}{n} \right)^x \left(1 - \frac{b}{n} \right)^{L-x}
+        \end{equation*}
+
+
+
+      \item What is the conditional distribution of \( B \) given \( X_L=j \)? 
+        Per Baye's Rule,
+        \begin{equation*}
+          \mathbb{P}(B=b|X_L=j) = \frac{\mathbb{P}(X_L=j|B=b) \mathbb{P}(B=b)}{\mathbb{P}(X_L=j)}
+        \end{equation*}
+        We worked the numerator out in 4i. The denominator is given by the partition rule:
+        \begin{equation*}
+          \mathbb{P}(B=b|X_L=j) = \frac{\frac{1}{n} {L \choose j} \left(\frac{b}{n} \right)^j \left(1 - \frac{b}{n} \right)^{L-j}} {\sum_{b=1}^n \mathbb{P}(X_L=j|B=b) * \mathbb{P}(B=b)}
+        \end{equation*}
+        \( \mathbb{P}(B=b) \) in the denominator = \( 1/n \). Since the same term exists in the numerator, we can cancel both. Further expanding the denominator, we find
+        \begin{equation*}
+          \mathbb{P}(B=b|X_L=j) = \frac{ {L \choose j} \left(\frac{b}{n} \right)^j \left(1 - \frac{b}{n} \right)^{L-j}} {\sum_{b=1}^n {L \choose j} \left(\frac{b}{n} \right)^j \left(1 - \frac{b}{n} \right)^{L-j}  }
+        \end{equation*}
+        Cancelling the \( {L \choose x} \) terms, we conclude
+        \begin{equation*}
+          \mathbb{P}(B=b|X_L=j) = \frac{  \left(\frac{b}{n} \right)^j \left(1 - \frac{b}{n} \right)^{L-j}} {\sum_{b=1}^n \left(\frac{b}{n} \right)^j \left(1 - \frac{b}{n} \right)^{L-j}  }
+        \end{equation*}
+
+
+
+      \item What value of \( k \) maximizes the conditional distribution from part (ii)? \\
+      \\
+        Maximizing the conditional probability in 4ii is equivalent to maximizing its numerator. We can find the value of \( k \) that maximizes the numerator by taking the numerator's derivative with respect to \( k \), then setting that expression equal to 0 to find critical points. 
+        \begin{align*}
+          \frac{d}{dk} \left( \left( \frac{k}{n} \right)^j \left( 1 - \frac{k}{n} \right)^{L-j} \right)  &= \frac{j}{n} \left( \frac{k}{n} \right)^{j-1} \left(1 - \frac{k}{n} \right)^{L-j} + \left( \frac{k}{n} \right)^j \frac{-(L-j)}{n} \left( 1- \frac{k}{n} \right)^{L-j-1} \\
+                                                                                                         &= \frac{1}{n} \left( \frac{k}{n} \right) ^{j-1} \left( 1 - \frac{k}{n} \right) ^{L-j-1} \left[ j \left(1 - \frac{k}{n} \right) - \frac{k}{n}(L-j) \right] \\
+                                                                                                         &= \frac{1}{n} \left( \frac{k}{n} \right) ^{j-1} \left( 1 - \frac{k}{n} \right) ^{L-j-1}  \left(j \cancel{- \frac{jk}{n}} - \frac{kL}{n}  \cancel{+ \frac{kj}{n}} \right) \\
+                                                                                                         &= \frac{1}{n} \left( \frac{k}{n} \right) ^{j-1} \left( 1 - \frac{k}{n} \right) ^{L-j-1} \left(j - \frac{kL}{n} \right)
+        \end{align*}
+
+        Setting the derivative equal to \( 0 \), we see that \( k=\frac{jn}{L} \) is a critical point, as are \( k=n \) and \( k=0 \), though neither of the latter two makes sense as a maximum.  \\\\\framebox{We thus conclude that \( k=\frac{jn}{L} \) maximizes the conditional probability in 4ii. }
+    \end{enumerate}
+
+  \item  Let \( S_n \) be a simple random walk on the integers, starting from \( S_0 = 0 \). Let \( M_n \) denote the maximum of \( S_0, S_1, \ldots , S_n \). Let \( N_n^{max}(b)  \) denote the number of paths for which \( S_k \geq b \) at some time \( k \in \{1,\ldots , n\} \). Let \( N_n^+(b) \) be the number of paths for which \( S_n > b \). Assume \( b \) is an even integer and \( n \) is odd  so that \( \mathbb{P}(S_n = b) = 0 \). 
+  \begin{enumerate}[label=(\roman*)]
+    \item Explain why \( N_n^{max}(b) = 2 \cdot N_n^+(b) \).  \\\\
+      Any path in \( N_n^+(b) \) must have some point \( S_k = b \) and \( S_{k+1} = b+1 \). Mirroring the reflection principle, imagine an alternate path \( S^* \) such that \( {S^*}_{k+j} = b - (S_{k+j}-b) \) for \( j \in \{k+1\ldots n\} \). i.e., an alternate path that is the same as the original up to time \( k \) where the path hits \( b \), then for time \( t \in \{K+1,\ldots ,n \} \) is the reflection of the original path over \( b \). \\
+      \\
+      Since every path constituting those counted in \( N_n^+(b) \) has such an alternate path, \( N_n^{max}(b) = 2 \cdot N_n^+(b) \). 
+
+
+    \item Write a formula for \( \mathbb{P}(M_n \geq b) \) in terms of \( n \) and \( b \). 
+      \begin{equation}
+        \mathbb{P}(M_n \geq b) = \frac{N_n^{max}(b)}{\text{\# paths}}
+      \end{equation}
+      Per 5i, this is equivalent to 
+      \begin{equation}
+        \mathbb{P}(M_n \geq b) = \frac{2N_n^+(b)}{\text{\# paths}} = \frac{2N_n^+(b)}{2^n} = 2^{n-1} N_n^{+}(b) \label{eqn:5.1}
+      \end{equation}
+      \( N_n^{+}(b) \) is the number of paths with \( S_n \geq b \). Imagine that the direction of each step of our random walk is determined by the toss of a coin. For a walk to have \( S_n \geq b \), 
+      \begin{align*}
+        heads - tails &\geq b \\
+        heads &\geq b+ tails \\
+        heads & \geq b + (n - heads) \\
+        2*heads & \geq  b + n \\
+        heads & \geq \frac{b+n}{2}
+      \end{align*}
+
+      The number of ways to flip \( k \) heads in \( n \) tosses is given by \( {n \choose k} \). Any number of heads between \( (b+n)/2 \) and \( n \) will give \( S_n \geq b \). Thus, 
+      \begin{equation}
+        N_n^+(b) = \sum_{i=0}^{n-b} {n \choose \frac{b+ n + i}{2}}
+      \end{equation}
+      Finally, plugging this into \( (\ref{eqn:5.1}) \), we conclude 
+      \begin{equation*}
+        \mathbb{P}(M_n \geq b) = \frac{\sum_{i=0}^{n-b} {n \choose \frac{b+ n + i}{2}}}{2^{n-1}}
+      \end{equation*}
+  \end{enumerate}
+\end{enumerate}
+\end{document}
+
+
+
+
+
