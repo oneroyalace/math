@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{2.6: Vector Fields (Lec 7)}
+\author{Asa Royal (ajr74)}
+\date{February 2, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection{Vector fields}
+\begin{definition}[vector field]
+  A vector field in \( \mathbb{R}^n \) is a map or function \( \vec{F} \subseteq \mathbb{R}^n \mapsto \mathbb{R}^n\). i.e. it maps vectors to vectors
+\end{definition}
+
+\begin{definition}[scalar field]
+  A scalar field in \( \mathbb{R}^n \) is a map or function \( \vec{F} \subseteq \mathbb{R}^n \mapsto \mathbb{R} \). i.e. it maps vectors to real numbers. The gradient field is an example of a scalar field. 
+\end{definition}
+
+\begin{definition}[flow line]
+  If \( \vec{F} \) is a vector field, a \textbf{flow line} for \( \vec{F} \) is a path \( \vec{c}(t) \) s.t. 
+  \begin{equation*}
+    \pvec{c}'(t) = \vec{F}(\vec{c}(t))
+  \end{equation*}
+  I.e. the path a particle would take if acted upon by the force field \( \vec{F} \) represents. The tangent vector of the path always coincides with the vector field. 
+\end{definition}
+
+\subsection{Divergence}
+\begin{definition}[divergence]
+  Divergence is a function (specifically a scalar field) that takes in a vector field and quantifies, at some given point, how much fluid flows away from that point. I.e. it measures the instantaneous rate of expansion of the field at the point.  \\
+  \\
+  If \( \vec{F} \) is a vector field, 
+  \begin{align*}
+    \text{div} \vec{F}  &= \frac{\partial F_1}{\partial x_1} + \ldots  + \frac{\partial F_n}{\partial x_n} \\ 
+                        &= \vec{\nabla} \cdot \vec{F}
+  \end{align*}
+  Note that \( \vec{\nabla} \) is a vector of differentiation operators, \( \frac{\partial }{\partial x_1} \ldots  \frac{\partial }{\partial x_n}\).
+\end{definition}
+
+\begin{remark}
+  I still don't understand why we don't need to take into account the other partial terms, e.g. \( \frac{\partial F_1}{\partial x_2} \)...
+\end{remark}
+
+\begin{definition}[Laplacian]
+  The Laplace operator, \( \nabla^2 \), is the divergence of the gradient:
+  \begin{equation*}
+    \nabla \cdot ( \nabla f) = \frac{\partial ^2 f}{\partial x^2} + \frac{\partial ^2 f}{\partial y ^2} + \frac{\partial ^2 f}{\partial z ^2}
+  \end{equation*}
+\end{definition}
+\subsection{Curl}
+
+\begin{definition}[Curl]
+  Curl is a vector field that lets us quantify the rotation of a vector field. Let \( \vec{F} \) be a vector field representing fluid flow. If \( \text{curl}(\vec{F})_{(x,y)} > 0 \), a rigid wheel placed at \( (x,y) \) will rotate counter clockwise. If \( \text{curl }\vec{F} = \vec{0} \), the wheel will not rotate about its axis. When \( \text{curl } \vec{F} = 0 \), we say a vector field is irrotational. In three-dimensional space, with \( \vec{F} = (F_1, F_2, F_3) \), 
+  \begin{align*}
+    \text{curl } \vec{F} = \nabla \times \vec{F} = \det \begin{bmatrix}
+      \vec{i} & \vec{j} & \vec{k} \\
+      \frac{\partial }{\partial x} & \frac{\partial }{\partial y} & \frac{\partial }{\partial z} \\
+      F_1 & F_2 & F_3
+    \end{bmatrix}
+  \end{align*}
+\end{definition}
+
+\begin{theorem}[curl of a gradient]
+  Gradient vector fields are curl free. I.e. for any \( C^2 \) function \( f \), 
+  \begin{equation*}
+    \nabla \times ( \nabla f) = \vec{0}
+  \end{equation*}
+
+  Since for any \( \vec{v} \), \( \vec{v} \times \vec{v} = \vec{0} \)
+\end{theorem}
+
+\subsection{Relationship between curl/divergence}
+
+\begin{theorem}[curls are divergence free]
+  For any \( C^2 \) vector field \( \vec{F} \), 
+  \begin{equation*}
+    \text{div } \text{curl } \vec{F} = \nabla \cdot (\nabla \cdot \vec{F}) = 0
+  \end{equation*}
+\end{theorem}
+\end{document}
+
+
+
+
