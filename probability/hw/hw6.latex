@@ -123,7 +123,34 @@
                      &= n \ln \mathbb{E} \left[e^{\lambda X_1} \right] & \text{because the \( X_j \) have same dist.} \\
                      &= n \mu(\lambda)
         \end{align*}
-    \end{enumerate}. 
+
+
+      \item Show that for any \( \varepsilon > 0 \) and \( \lambda > 0 \), 
+        \begin{equation}
+          \mathbb{P}(X_1 + \ldots  + X_n > n(p + \varepsilon)) \leq e^{n(\mu(\lambda) - \lambda(\varepsilon + p))} \label{eqn:2.2}
+        \end{equation}
+
+        \begin{proof}
+          Consider the function \( f(x) = e^{\lambda x} \). Because \( f \) increases monotonically with \( x \), for a positive r.v. \( Y \), 
+          \begin{equation*}
+            \mathbb{P}(Y > a) = \mathbb{P}(f(Y) > f(a))
+          \end{equation*}
+
+          So to prove \( (\ref{eqn:2.2}) \), we can show that 
+          \begin{equation}
+            \mathbb{P} \left(e^{\lambda(X_1+\ldots  + X_n)} \geq e^{\lambda n(p+\varepsilon)} \right) \leq e^{n(\mu(\lambda) - \lambda(p+\varepsilon))}
+          \end{equation}
+
+          Per Markov's inequality, 
+          \begin{align}
+            \mathbb{P} \left(e^{\lambda(X_1+\ldots  + X_n)} \geq e^{\lambda n(p+\varepsilon)} \right) &\leq \frac{1}{e^{\lambda n (p+\varepsilon)}} \mathbb{E}[e^{\lambda(X_1 + \ldots  + X_n)}] \\
+                                                                                                      &= \frac{1}{e^{\lambda n(p+\varepsilon)}} e^{h(\lambda)} & \text{per 2.ii} \\
+                                                                                                      &= \frac{1}{e^{\lambda n(p+\varepsilon)}} e^{n \mu(\lambda)} & \text{per 2.ii} \\
+                                                                                                      &= e^{n \mu(\lambda) - \lambda n(p + \varepsilon)} \\
+                                                                                                      &= e^{n( \mu(\lambda) - \lambda(\varepsilon+p))}
+          \end{align}
+        \end{proof}
+    \end{enumerate}
 
   \item ..
     \begin{enumerate}[label=(\roman*)]
@@ -228,11 +255,11 @@
 
       The number of ways to flip \( k \) heads in \( n \) tosses is given by \( {n \choose k} \). Any number of heads between \( (b+n)/2 \) and \( n \) will give \( S_n \geq b \). Thus, 
       \begin{equation}
-        N_n^+(b) = \sum_{i=0}^{n-b} {n \choose \frac{b+ n + i}{2}}
+        N_n^+(b) = \sum_{k=(b+n)/2}^n {n \choose k} %= \sum_{k=0}^{(n-b)/2} {n \choose \frac{b+ n }{2} +k}
       \end{equation}
       Finally, plugging this into \( (\ref{eqn:5.1}) \), we conclude 
       \begin{equation*}
-        \mathbb{P}(M_n \geq b) = \frac{\sum_{i=0}^{n-b} {n \choose \frac{b+ n + i}{2}}}{2^{n-1}}
+        \mathbb{P}(M_n \geq b) = \frac{\sum_{k=(b+n)/2}^{n} {n \choose k}}{2^{n-1}}
       \end{equation*}
   \end{enumerate}
 \end{enumerate}
