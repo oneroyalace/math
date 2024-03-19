@@ -1,0 +1,211 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 5mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+
+\let\implies\Rightarrow
+\let\impliedby\Leftarrow
+\let\iff\Leftrightarrow
+\let\epsilon\varepsilon
+
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+% Skip items in enumerate (https://tex.stackexchange.com/q/101832)
+\makeatletter % change "@" catcode (see https://tex.stackexchange.com/a/8353)
+\newcommand{\skipitems}[1]{%
+  \addtocounter{\@enumctr}{#1}%
+}
+\makeatother
+
+
+\title{Math 340 HW 7}
+\author{Asa Royal (ajr74) [collaborators: none]}
+\date{March 22 2024}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+  \item ..
+  \item Let \( Z \) be a standard normal random variable. Note that \( \Phi(x) = F_Z \).  Now let \( X \sim N(2,2) \) be a random variable repesenting the weight of the 2,500 packages. Since the weight of each package (call this \( X_i) \) is independent and normally distributed, \( \mathrm{Var}(X) = \sum_{i=1}^{2500} \mathrm{Var}(X_i)  = 5000 \) . We can solve this problem by expressing \( F_X \) in terms of \( \Phi \), then subracting \( \mathbb{P}(X \leq 4850) \) from \( \mathbb{P}(X \leq 5150) \) to find \( \mathbb{P}(4850 \leq X \leq 5150) \).  \\\\
+    To express \( F_x \) in terms of \( \Phi \), we observe that \( X = \sigma Z + \mu \), so 
+    \begin{align*}
+      \mathbb{P}(X \leq x) &= \mathbb{P}(\sigma Z + \mu \leq x) \\
+                           &= \mathbb{P}(\sigma Z \leq x - \mu) \\
+                           &=\mathbb{P} \left(Z \leq \frac{x-\mu}{\sigma} \right) \\
+                           &= \Phi(x-\mu)
+    \end{align*}
+
+    Therefore, 
+    \begin{align*}
+      \mathbb{P}(X \leq 5150) &= \Phi(5150-5000) = \Phi(150) \\
+      \mathbb{P}(X \leq 4850) &= \Phi(4850-5000) = \Phi(-150)
+    \end{align*}
+
+    So \( \mathbb{P}(4850 \leq X \leq 5150) = \Phi(150) - \Phi(-150) \). 
+
+  \item ...
+  \item \textbf{True}. If \( f(x) < 0 \) for some \( x=a \), \( F_x = \int{f(x) dx} \) would decrease along some interval \( [a-\varepsilon, a + \varepsilon] \), violating the definition of a CDF. If \( f(x) > 1 \) for some \( x=\beta \), then \( \int_{\beta - \varepsilon}^{\beta + \varepsilon} f(x)dx > 1 \). Thus, clearly \( \int_{- \infty}^{\infty} f(x)dx \neq 1 \), violaiting the definition of a CDF.
+  \item Suppose that \( X \) is uniformly distributed on the interval \( [2,4] \). 
+    \begin{enumerate}[label=(\roman*)]
+      \item What is the density for \( X \)? 
+        \begin{equation*}
+          f(x) = 
+          \begin{cases}
+            1/2 & \text{if } x \in [2,4] \\
+            0 & \text{otherwise}
+          \end{cases}
+        \end{equation*}
+
+
+      \item What is the CDF for \( X \)? 
+        \begin{equation*}
+          F_x = 
+          \begin{cases}
+            0 & \text{if } x \leq 2 \\
+            \frac{1}{2}(x-2) & \text{if } x \in [2,4] \\
+            1 & \text{if } x \geq 4
+          \end{cases}
+        \end{equation*}
+
+
+
+      \item What are the CDF and density for the random variable \( Y = X^2 + 1 \)?  \\
+      \\
+        \textbf{CDF} 
+        \begin{align*}
+          \mathbb{P}(Y \leq b) &= \mathbb{P}(X^2 + 1 \leq b) \\
+                               &= \mathbb{P}(X^2 \leq b -1) \\
+                               &= \mathbb{P}(X \leq \sqrt{b-1} \\
+                               &= \mathbb{P}(X \in [2, \sqrt{b-1}]) \\
+                               &= \frac{\sqrt{b-1}-2}{2}
+        \end{align*}
+        But note that the \( Y \) has 0 density when \( X \leq 2 , Y \leq 5 \). Thus,
+        \begin{equation*}
+          F_Y = 
+          \begin{cases}
+            0 & \text{if } Y \leq 5 \\
+            \frac{\sqrt{b-1}-2}{2} & \text{if } 5 \leq b \leq 17 \\
+            1 & \text{if } Y \geq 17
+          \end{cases}
+        \end{equation*}
+        
+        \textbf{PDF}
+        \begin{align*}
+          f(b) &= \frac{d}{db} \left( \frac{\sqrt{b-1}-2}{2} \right) \\
+               &= \frac{1}{2} \frac{d}{db} ( \sqrt{b-1} -2) \\
+               &= \frac{1}{2} \left( \frac{1}{2 \sqrt{b-1}} \right) \\
+               &= \frac{1}{4 \sqrt{b-1}}
+        \end{align*}
+        Taking into account the zero density regions,
+        \begin{equation*}
+          \begin{cases}
+            0 & \text{if } Y \leq 5 \\
+            \frac{1}{4 \sqrt{b-1}} & \text{if } 5 \leq Y \leq 17 \\
+            0 & \text{if } Y \geq 17 
+          \end{cases}
+        \end{equation*}
+
+
+      \item What are the mean and variance of \( Y \)?  \\
+      \\
+      \textbf{Mean}
+      The mean of a random variable \( Y \) occurs at the "center" of the probability mass: where \( F_Y = \mathbb{P}(Y \leq \mu) = 1/2 \). 
+      \begin{align*}
+        \frac{\sqrt{\mu-1}-2}{2} &= \frac{1}{2} \\
+        \sqrt{\mu-1} &= 3 \\
+        \mu-1 &= 9 \\
+        \mu &= 10
+      \end{align*}
+    \end{enumerate}
+    \textbf{variance} \\
+    \\
+    \( \mathrm{Var}(Y) = \mathbb{E}[Y^2] - \mathbb{E}[Y]^2 \). We calculated \( \mathbb{E}[Y] \) above. We can calculate \( \mathbb{E}[Y^2] \) by noting \( \mathbb{P}(Y^2 \leq k) = \mathbb{P}(Y \leq \sqrt{k}) \). Applying the formula for \( F_Y \) found in 5iii, this is 
+    \begin{equation}
+      \frac{\sqrt{\sqrt{k}-1}-2}{2}
+    \end{equation}
+
+    \( \mathbb{E}[Y^2] \) again occurs at the center of the probability mass of \( Y^2 \): where \( F_{Y^2} = 1/2 \). We find this value below: 
+    \begin{align*}
+      \frac{\sqrt{\sqrt{k}-1}-2}{2} &= \frac{1}{2} \\
+      \sqrt{\sqrt{k-1}}-2 &= 1  \\
+      \sqrt{\sqrt{k}-1} &= 3 \\
+      \sqrt{k}-1 &= 9 \\
+      \sqrt{k} &= 10 \\
+      k &= 100
+    \end{align*}
+
+    So \( \mathbb{E}[Y^2] = 100 \). \textcolor{red}{\( \mathrm{Var}(Y) = \mathbb{E}[Y^2] - \mathbb{E}[Y]^2 = 100-10^2 = 0?? \)}
+
+
+
+
+  \item .. \\
+  \\
+  
+    \textbf{Find \( c \): } \\
+    \\
+    For any pdf \( f(x) \), \( \int_{-\infty}^{\infty} f(x) = 1 \), which means in this case, \( \int_{-1}^1 cx^2 = 1 \). Solving for \( c \): 
+    \begin{align*}
+      \int_{-1}^1 cx^2 dx &= 1 \\
+      \frac{c}{3} x^3 \Big|_{-1}^1 &= 1 \\
+      \frac{2c}{3} &= 1 \\
+      c &= 3/2
+    \end{align*}
+
+    \textbf{Find \( \mathbb{P}(X > 1/2) \)} \\
+    \\
+    \begin{align*}
+      \mathbb{P}(X > 1/2) &= 1 - \mathbb{P}(X \leq 1/2) \\
+                          &= 1 - \int_{- \infty}^{1/2} f(x) \\
+                          &= 1 - \left( \int_{-\infty}^{-1} f(x)dx + \int_{-1}^{1/2} f(x)dx \right) \\
+                          & 1 - \int_{-1}^{1/2} \frac{3}{2} x^2 dx \\
+                          &= 1 - \frac{1}{2} x^3 \big|_{-1}^{1/2} \\
+                          &= 1 - \left( \frac{1}{2} \right) \left( \frac{9}{8} \right) \\
+                          &= 7/16
+    \end{align*}
+\end{enumerate}
+\end{document}
+
+
+
+
+
+
