@@ -97,14 +97,14 @@
     \begin{align}
       \mathbb{P}(4850 \leq X_1 + \ldots  + X_n \leq 5150) &= \mathbb{P} \left(\frac{4850 - \mu n}{\sqrt{n \sigma^2}} \leq \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n\sigma^2}} \leq \frac{5150 - \mu n}{\sqrt{n \sigma^2}} \right) \\
                                                           &= \mathbb{P} \left(\frac{4850 - 5000}{\sqrt{2500(2)^2}} \leq \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n\sigma^2}} \leq \frac{5150 - 5000}{\sqrt{2500 (2)^2}} \right) \\
-                                                          &= \mathbb{P} \left(-150 \leq  \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n\sigma^2}} \leq 150 \right) \label{eqn1.1}\\
+                                                          &= \mathbb{P} \left(-1.5 \leq  \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n\sigma^2}} \leq 1.5 \right) \label{eqn1.1}\\
     \end{align}
 
     Per the CLT, \( ( \ref{eqn1.1}) \) is equivalent to 
     \begin{equation}
-      \int_{-150}^{150} \frac{1}{\sqrt{2\pi}} e^{- \frac{y^2}{2}}dy
+      \int_{-1.5}^{1.5} \frac{1}{\sqrt{2\pi}} e^{- \frac{y^2}{2}}dy
     \end{equation}
-    Which, in turn, is equal to \framebox{\( \Phi(150) - \Phi(-150) \)}. 
+    Which, in turn, is equal to \framebox{\( \Phi(1.5) - \Phi(-1.5) \)}. 
 
   \item Consider the tail of \( Y \). 
     \begin{align*}
@@ -115,8 +115,8 @@
     \begin{align*}
       \mathbb{P} \left( X>\frac{t}{c} \right) = e^{-\frac{\lambda}{c} t} \\
     \end{align*}
-    \( Y \)'s tail probability is equivalent to that of an exponentially-distributed r.v. with parameter \( - \frac{\lambda}{c} \). Thus \( Y \sim \text{Exponential } \left(- \frac{\lambda}{c} \right) \). 
-  \item \textbf{True}. If \( f(x) < 0 \) for some \( x=a \), \( F_x = \int{f(x) dx} \) would decrease along some interval \( [a-\varepsilon, a + \varepsilon] \), violating the definition of a CDF. If \( f(x) > 1 \) for some \( x=\beta \), then \( \int_{\beta - \varepsilon}^{\beta + \varepsilon} f(x)dx > 1 \). Thus, clearly \( \int_{- \infty}^{\infty} f(x)dx \neq 1 \), violaiting the definition of a CDF.
+    \( Y \)'s tail probability is equivalent to that of an exponentially-distributed r.v. with parameter \(  \frac{\lambda}{c} \). Thus \( Y \sim \text{Exponential } \left( \frac{\lambda}{c} \right) \). 
+  \item \textbf{False}. As a counterexample, consider a random variable \( X \) that is uniformly distributed on the interval \( B =  [0,1/4] \). \( \forall x \in B, f(x) = 4 > 1 \)
   \item Suppose that \( X \) is uniformly distributed on the interval \( [2,4] \). 
     \begin{enumerate}[label=(\roman*)]
       \item What is the density for \( X \)? 
@@ -142,7 +142,7 @@
 
 
       \item What are the CDF and density for the random variable \( Y = X^2 + 1 \)?  \\
-        \begin{enumerate}
+        \begin{enumerate}[label=(\alph*)]
           \item Find \( F_Y \): \\
           \\
             \begin{align*}
