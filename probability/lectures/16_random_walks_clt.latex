@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 16 Big Ideas Journal (Random walks continued; central limit theorem)}
+\author{Asa Royal (ajr74)}
+\date{March 5, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection*{Random walks}
+\begin{theorem}[Ballot theorem]
+  Consider \( N_n^+(0,b) \): paths from \( S_0=0 \) to \( S_n=b \) for which \( S_k > 0  \forall k \in \{1, \ldots , n\} \). We can think of \( S_k \) as how many votes ahead candidate X is over candidate Y on election night. 
+  \begin{equation*}
+    \forall b \neq 0, N_n+(0,b) = \frac{|b|}{n} N_n(0,b)
+  \end{equation*}
+
+  \( |b|/n \) is the fraction of paths that don't touch the \( x \)-axis (never go negative). 
+\end{theorem}
+
+\subsection*{Central limit theorem}
+
+\subsubsection*{CLT applied to random walks}
+
+\begin{eg}[CLT random walks]
+  Consider the following probability measure (bakes in equal parity)
+  \begin{equation*}
+    \mathbb{P}_n^0 (S_2n=2k) = {2n \choose {n+k}} 2^{-(2n)}
+  \end{equation*}
+  Let \( X_k \) be a random variable denoting how much we move on step \( k \). 
+  \begin{equation*}
+    \mathbb{E}[S_n] = \mathbb{E}[\alpha + \sum_{k-1}^n X_k(\omega) = \sum_{k=1}^n \mathbb{E}[X_k] = 0
+  \end{equation*}
+
+  \begin{equation*}
+    \mathrm{Var}(S_n) = \sum_{k=1}^n \mathrm{Var}(X_k) = \sum_{k=1}^n \mathbb{E}(|X_k - \mu|^2) = \sum_{k=1}^n \mathbb{E}(|X_k - 0|^2) = \sum_{k=1}^n 1 = n
+  \end{equation*}
+  \begin{equation*}
+    SD(S_n) = \sqrt{n}
+  \end{equation*}
+\end{eg}
+
+\begin{remark}
+  The CLT suggests us that we shouldn't be surprised if \( S_n \approx O(\sqrt{n}) \). 
+\end{remark} 
+
+\begin{theorem}[Central Limit Theorem for random walks]
+  For any \( \alpha, \beta \)
+  \begin{equation*}
+    \lim_{n \rightarrow \infty} \mathbb{P}_n^\alpha \left( \alpha \leq \frac{S_n}{\sqrt{n}} \leq \beta \right) = \int_{\alpha}^{\beta} \frac{e^{- \frac{y^2}{2}}}{\sqrt{2 \pi}} dy
+  \end{equation*}
+\end{theorem}
+
+\begin{remark}
+  The CLT lets us bound how far away we expect a random walker to wander from the mean of the walk. 
+\end{remark}
+
+\subsubsection*{General CLT}
+\begin{theorem}[Central Limit Theorem]
+
+Suppose \( X_1, \ldots , X_n \) is a sequence of i.i.d random variables with \( ;u = \mathbb{E}[X_i], \sigma^2 = \mathrm{Var}(X_i) \) and \( \mathbb{E}[{X_i}^4 < \infty \). 
+  For any \( \alpha, \beta \)
+  \begin{equation*}
+    \lim_{n \rightarrow \infty} \mathbb{P}_n^\alpha \left( \alpha \leq \frac{(X_1 + \ldots  + X_n) - \mu_n}{\sqrt{n \sigma ^2}} \leq \beta \right) = \int_{\alpha}^{\beta} \frac{e^{- \frac{y^2}{2}}}{\sqrt{2 \pi}} dy
+  \end{equation*}
+\end{theorem}
+
+\begin{remark}
+  Note that the CLT for random walks is a particular case of the general CLT where \( S_n \) is a sum of random step variables with mean zero and variance 1. 
+\end{remark}
+
+\begin{eg}[Using CLT to bound p-coin head count]
+  Let \( Z_n \) be the nubmer of heads we see in \( n \) tosses. The marignal distribution of \( Z_n \) is given by the binomial distribution. As we know, \( Z_n = X_1 + \ldots  + X_n \) where \( X_j \) is a bernoulli random variable. \( \mathbb{E}[X_j] = p \) and \( \mathrm{Var}(X_j) = p(1-p) \). Per the CLT:
+  \begin{equation*}
+    \mathbb{P} \left( \alpha \leq \frac{(X_1 + \ldots  + X_n) - np}{\sqrt{np(1-p)}} \leq b \right) = \int_{\alpha}^{\beta} \frac{e^{- \frac{y^2}{2}}}{\sqrt{2 \pi}} dy
+  \end{equation*}
+
+  Also, note that the CLT expression gives us 
+  \begin{align*}
+    &\mathbb{P}\left(\alpha \sqrt{(np(1-p)} \leq (X_1 + \ldots  + X_n) - np \leq \beta \sqrt{np(1-p)} \right) \\
+    = &\mathbb{P}(Z_n \in (np + \alpha \sqrt{np(1-p)}, np + \beta \sqrt{np(1-p)}
+  \end{align*}
+  i.e. the probabiliy that \( Z \) is within \( \alpha  \) and \( \beta \) standard deviations of its mean. 
+\end{eg}
+
+
+\end{document}
+

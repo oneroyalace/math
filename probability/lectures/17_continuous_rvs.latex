@@ -1,0 +1,148 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 17 Big Ideas Journal (Continuously distributed random variables)}
+\author{Asa Royal (ajr74)}
+\date{March 7, 2024}
+
+\begin{document}
+\maketitle
+
+
+
+
+\begin{prop}
+  For any continuously-distributed r.v. \( X \), \( \forall z , \mathbb{P}(X=z) = 0 \). 
+\end{prop}
+
+
+\begin{remark}
+  Defining outcome spaces and probability measures for continuous random variables is a bit odd. Consider, e.g., the fact that because  intervals for continuous r.v. uncountable unions, 
+  \begin{equation*}
+    1 = \mathbb{P}(X \in (\ell, r)) = \mathbb{P} \left( \bigcap_{z \in ( \ell, r)} \{ X = z \} \right) \neq \sum_{z \in (\ell, r)} \mathbb{P}(X=z) = 0
+  \end{equation*}
+\end{remark}
+
+\begin{definition}[Cummulative distribution function (CDF)]
+  Let \( X \) be any real-valued r.v.. The CDF of \( X \) is 
+  \begin{equation*}
+    F(z) = \mathbb{P}(X \leq z) = \mathbb{P}(X \in ( -\infty z))
+  \end{equation*}
+\end{definition}
+And note that \( F: \mathbb{R} \mapsto [0,1] \)
+
+\begin{definition}[continuous r.v.]
+  Formally, a random variable is \textbf{continuous} if its CDF is continuous (and can thus be integrated to recover a density function). 
+\end{definition}
+
+\begin{definition}[density function]
+  A continuously-distributed r.v. \( X \) has a density \( f(x) \) if \( \forall a < b \in R,  \)
+  \begin{equation*}
+    \mathbb{P}(X \in (a,b)) = \int_{a}^b f(x) dx
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  Note that by the fundamental theorem of calculus, \( F(b) - F(a) = \int_a^b f(x)dx \) and \( F'(z) = f(z) \). 
+\end{remark}
+
+\subsection*{Examples of continuously-distributed r.v.s}
+\begin{enumerate}
+  \item  Uniform distribution \\
+    \( X \sim \text{Unif}(\ell, r) \) if
+    \begin{equation*}
+      \mathbb{P}(X \in (a,b)) = \frac{b-a}{r-\ell}
+    \end{equation*}
+    if \( l < a < b < r \). 
+    \item Exp(\( \lambda \)): exponential distribution w/ paramter \( \lambda \). 
+      \begin{align*}
+        F(t) &= \mathbb{P}(X \leq t) = \begin{cases}
+          1 - e^{-\lambda t} & t \geq 0 \\
+          0 & t <   0
+        \end{cases} \\
+          f(t) &= F'(t) = \begin{cases}
+          \lambda e^{-\lambda t} & t \geq 0 \\
+          0 & t <   0
+        \end{cases}
+      \end{align*}
+      The exponential distribution is used, e.g., to model time until an arrival, akin to how we use the geometric distribution with discretized time. 
+
+    \item Gaussian (normal) dist\\
+      Let \( \mu \in R, \sigma^2 > 0 \). \( X \sim \text{Normal}(\mu, \sigma ^2) \) if 
+      \begin{align*}
+        f(x) &= \frac{e^{ \frac{-(x-\mu)^2}{2 \sigma ^2}}}{ \sigma \sqrt{2 \pi }} \\
+      \end{align*}
+      \begin{remark}
+        \( N(0,1) \) with \( \mu = 0, \sigma^2 = 1 \) is called the standard normal. 
+      \end{remark}
+\end{enumerate}
+
+\end{document}
+
+

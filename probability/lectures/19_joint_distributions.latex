@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 19 Big Ideas Journal (Joint distributions of cont. r.v.s)}
+\author{Asa Royal (ajr74)}
+\date{March 21, 2024}
+
+\begin{document}
+\maketitle
+
+
+\subsection*{Joint density} 
+\begin{definition}[joint density]
+  \( X \) and \( Y \) have a joint density \( f(x,y) \) if \( \mathbb{P}((x,y) \in B) = \int \int_B f(x,y) dx dy \) for all open \( B \subset \mathbb{R}^2 \). 
+\end{definition}
+
+\begin{remark}
+  \( \int \int_{\mathbb{R}^2} f(x,y) dx dy = 1 \) 
+  
+\end{remark}
+
+\begin{theorem}[marginal density from joint density]
+  The marginal density of \( X \) is 
+  \begin{equation*}
+   f_x(x) = \int_{\mathbb{R}} f(x,y) dy  
+  \end{equation*} 
+  This calculation of the marginal density from the joint density is similar to the one we did in the discrete case. Here, instead of summing over all the discrete values \( Y \) can take, we take an infinite sum across the domain of \( Y \), which is \( \mathbb{R} \). 
+  
+\end{theorem}
+
+\subsection*{Independence}
+
+\begin{definition}[independence of continuous random variables]
+  Suppose \( X \) and \( Y \) have densities \( f_X, f_Y \) respectively. They are \textbf{independent} iff \( \forall x,y \), their joint density is 
+  \begin{equation*}
+    f(x,y) = f_X(x) f_Y(y)
+  \end{equation*}
+\end{definition}
+
+
+\begin{remark}
+  Even if \( X \) and \( Y \) have a constant joint density on some region \( B \), their marginal densities need not be constant. 
+\end{remark}
+
+\subsection*{Examples: moving between joint and marginal densities}
+\begin{eg}[Obtain marginal density from joint]
+  Consider the right triangle with vertices at \( (0,0), (1,0), (1,1) \). Assume density is uniformly distributed across the triangle. \\
+  \\
+  Note that the marginal density of \( X \) is not constant! the density between \( (0,\varepsilon) \) and \( (1-\varepsilon, 1) \) is not equivalent! The latter is clearly larger.  \\
+  \\
+  We can find \( \mathbb{P}(X < a) \)  for some \( 0 < a < 1 \) by integrating \( f(x,y) \) across the triangle formed by the existing hypotenuse, the \( x \) axis, and the line \( x=a \). 
+\end{eg}
+
+
+\begin{eg}[Obtain joint density from marginals]
+  Imagine \( T_1 \sim \text{Unif}(1,4) \) and \( T_2 \sim \text{Unif}(2,5) \) are independent and represent arrival times. What is \( \mathbb{P}(T_1 < T_2) \)?  \\
+  \\
+  Because the random variables are independent, we can derive their joint distribution from their marginals: 
+  \begin{equation*}
+    f(t_1,t_2) = f_1(t_1)f_2(t_2)
+  \end{equation*}
+  Both marginals have density \( 1/3 \) in their respective non-zero areas, and thus \( 1/9 \) on their overlapping non-zero areas. The overlapping area (a square) has corners \( (1,2), (4,2), (1,5), (4,5) \) and area \( 9 \). The joint density is thus \( 1/9 \) on the overlapping region, and the \( \mathbb{P}(T_1 < T_2 \) = 
+  \begin{equation*}
+    \int \int_{B} \frac{1}{9}dt_1 dt_2 = \frac{1}{9}B
+  \end{equation*}
+  where \( B \) is the region in the overlapping areas above the lime \( t_1=t_2 \). 
+\end{eg}
+\end{document}
+
+
+
+

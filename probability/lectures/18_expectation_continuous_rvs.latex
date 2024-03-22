@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 18 Big Ideas Journal (Expectation of continuously-distributed random variabless)}
+\author{Asa Royal (ajr74)}
+\date{March 19, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{theorem}[Expectation of continuously-distributed r.v.s]
+  For a a continuously-distributed random variable \( X \) with density \( f(z) \), 
+  \begin{equation*}
+    \mathbb{E}[X] = \int_{-\infty}^{\infty} z f(z)dz
+  \end{equation*}
+  Assuming the integral converges 
+\end{theorem}
+
+\subsection*{Properties of expectation for continuous r.v.s}
+
+\begin{remark}
+  Many of the properties of expectation of discrete r.v.s carry over to continuous r.v.s, including
+\end{remark}
+
+\begin{enumerate}
+  \item Linearity: for \( \alpha, \beta \in \mathbb{R} \),
+    \begin{equation*}
+      \mathbb{E}[\alpha X + \beta Y]  = \alpha \mathbb{E}[X] + \beta \mathbb{E}[Y]
+    \end{equation*}
+
+  \item Expectation of functions of r.v.s. In particular, if \( g: \mathbb{R} \mapsto \mathbb{R} \), 
+    \begin{equation*}
+      \mathbb{E}[g(X)] = \int_{\mathbb{R}} g(z)f(z)dz
+    \end{equation*}
+
+    \begin{enumerate}
+      \item In particular, \( \mathbb{E}[X] = \int_{\mathbb{R}}zf(z)dz \) and \( \mathbb{E}[X^2] = \int_{\mathbb{R}}z^2f(z)dz \), and \( \mathrm{Var}(X) \) is still \( \mathbb{E}[X^2] - \mathbb{E}[X]^2 \).
+    \end{enumerate}
+  \item Tail sum formula. If \( X \) is a positive random variable,
+    \begin{equation*}
+      \mathbb{E}[X] = \int_{0}^{\infty} \mathbb{P}(X \geq t) dt = \int_{0}^{\infty} \left(1 - F(t) \right)dt
+    \end{equation*}
+
+  \item Markov's inequality and Chebyshev's inequality hold for positive random variables:
+    \begin{equation*}
+      \mathbb{P}(X \geq r) \leq \frac{1}{r} \mathbb{E}[X]
+    \end{equation*}
+\end{enumerate}
+
+\begin{remark}
+  When trying to compute the variance of symmetric continuously-distributed random variables, we can try to recenter them around 0 so that \( \mathbb{E}[X]^2 = 0 \). Then we only need to calculate \( \mathbb{E}[X^2] = \int_{- \infty}^{\infty} z^2 f(z)dz \)
+\end{remark}
+
+\end{document}
+
+
+
