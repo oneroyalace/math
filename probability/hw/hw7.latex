@@ -63,25 +63,59 @@
 \begin{document}
 \maketitle
 \begin{enumerate}
-  \item ..
-  \item Let \( Z \) be a standard normal random variable. Note that \( \Phi(x) = F_Z \).  Now let \( X \sim N(2,2) \) be a random variable repesenting the weight of the 2,500 packages. Since the weight of each package (call this \( X_i) \) is independent and normally distributed, \( \mathrm{Var}(X) = \sum_{i=1}^{2500} \mathrm{Var}(X_i)  = 5000 \) . We can solve this problem by expressing \( F_X \) in terms of \( \Phi \), then subracting \( \mathbb{P}(X \leq 4850) \) from \( \mathbb{P}(X \leq 5150) \) to find \( \mathbb{P}(4850 \leq X \leq 5150) \).  \\\\
-    To express \( F_x \) in terms of \( \Phi \), we observe that \( X = \sigma Z + \mu \), so 
+  \item Since for a random walk \( S_n = X_1 + \ldots  + X_n \) where \( X_1 \) are iid random variables, we can apply the central limit theorem to find the probability that \( S_n \) lies within some range. In this problem, we are exploring
+    \begin{equation}
+      \lim_{n \rightarrow \infty} \mathbb{P}(|S_n| < n^r) = 0
+    \end{equation}
+    That expression is equivalent to 
+    \begin{equation}
+      \mathbb{P}(-n^r \leq X_1 + \ldots  + X_n \leq n^r)
+    \end{equation}
+    We can make this look like the CLT by subracting \( \mu n \) from all terms in the inequality, then dividing by \( \sqrt{n\sigma^2} \). Thus, \( (1) \) and \( (2) \) are equivalent to
+    \begin{equation}
+      \mathbb{P} \left(\frac{-n^r - \mu n}{\sqrt{n \sigma^2}}  \leq \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n \sigma^2}} \leq \frac{n^r - \mu n}{\sqrt{n \sigma^2}} \right)
+    \end{equation}
+    We can easily calculate \( \sigma  = \mathrm{Var}(X_i) \). Since \( X_i \) takes values \( 0 \) and \( 1 \) with equal probability, \( \mathbb{E}[X_i] = 0 \) and: 
+    \begin{align}
+      \mathrm{Var}(X_i) &= \mathbb{E}[{X_i}^2] - \mathbb{E}[X_i]^2  \\
+                        &= (-1)^2(1/2) + (1)^2(1/2) \\
+                        &= 1
+    \end{align}
+    Returning to \( (3) \) and noting \( \mu n = 0 \), we can now express 
     \begin{align*}
-      \mathbb{P}(X \leq x) &= \mathbb{P}(\sigma Z + \mu \leq x) \\
-                           &= \mathbb{P}(\sigma Z \leq x - \mu) \\
-                           &=\mathbb{P} \left(Z \leq \frac{x-\mu}{\sigma} \right) \\
-                           &= \Phi(x-\mu)
+      \lim_{n \rightarrow \infty} \mathbb{P}(|S_n| < n^r) = \mathbb{P} \left( \frac{-n^r}{\sqrt{n }} \leq \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n \sigma^2}} \leq \frac{n^r}{\sqrt{n }} \right)
     \end{align*}
 
-    Therefore, 
+    Per the CLT, this is 
+    \begin{equation*}
+      \int_{-n^{\left( r - \frac{1}{2} \right)}}^{n^{\left(r-\frac{1}{2}\right)}} \frac{1}{\sqrt{2\pi}} e^{- \frac{y^2}{2}} dy
+    \end{equation*}
+    If \( r > 1/2 \), the upper bound of the integral tends to infinity while the lower bound tends to negative infinity, so the expression becomes \( \int_{- \infty}^{\infty} f(x)dx = 1 \).  On the other hand, if \( r < 1/2 \), the upper bound will evaluate to \( n^{-x} \) for \( x \in (-1/2,0) \). As \( n \rightarrow \infty \), this value tends toward zero. The lower bound tends towards \( -n^{-x} \), which is also 0. Thus, the CLT integral becomes \( \int_{0}^{0} f(x) dx \) = 0. \\
+    \\
+    \framebox{In conclusion, if \( \alpha = 1/2 \), both of the statements expressed in the problem are true.}
+  \item Let \( X_1, \ldots , X_n \) be random variables representing the weight of the individual boxes. We wish to estimate \( \mathbb{P}(4850 \leq X_1 + \ldots  + X_n \leq 5150 \). Since \( X_1, \ldots , X_n \) are iid random variables and \( n \) is relatively large, the sum of the variables roughly follows a normal distribution. We thus make use of the central limit theorem: 
+    \begin{align}
+      \mathbb{P}(4850 \leq X_1 + \ldots  + X_n \leq 5150) &= \mathbb{P} \left(\frac{4850 - \mu n}{\sqrt{n \sigma^2}} \leq \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n\sigma^2}} \leq \frac{5150 - \mu n}{\sqrt{n \sigma^2}} \right) \\
+                                                          &= \mathbb{P} \left(\frac{4850 - 5000}{\sqrt{2500(2)^2}} \leq \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n\sigma^2}} \leq \frac{5150 - 5000}{\sqrt{2500 (2)^2}} \right) \\
+                                                          &= \mathbb{P} \left(-150 \leq  \frac{X_1 + \ldots  + X_n - \mu n}{\sqrt{n\sigma^2}} \leq 150 \right) \label{eqn1.1}\\
+    \end{align}
+
+    Per the CLT, \( ( \ref{eqn1.1}) \) is equivalent to 
+    \begin{equation}
+      \int_{-150}^{150} \frac{1}{\sqrt{2\pi}} e^{- \frac{y^2}{2}}dy
+    \end{equation}
+    Which, in turn, is equal to \framebox{\( \Phi(150) - \Phi(-150) \)}. 
+
+  \item Consider the tail of \( Y \). 
     \begin{align*}
-      \mathbb{P}(X \leq 5150) &= \Phi(5150-5000) = \Phi(150) \\
-      \mathbb{P}(X \leq 4850) &= \Phi(4850-5000) = \Phi(-150)
+      \mathbb{P}(Y>t) &= \mathbb{P}(cX>t) \\
+                      &= \mathbb{P} \left( X>\frac{t}{c} \right) \\
     \end{align*}
-
-    So \( \mathbb{P}(4850 \leq X \leq 5150) = \Phi(150) - \Phi(-150) \). 
-
-  \item ...
+    Since \( X \sim \text{Exponential}(\lambda) \), this is 
+    \begin{align*}
+      \mathbb{P} \left( X>\frac{t}{c} \right) = e^{-\frac{\lambda}{c} t} \\
+    \end{align*}
+    \( Y \)'s tail probability is equivalent to that of an exponentially-distributed r.v. with parameter \( - \frac{\lambda}{c} \). Thus \( Y \sim \text{Exponential } \left(- \frac{\lambda}{c} \right) \). 
   \item \textbf{True}. If \( f(x) < 0 \) for some \( x=a \), \( F_x = \int{f(x) dx} \) would decrease along some interval \( [a-\varepsilon, a + \varepsilon] \), violating the definition of a CDF. If \( f(x) > 1 \) for some \( x=\beta \), then \( \int_{\beta - \varepsilon}^{\beta + \varepsilon} f(x)dx > 1 \). Thus, clearly \( \int_{- \infty}^{\infty} f(x)dx \neq 1 \), violaiting the definition of a CDF.
   \item Suppose that \( X \) is uniformly distributed on the interval \( [2,4] \). 
     \begin{enumerate}[label=(\roman*)]
@@ -108,99 +142,131 @@
 
 
       \item What are the CDF and density for the random variable \( Y = X^2 + 1 \)?  \\
-      \\
-        \textbf{CDF} 
-        \begin{align*}
-          \mathbb{P}(Y \leq b) &= \mathbb{P}(X^2 + 1 \leq b) \\
-                               &= \mathbb{P}(X^2 \leq b -1) \\
-                               &= \mathbb{P}(X \leq \sqrt{b-1} \\
-                               &= \mathbb{P}(X \in [2, \sqrt{b-1}]) \\
-                               &= \frac{\sqrt{b-1}-2}{2}
-        \end{align*}
-        But note that the \( Y \) has 0 density when \( X \leq 2 , Y \leq 5 \). Thus,
-        \begin{equation*}
-          F_Y = 
-          \begin{cases}
-            0 & \text{if } Y \leq 5 \\
-            \frac{\sqrt{b-1}-2}{2} & \text{if } 5 \leq b \leq 17 \\
-            1 & \text{if } Y \geq 17
-          \end{cases}
-        \end{equation*}
-        
-        \textbf{PDF}
-        \begin{align*}
-          f(b) &= \frac{d}{db} \left( \frac{\sqrt{b-1}-2}{2} \right) \\
-               &= \frac{1}{2} \frac{d}{db} ( \sqrt{b-1} -2) \\
-               &= \frac{1}{2} \left( \frac{1}{2 \sqrt{b-1}} \right) \\
-               &= \frac{1}{4 \sqrt{b-1}}
-        \end{align*}
-        Taking into account the zero density regions,
-        \begin{equation*}
-          \begin{cases}
-            0 & \text{if } Y \leq 5 \\
-            \frac{1}{4 \sqrt{b-1}} & \text{if } 5 \leq Y \leq 17 \\
-            0 & \text{if } Y \geq 17 
-          \end{cases}
-        \end{equation*}
+        \begin{enumerate}
+          \item Find \( F_Y \): \\
+          \\
+            \begin{align*}
+              \mathbb{P}(Y \leq b) &= \mathbb{P}(X^2 + 1 \leq b) \\
+                                   &= \mathbb{P}(X^2 \leq b -1) \\
+                                   &= \mathbb{P}(X \leq \sqrt{b-1} \\
+                                   &= \mathbb{P}(X \in [2, \sqrt{b-1}]) \\
+                                   &= \frac{\sqrt{b-1}-2}{2}
+            \end{align*}
+            But note that the \( Y \) has 0 density when \( X \leq 2 , Y \leq 5 \). Thus,
+            \begin{equation*}
+              F_Y = 
+              \begin{cases}
+                0 & \text{if } Y \leq 5 \\
+                \frac{\sqrt{b-1}-2}{2} & \text{if } 5 \leq b \leq 17 \\
+                1 & \text{if } Y \geq 17
+              \end{cases}
+            \end{equation*}
+          
+          \item Find density of \( Y \):  \\
+          \\
+            \begin{align*}
+              f(b) &= \frac{d}{db} \left( \frac{\sqrt{b-1}-2}{2} \right) \\
+                   &= \frac{1}{2} \frac{d}{db} ( \sqrt{b-1} -2) \\
+                   &= \frac{1}{2} \left( \frac{1}{2 \sqrt{b-1}} \right) \\
+                   &= \frac{1}{4 \sqrt{b-1}}
+            \end{align*}
+            Taking into account the zero density regions,
+            \begin{equation*}
+              \begin{cases}
+                0 & \text{if } Y \leq 5 \\
+                \frac{1}{4 \sqrt{b-1}} & \text{if } 5 \leq Y \leq 17 \\
+                0 & \text{if } Y \geq 17 
+              \end{cases}
+            \end{equation*}
+          
+        \end{enumerate}
 
 
       \item What are the mean and variance of \( Y \)?  \\
-      \\
-      \textbf{Mean}
-      The mean of a random variable \( Y \) occurs at the "center" of the probability mass: where \( F_Y = \mathbb{P}(Y \leq \mu) = 1/2 \). 
-      \begin{align*}
-        \frac{\sqrt{\mu-1}-2}{2} &= \frac{1}{2} \\
-        \sqrt{\mu-1} &= 3 \\
-        \mu-1 &= 9 \\
-        \mu &= 10
-      \end{align*}
-    \end{enumerate}
-    \textbf{variance} \\
-    \\
-    \( \mathrm{Var}(Y) = \mathbb{E}[Y^2] - \mathbb{E}[Y]^2 \). We calculated \( \mathbb{E}[Y] \) above. We can calculate \( \mathbb{E}[Y^2] \) by noting \( \mathbb{P}(Y^2 \leq k) = \mathbb{P}(Y \leq \sqrt{k}) \). Applying the formula for \( F_Y \) found in 5iii, this is 
-    \begin{equation}
-      \frac{\sqrt{\sqrt{k}-1}-2}{2}
-    \end{equation}
 
-    \( \mathbb{E}[Y^2] \) again occurs at the center of the probability mass of \( Y^2 \): where \( F_{Y^2} = 1/2 \). We find this value below: 
-    \begin{align*}
-      \frac{\sqrt{\sqrt{k}-1}-2}{2} &= \frac{1}{2} \\
-      \sqrt{\sqrt{k-1}}-2 &= 1  \\
-      \sqrt{\sqrt{k}-1} &= 3 \\
-      \sqrt{k}-1 &= 9 \\
-      \sqrt{k} &= 10 \\
-      k &= 100
-    \end{align*}
+        \begin{enumerate}
+          \item Find the mean of \( Y \): \\
+          \\
+          
+          Per the linearity of expectation, 
+          \begin{align}
+            \mathbb{E}[Y] = \mathbb{E}[X^2 + 1] = \mathbb{E}[X^2] + 1 \label{eqn5.1}
+          \end{align}
+          We find \( \mathbb{E}[X^2] \) below:
+          \begin{align}
+            \mathbb{E}[X^2] &= \int_{-\infty}^{\infty} x ^2 f(x) dx \\
+                            &= \int_{2}^4 x ^2 f(x) dx  & \text{limit domain to interval} \\
+                            &= \frac{1}{2} \int_2^4 x ^2 & \text{plug in uniform dens.} \\
+                            &= \frac{1}{6} x^3 \big|_2^4 \\
+                            &= 28/3 \label{eqn5.2}
+          \end{align}
+          
+          Combining \( (\ref{eqn5.1}) \) and \( (\ref{eqn5.2}) \), we conclude \framebox{\( \mathbb{E}[Y] = 31/3 \)}. \\
 
-    So \( \mathbb{E}[Y^2] = 100 \). \textcolor{red}{\( \mathrm{Var}(Y) = \mathbb{E}[Y^2] - \mathbb{E}[Y]^2 = 100-10^2 = 0?? \)}
 
+        \item Find the variance of \( Y \): \\
+        \\
+          \( \mathrm{Var}(Y) = \mathbb{E}[Y^2] - \mathbb{E}[Y]^2 \). We calculated \( \mathbb{E}[Y] \) above. We calculate \( \mathbb{E}[Y^2] \) below, applying the linearity of expectation and the formula for the expectation of a function of a continuous r.v. 
+          
+          \begin{align*}
+            \mathrm{Var}(Y) &= \mathbb{E}[Y^2] - \mathbb{E}[Y] ^2 \\
+                            &= \mathbb{E}[X^4 + 2x^2 + 1] -  (31/3)^2 \\
+                            &= \mathbb{E}[X^4] + \mathbb{E}[2X^2] + 1 - (31/3)^2 \\
+                            &= \int_2^4 \frac{1}{2}x^4dx + 2 \mathbb{E}[X^2]  + 1 - (31/3)^2 & \mathbb{E} \text{ of cont rv}\\ 
+                            &= \frac{1}{10} x^5 \big|_2^4 + 2(28/3) + 1 - (31/3)^2 & \text{sub } \mathbb{E}[X^2] \text{ from } (\ref{eqn5.2}) \\
+                            &= \frac{1}{10} (1024-32) + 56/3 + 1 - (32/3)^2 \\
+                            &= 992/10 + 56/3 + 1 - (32/3)^2 \\
+                            &= \framebox{229/45}
+          \end{align*}
+        
+        \end{enumerate}
+
+
+  \end{enumerate}
 
 
 
   \item .. \\
-  \\
-  
-    \textbf{Find \( c \): } \\
-    \\
-    For any pdf \( f(x) \), \( \int_{-\infty}^{\infty} f(x) = 1 \), which means in this case, \( \int_{-1}^1 cx^2 = 1 \). Solving for \( c \): 
-    \begin{align*}
-      \int_{-1}^1 cx^2 dx &= 1 \\
-      \frac{c}{3} x^3 \Big|_{-1}^1 &= 1 \\
-      \frac{2c}{3} &= 1 \\
-      c &= 3/2
-    \end{align*}
+    \begin{enumerate}
+      \item Find \( c \): \\
+      \\
+      
+        For any pdf \( f(x) \), \( \int_{-\infty}^{\infty} f(x) = 1 \), which means in this case, \( \int_{-1}^1 cx^2 = 1 \). Solving for \( c \): 
+        \begin{align*}
+          \int_{-1}^1 cx^2 dx &= 1 \\
+          \frac{c}{3} x^3 \Big|_{-1}^1 &= 1 \\
+          \frac{2c}{3} &= 1 \\
+          \Aboxed{c &= 3/2}
+        \end{align*}
 
-    \textbf{Find \( \mathbb{P}(X > 1/2) \)} \\
-    \\
-    \begin{align*}
-      \mathbb{P}(X > 1/2) &= 1 - \mathbb{P}(X \leq 1/2) \\
-                          &= 1 - \int_{- \infty}^{1/2} f(x) \\
-                          &= 1 - \left( \int_{-\infty}^{-1} f(x)dx + \int_{-1}^{1/2} f(x)dx \right) \\
-                          & 1 - \int_{-1}^{1/2} \frac{3}{2} x^2 dx \\
-                          &= 1 - \frac{1}{2} x^3 \big|_{-1}^{1/2} \\
-                          &= 1 - \left( \frac{1}{2} \right) \left( \frac{9}{8} \right) \\
-                          &= 7/16
-    \end{align*}
+      \pagebreak
+
+
+      \item Find \( \mathbb{P}(X> 1/2) \) \\
+      \\
+        \begin{align*}
+          \mathbb{P}(X > 1/2) &= 1 - \mathbb{P}(X \leq 1/2) & \text{express tail in terms of CDF}\\
+                              &= 1 - \int_{- \infty}^{1/2} f(x) \\
+                              &= 1 - \left( \int_{-\infty}^{-1} f(x)dx + \int_{-1}^{1/2} f(x)dx \right) \\
+                              &= 1 - \int_{-1}^{1/2} \frac{3}{2} x^2 dx & \text{since density is 0 outside } [-1,1]\\
+                              &= 1 - \frac{1}{2} x^3 \big|_{-1}^{1/2} \\
+                              &= 1 - \left( \frac{1}{2} \right) \left( \frac{9}{8} \right) \\
+          \Aboxed{&= 7/16}
+        \end{align*}
+      
+    \end{enumerate}
+
+
+
+  \item We will show that \( F_Y(t) = t  \), revealing that \( Y \sim \text{Unif} \). 
+    \begin{align}
+      F_Y(t) &= \mathbb{P}(Y \leq t) & \text{def of CDF} \\
+             &= \mathbb{P}(F(X) \leq t) \\
+             &= \mathbb{P} \left(X \leq F^{-1}(t) \right) \text{ on } 0 \leq t \leq 1 & \text{ineq. holds b/c F is increasing} \\
+             &= F(F^{-1}(t)) \text{ on } 0 \leq t \leq 1 & \text{def of CDF} \\
+             &= t\text{ on } 0 \leq t \leq 1
+    \end{align}
+    Since \( F_Y(t) = t  \) on \(  0 \leq t \leq 1 \), \framebox{\( Y \sim \text{Unif}(0,1) \)}. 
 \end{enumerate}
 \end{document}
 
