@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{3.3: Local Extrema (Lec 8)}
+\author{Asa Royal (ajr74)}
+\date{February 7, 2024}
+
+\begin{document}
+\maketitle
+
+\section*{Critical points}
+\begin{definition}[local minimum/maximum]
+  Let \( f: U \subseteq \mathbb{R}^n \rightarrow \mathbb{R}\). \( \vec{x_0} \) is a \textbf{local minimum } of \( f \) if \( \exists \) a neighborhood \( V \) of \( \vec{x_0} \) s.t. \( \forall \vec{x} \in V, f(\vec{x}) > f(\vec{x_0}) \). Similar definition for \textbf{local maximum}. 
+\end{definition}
+
+\begin{definition}[global maximum/minimum]
+  \( \vec{x_0} \) is a global minimum if \( \forall \vec{x} \in V, f(\vec{x} > f(\vec{x_0} \)
+\end{definition}
+
+\begin{definition}[critical point]
+  \( \vec{x_0} \) is a \textbf{critical point} of \( f \) if \( Df(\vec{x_0}) = \vec{0} \) or if \( f \) is not differentiable at \( \vec{x_0} \). Note: if \( f \) is real-valued, \( Df(x_0) = 0 \) is equivalent to saying \( \nabla f_{x_0} = 0 \).
+\end{definition}
+
+\begin{remark}
+  \textcolor{red}{What does the not differentiable at \( \vec{x_0} \) imply?)}
+\end{remark}
+
+\begin{theorem}[First derivative text]
+  If \( U \subseteq \mathbb{R}^n \) is open and \( f \) is differentiable then any local extrema is a critical point. 
+\end{theorem}
+
+\begin{proof}
+  Suppose \( \vec{x}\) is a local extrema of \( f \). Now let \( g(t) = f(x_0 + t \vec{v}) \). \( g(t) \) clearly has a local extrema when \( t=0 \) for \textbf{any} \( \vec{v} \in \mathbb{R}^n \). \\
+  \\
+  \textcolor{olive}{To visualize this, imagine we're at the top of a hill (the local max of \( f \)). Now imagine the set of all vectors starting from the point we're at. This is \( g \). The maximum of that set is our current position! i.e. \( f(x) + 0 \vec{v} \).} \\
+  \\
+  Per one variable calculus, since \( x_0 \) is a local maximum of \( g \), \( g'(t) = 0 \). But \( g(t) = f(x_0 + t \vec{v}) \), so per multivariate rules, \( g'(t) = D[f(\vec{x_0})] \vec{v} = 0 \). Since this is true for any \( \vec{v} \), \( D[f(\vec{x_0})] = 0 \), so \( \vec{x_0} \) is a critical point. 
+\end{proof}
+\begin{corollary}
+  If \( \vec{x_0} \) is not a critical point then \( \vec{x_0} \) cannot be an extrema. 
+\end{corollary}
+
+\section*{Determining type of maxima}
+
+\begin{remark}
+  Not all critical points are extrema. For example, \( x=0 \) for \( f(x) = x^3 \) or \( f(x,y) = y^2 - x^2 \) at \( (0,0) \). The latter is an example of a \textbf{saddle point}. Though \( Df = \nabla f = \vec{0} \) at \( (0,0) \), \( (0,0) \) is a local minimum in the \( x \) direction and a local maximum in the \( y \) direction. 
+\end{remark}
+
+\begin{theorem}[Second derivative test for local extrema]
+  If \( f: U \subset \mathbb{R}^n \mapsto \mathbb{R}, x_0 \in U \) is a critical point of \( f \), and...
+  \begin{itemize}
+    \item The Hessian \( Hf(x_0) \) is \textbf{positive-definite}, \( x_0 \) is a \textbf{relative minimum} of \( f \).
+    \item  \( Hf(x_0) \) is \textbf{negative-definite}, \( x_0 \) is a \textbf{relative maximum} of \( f \). 
+    \item \( Hf(x_0) \) is \textbf{neither positive- nor negative-definite} but \( \det Hf(x_0) \neq 0 \), \( x_0 \) is a \textbf{saddle point}. 
+    \item \( Hf(x_0) \) is \textbf{neither positive- nor negative-definite} and \( \det(Hf(x_0)) = 0 \), we \textbf{can't categorize critical point using the second derivative test}. 
+  \end{itemize} . 
+\end{theorem}
+
+\section*{Finding global extrema}
+If we wish wish to find teh global extrema of a function \( f: U \mapsto R \), we need to find the critical points for all \( x_0 \in U\), as well as the critical points of \( f \) as a function only on the boundary \( \partial U \). 
+
+\end{document}
+
+
+
+
