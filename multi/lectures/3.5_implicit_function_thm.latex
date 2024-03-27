@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{3.5: Implicit Function Theorem}
+\author{Asa Royal (ajr74)}
+\date{2/21/24}
+
+\begin{document}
+\maketitle
+
+\begin{remark}
+  Intuition of one-variable implicit function theorem: Imagine we have some \( C^1 \) function \( y=f(x) \) and \( f'(x_0) \neq 0 \). Then locally near \( x_0 \), we can solve for \( x \) to find the inverse function \( x=f^{-1}(y) \). 
+  \\
+  \\
+  Why? If \( f'(x_0) \neq 0 \), the function is injective in the neighborhood of \( x_0 \). i.e. Given a value of \( y = f(x) \), we can uniquely identify an \( x \).  i.e. \( f^{-1} \) exists!
+\end{remark}
+
+Given an implicit curve \( F(x,y) = c \), the ICT will tell us under what conditions the curve lets us eexplicitly define \( y=f(x) \) and allows us to find \( f'(x)?  \)
+
+\( f'(x) = - \frac{F_x}{F_y} \) if \( F_y \neq 0 \). 
+
+\begin{remark}
+  Assume we have some \( F(x,y,z) = c  \) level set. We can solve for \( z \) as a function of \( x,y \) at \( (x_0,y_0,z_0 \) iff \( \frac{\partial F}{\partial z}(x_0,y_0,z_0) \neq 0 \)
+\end{remark}
+
+\begin{theorem}[IFT higher dimension]
+  Assume we want to solve \( m \) equations for \( m \) variables \( z_1, \ldots , z_m \) at \( (x_0, \ldots , x_n) \). Then we must have 
+  \begin{equation*}
+    \det \begin{bmatrix}
+      \frac{\partial F_1}{\partial z_1} & \ldots  & \frac{\partial F_1}{\partial z_m} \\
+      \vdots & & \vdots \\
+      \frac{\partial F_m}{\partial z_1} & \ldots  & \frac{\partial F_m}{\partial z_m}
+    \end{bmatrix} \neq  0
+  \end{equation*}
+  at \( (x_0, \ldots , x_n) \). 
+  \textbf{The function must be full rank! Full rank = invertible!}
+\end{theorem}
+
+\begin{remark}
+  We can then find, e.g., \( \frac{\partial u}{\partial x}  \) by implicitly differentiating the \( m \) equations with respect to \( x \) and solving the set of linear equations. 
+\end{remark}
+
+\begin{theorem}[inverse function theorem]
+  Say we have functions \( f_1, \ldots , f_n \) with continuous partials. If near a given solution \( \vec{x}_0, \vec{y}_0, J(f)(\vec{x}_0) \neq 0,  \) then the equations 
+  \begin{equation*}
+    \begin{cases}
+      f_1(x_1, &\ldots ,x_n) = y_1 \\
+               &\ldots  \\
+      f_n(x_1, &\ldots , x_n) = y_n
+    \end{cases}
+  \end{equation*}
+  can be uniquely solved as \( \vec{x} = g(\vec{y}) \)
+\end{theorem}
+
+\end{document}
