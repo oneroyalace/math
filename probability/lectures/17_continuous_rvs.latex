@@ -143,6 +143,18 @@ And note that \( F: \mathbb{R} \mapsto [0,1] \)
       \end{remark}
 \end{enumerate}
 
+\begin{prop}
+  Any random variable can be simulated as a function of a uniformly-distributed r.v. \\
+  Let \( U \sim \text{Unif}(0,1) \). Let \( F \) be the CDF of a functino we wish to find an RV for. Assume that \( F \) is strictly increasing and continuous. Let \( X = F^{-1}(U) \). Then \( X \sim F \). 
+\end{prop}
+
+\begin{proof}
+  \begin{equation*}
+    \mathbb{P}(X \leq x) = \mathbb{P}(F^{-1}(U)) \leq x = \mathbb{P}(U \leq F(X) 
+  \end{equation*}
+  So \( X \) has the same CDF as \( F \). 
+\end{proof}
+
 \end{document}
 
 
