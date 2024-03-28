@@ -76,35 +76,35 @@
 
 \begin{remark}
   In general, marginal density alone does not determine joint density. Knowing how \( X \) is distributed and how \( Y \) are distributed is not enough to know how they are jointly distributed. 
-
 \end{remark}
 
-\begin{remark}
+\subsection*{Conditional probability: discrete and continuous cases}
+\begin{theorem}[Conditional density (discrete)]
   Note that in the discrete case, 
   \begin{align*}
-    \mathbb{P}(X=k|Y=j) &= \frac{\mathbb{P})X=k,Y=j}{\mathbb{P}(Y=j)} \\
-                        &== \frac{\mathbb{P}(X=k,Y=j)}{\sum_{x \in R(X)} \mathbb{P}(Y=j|X=k) \mathbb{P}(X=k}
-                        &= \frac{\mathbb{P}(X=k,Y=j)}{\sum_{x \in R(X)} \mathbb{P}(X=k,Y=j}
+    \mathbb{P}(X=k|Y=j) &= \frac{\mathbb{P}(X=k,Y=j)}{\mathbb{P}(Y=j)} \\
+                        &= \frac{\mathbb{P}(X=k,Y=j)}{\sum_{x \in R(X)} \mathbb{P}(Y=j|X=x) \mathbb{P}(X=x)} \\
+                        &= \frac{\mathbb{P}(X=k,Y=j)}{\sum_{x \in R(X)} \mathbb{P}(X=x,Y=j)}
   \end{align*}
-\end{remark}
+\end{theorem}
 
-\begin{theorem}[Conditional density]
-  If \( X, Y \) have joint density \( f(x,y) \) then the conditional density of \( X \) given \( Y=y \ is )
+\begin{theorem}[Conditional density (continuous)]
+  If \( X, Y \) have joint density \( f(x,y) \) then the conditional density of \( X \) given \( Y=y \) is 
   \begin{equation*}
     f(x|Y=k) = \frac{f(x,k)}{\int_{\mathbb{R}} f(\ell,k) d \ell} = \frac{f(x,k)}{f_Y(y)}
   \end{equation*}
 \end{theorem}
 
 \begin{remark}
-  The conditional density is found by taking the joint desnity with one variable fixed and dividing that by the marginal of the non-fixed variable
+  The conditional density is found by taking the joint density with one variable fixed and dividing that by the marginal of the non-fixed variable. Logically, this is very similar to how we find conditioanl probability in the discrete case!
 \end{remark}
 
-\begin{theorem}
+\begin{corollary}
   \begin{align*}
-    f(x,y) &= f(x|Y=y) f_Y(y)
-    f_X(x) = \int_{\mathbb{R}} f(x,y) dy = \int_{\mathbb{R}} \int f(x|Y=y) f_Y(y) dy 
+    f(x,y) &= f(x|Y=y) f_Y(y) \\
+    f_X(x) &= \int_{\mathbb{R}} f(x,y) dy = \int_{\mathbb{R}}  f(x|Y=y) f_Y(y) dy 
   \end{align*}
-\end{theorem}
+\end{corollary}
 
 
 \begin{remark}
