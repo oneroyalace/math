@@ -1,0 +1,177 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 21 Poisson processes)}
+\author{Asa Royal (ajr74)}
+\date{March 28, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection{Basics of Poisson arrival processes}
+\begin{definition}[Poisson arrival proces]
+  \( N(t) \) represents a Poisson arrival process, a random function denoting the number of arrivals that occur before some time \( t \).  \\
+  \\
+  Let \( \lambda > 0, X_1, X_2, X_3, \ldots  \) be independent with \( X_i \sim ~ \text{Exp}(\lambda) \). \( X_i \) represents the \( i\)th inter-arrival time (aka waiting time). 
+  Since \( X_i \sim \text{Exp}(\lambda) \), 
+  \begin{equation*}
+    \mathbb{P}(X_i > s) = e^{-\lambda s}, \forall s > 0
+  \end{equation*}
+  Moreover, if \( A_n \) is the \( n \)th arrival time, \( A_n = \sum_{k=1}^n X_k \), so 
+  \begin{align*}
+    N(t) &= \text{max}\{n \geq 0 | A_n \leq t \} \\
+         &= \text{max}\{\sum_{k=1}^n X_k \leq t \} 
+  \end{align*}
+\end{definition}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/21_arrival_times.jpg}
+    \caption{Inter-arrival and arrival times}
+  \end{subfigure}
+  \begin{subfigure}{.4\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/21_arrival_process.jpg}
+    \caption{N(t) piecewise relationship w/ arrivals}
+  \end{subfigure}
+\end{figure}
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=0.5\textwidth]{figures/21_arrival_process.jpg}
+%   \caption{Inter-arrival and arrival times}
+% \end{figure}
+
+\begin{remark}
+  \( N(t) \) is: 
+  \begin{enumerate}
+    \item Non-negative and non-decreasing
+    \item piecewise constant
+    \item has jumps of size 1 at arrival times 
+  \end{enumerate}
+\end{remark}
+
+\subsection{Distribution of \( N(t) \) }
+\begin{definition}[Modified Poisson Arrival Process]
+  For an interval \( I = (a,b] \subset (0, \infty) \), define \( N(I) \) = \# arrivals in interval \( I \). i.e. 
+  \begin{equation*}
+   N(I) =  N(b) - N(a) 
+  \end{equation*}
+  Note that this means
+  \begin{equation*}
+    N(t) = N((0,t]) = N(t) - N(0)
+  \end{equation*} 
+\end{definition}
+
+\begin{theorem}
+  Let \( N \) be a Poisson arrival process w/ parameter \( \lambda \). 
+  \begin{enumerate}
+    \item If \( I =  (a,b] \) is any interval then \( N(I) \) has the \( \text{Poisson}(\lambda |I|) \) distribution where \( |I| = |b-a| \). Thus, 
+      \begin{equation*}
+        \mathbb{P}(N(I) = k) = \frac{(\lambda |I|)^k}{k!} e^{- \lambda t}
+      \end{equation*}
+      And 
+      \begin{equation*}
+        \mathbb{E}[N(I)] = \lambda |I|
+      \end{equation*}
+      \begin{enumerate}
+        \item In particular, \( N(t) \sim \text{Poisson}(\lambda t) \), so \( \mathbb{E}[N(t)] = \lambda n \)
+      \end{enumerate}
+    \item For any disjoint intervals \( I_j = (a_j, b_j], j= 1,\ldots, n \), the random variables \( N(I_1), N(I_2), \ldots , N(I_n) \) are independent. 
+  \end{enumerate}
+\end{theorem}
+
+\subsection{Distribution of nth arrival time}
+
+\begin{definition}[Gamma distribution]
+  \( G(n, \lambda) \) is a continuous distribution on \( [0, \infty) \) with density: 
+  \begin{equation*}
+    g_n(t) = 
+    \begin{cases}
+      \frac{(\lambda t)^{n-1}{(n-1)!}} \lambda e^{- \lambda t} & \text{if} t \geq 0 \\
+      0 & \text{if} t < 0
+    \end{cases}
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  \( \text{Gamma}(n, \lambda) \) is a distribution of the sum of \( n \) independent \( \text{Exp}(\lambda) \) random variables. 
+\end{remark}
+
+\begin{prop}
+  The \( n \)th arrival time \( A_n \) has the \( \text{Gamma}(n, \lambda) \) distribution
+\end{prop}
+
+
+\end{document}
+
+
+
