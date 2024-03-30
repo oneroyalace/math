@@ -1,0 +1,179 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{4.3/4.4: Vector Fields, Divergence, and Curl (Lec 7, 8)}
+\author{Asa Royal (ajr74)}
+\date{March 1, 2024 and March 6, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection{Vector fields}
+\begin{definition}[vector field]
+  A vector field in \( \mathbb{R}^n \) is a map or function \( \vec{F} \subseteq \mathbb{R}^n \mapsto \mathbb{R}^n\). i.e. it maps vectors to vectors. The gradient is a common example of a vector field. A vector field in space maps every point in space to a 3d vector; A vector field in the plane maps every point in the plan to a 2d vector. 
+\end{definition}
+
+\begin{definition}[scalar field]
+  A scalar field in \( \mathbb{R}^n \) is a map or function \( \vec{F} \subseteq \mathbb{R}^n \mapsto \mathbb{R} \). i.e. it maps vectors to real numbers. Divergence is an example of a scalar field. 
+\end{definition}
+
+\begin{definition}[flow line]
+  If \( \vec{F} \) is a vector field, a \textbf{flow line} for \( \vec{F} \) is a path \( \vec{c}(t) \) s.t. 
+  \begin{equation*}
+    \pvec{c}'(t) = \vec{F}(\vec{c}(t))
+  \end{equation*}
+  I.e. the path a particle would take if acted upon by the force field \( \vec{F} \) represents. The tangent vector of the path always coincides with the vector field. 
+\end{definition}
+
+
+\subsection{Divergence}
+
+\begin{definition}[del]
+  The \textbf{del operator} is defined by 
+  \begin{equation*}
+    \nabla = \left( \frac{\partial }{\partial x}, \frac{\partial }{\partial y}, \frac{\partial }{\partial z} \right) = \vec{i} \frac{\partial }{\partial x} + \vec{j} \frac{\partial }{\partial y} + \vec{k} \frac{\partial }{\partial z}
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  The gradient is obtained by applying the del operator on \( f \). So the gradient of \( f \) is 
+  \begin{equation*}
+    \nabla f = \left( \vec{i} \frac{\partial }{\partial x} + \vec{j} \frac{\partial }{\partial y} \right) f = \vec{i} \frac{\partial f}{\partial x} + \vec{j} \frac{\partial f}{\partial y}
+  \end{equation*}
+\end{remark}
+\begin{definition}[divergence]
+  Divergence is a function (specifically a scalar field) that takes in a vector field and quantifies how much the field diverges at that point. I.e. it measures the instantaneous rate of expansion of the field at the point.  Operationally, it is defined as the dot product of the \( \nabla \) operator with \( \vec{F} \).  \\
+  \\
+  If \( \vec{F} \) is a vector field, 
+  \begin{align*}
+    \text{div} \vec{F}  &= \frac{\partial F_1}{\partial x_1} + \ldots  + \frac{\partial F_n}{\partial x_n} \\ 
+                        &= \vec{\nabla} \cdot \vec{F}
+  \end{align*}
+  Note that \( \vec{\nabla} \) is a vector of differentiation operators, \( \frac{\partial }{\partial x_1} \ldots  \frac{\partial }{\partial x_n}\).
+\end{definition}
+
+\begin{remark}
+  Imagine gas occupies a small region \( W \) about some point \( \vec{x}_0 \). For each point \( \vec{x} \in W \), let \( \vec{x}(t) \) be the flow line emanating from \( \vec{x} \). The set of points \( \vec{x}(t) \) describes how the set \( W \) flows after time \( t \). Let \( W(t) \) be the area of the region spanned by \( \vec{x}(t) \). \textbf{Divergence} is a ratio of \( W(t) \) to the original area. 
+\end{remark}
+
+\begin{definition}[Laplacian]
+  The Laplace operator, \( \nabla^2 \), is the divergence of the gradient:
+  \begin{equation*}
+    \nabla \cdot ( \nabla f) = \frac{\partial ^2 f}{\partial x^2} + \frac{\partial ^2 f}{\partial y ^2} + \frac{\partial ^2 f}{\partial z ^2}
+  \end{equation*}
+\end{definition}
+\subsection{Curl}
+
+\begin{definition}[Curl]
+  Curl is a vector field that lets us quantify the rotation of a vector field. Let \( \vec{F} \) be a vector field representing fluid flow. If \( \text{curl}(\vec{F})_{(x,y)} > 0 \), a rigid wheel placed at \( (x,y) \) will rotate counter clockwise. If \( \text{curl }\vec{F} = \vec{0} \), the wheel will not rotate about its axis. When \( \text{curl } \vec{F} = 0 \), we say a vector field is irrotational. In three-dimensional space, with \( \vec{F} = (F_1, F_2, F_3) \), 
+  \begin{align*}
+    \text{curl } \vec{F} = \nabla \times \vec{F} = \det \begin{bmatrix}
+      \vec{i} & \vec{j} & \vec{k} \\
+      \frac{\partial }{\partial x} & \frac{\partial }{\partial y} & \frac{\partial }{\partial z} \\
+      F_1 & F_2 & F_3
+    \end{bmatrix}
+  \end{align*}
+\end{definition}
+
+\begin{theorem}[gradients are irrotational]
+  Gradient vector fields are curl free (irrotational). I.e. for any \( C^2 \) function \( f \), 
+  \begin{equation*}
+    \nabla \times ( \nabla f) = \vec{0}
+  \end{equation*}
+
+  Since for any \( \vec{v} \), \( \vec{v} \times \vec{v} = \vec{0} \)
+\end{theorem}
+
+\subsection{Relationship between curl/divergence}
+
+\begin{theorem}[curls are divergence free]
+  For any \( C^2 \) vector field \( \vec{F} \), 
+  \begin{equation*}
+    \text{div } \text{curl } \vec{F} = \nabla \cdot (\nabla \cdot \vec{F}) = 0
+  \end{equation*}
+\end{theorem}
+
+\subsection{Relationships between vector fields, operators}
+\begin{enumerate}
+  \item div curl \( \vec{F} \) =  \( \nabla \cdot (\nabla \times F) \) = 0 (scalar). Curl vector fields are divergence free
+  \item Gradient vector fields are curl free. \( \nabla \times (\nabla \vec{F}) = \vec{0} \)
+  \item div grad \( \vec{F} \) = \( \nabla \cdot \nabla f = \frac{\partial ^2 f}{\partial {x_1} ^2} +\ldots +  \frac{\partial ^2 f}{\partial {x_n} ^2} \), which is the Laplacian (a scalar function)
+  \item grad div \( \vec{F} \) = \( \nabla(\nabla \cdot F) = \left(\frac{\partial }{\partial x_1}(\nabla \cdot F), 
+                                \ldots ,
+                              \frac{\partial }{\partial x_n}(\nabla \cdot \vec{F} \right) \). This is a vector field telling us how quickly and in what direction a field diverges at each point. 
+\end{enumerate}
+
+\end{document}
+
+
+
+
+
