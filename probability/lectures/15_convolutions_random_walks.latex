@@ -1,0 +1,142 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 15 (Convolutions, random walks)}
+\author{Asa Royal (ajr74)}
+\date{February 29, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection{Convolutions}
+\begin{theorem}
+  If we know the marginal distributions of two discrete random variables, \( X \) and \( Y \), we can find the marginal distribution of their sum: 
+  \begin{equation*}
+    \mathbb{P}(X+Y=k) = \sum_{y \in R(Y)} \mathbb{P}(X=k-y)\mathbb{P}(Y=y)
+  \end{equation*}
+  We refer to that quantity as 
+  \begin{equation*}
+    \rho_X * \rho_Y(k)
+  \end{equation*}
+\end{theorem}
+
+\subsection{Random walks}
+\begin{definition}[Random walk]
+  Intuition: Consider a path on \( Z \) with \( S_n \) = position at time \( n \) and \( a \in \mathbb{N} \) as the path's starting point. At each point, fli pa coin. If heads, move in the positive direction. If tails, move in the negative.
+  Mathematically, fix \( n \). \( \Omega = \{ \omega - (\omega_1, \ldots , \omega_n) | \omega_k \in \{ -1, 1\} \} \). \( \omega_k \) is the step taken at time \(  k \). \( S_k(\omega) \) is the position after the \( k \)th step. 
+  \begin{equation*}
+    S_k(\omega) = \alpha + \sum_{j=1}^k \omega_j
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  If coin tosses are fair, \( \mathbb{P}(\{ \omega \} = 2^{-n} \). All paths are equally likely. 
+\end{remark}
+
+\begin{eg}[Probability of ending at b if starting at a]
+  \begin{equation*}
+    \mathbb{P}^a (S_n=b)  = \frac{\text{\# paths from a to b}}{\text{total \# paths}} = \frac{{n \choose \frac{n+b-a}{2}}}{2^n}
+  \end{equation*}
+\end{eg}
+
+\begin{theorem}[Reflection principle]
+  Let \( {N_n}^0 (a,b) \) be the number of paths \( a \mapsto b \) of length \( n \) that touch or cross 0. 
+  \begin{align*}
+    {N_n}^0 (a,b) &= N_n(-a,b) \\
+                  &= { n \choose \frac{n+b+a}{2} }
+  \end{align*}
+\end{theorem}
+
+\begin{remark}
+  Intuition for reflection principle: Imagine the set of paths \( X: {S_n}^a=b \) that cross zero. Assume that the paths in \( X \) have \( S_k=0 \). Now reflect each path in \( X \) over the \( x \) axis before step \( k \). Keep the paths the same after step \( k \). This partially-reflected set represents every path \( Y: {S_n}^{-a}=b \); each path in \( Y \) is guaranteed to cross zero. Because there is a 1:1 correspondence between paths in \( X \) and \( Y \), we can say \( {N_n}^0(a,b) = N_n(-a,b) \) \\
+  \\
+  See the picture below for an example of the reflection principle. Note the 1:1 correspondence betwen the solid paths and the dashed paths before the x-axis crossing
+  \end{remark}
+\pagebreak
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{figures/15_reflection_principle.png}
+  \caption{Demonstration of reflection principle. For each solid path that crosses the x-axis, there is a corresponding path reflected before crossing}
+\end{figure}
+
+\begin{eg}[Applying reflection principle]
+  Compute the probability of going from \( a \) to \( b \) without hitting 0. 
+  \begin{equation*}
+    \mathbb{P}^a(S_n=b, S_k \neq 0\text{ for all } k) = 1 - \frac{{N_n}^0 (a,b)}{2^n} = 1 - \frac{ {n \choose {\frac{n+b+a}{2}}}}{2^n}
+  \end{equation*}
+\end{eg} 
+
+\end{document}
+
+
+
+
+

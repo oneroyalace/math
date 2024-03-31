@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 13: Variance, Weak LLN, Chebyshev/Markov)}
+\author{Asa Royal (ajr74)}
+\date{February 22, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection{Variance of sum of iids}
+\begin{remark}
+  Recall that generally, \( \mathrm{Var}\left( \sum_{i=1}^n X_i \right) = \sum_{i=1}^n \mathrm{Var}(X_i) + 2 \sum_{i < j} \mathrm{Cov}(X_i,X_j) \)
+\end{remark}
+
+\begin{prop}
+  If random variables \( X_1, \ldots , X_n \) have equal variance, 
+  \begin{equation*}
+    \mathrm{Var}(X_1 + \ldots  + X_n) = \sum_{i=1}^n \sigma ^2 = n \sigma ^2
+  \end{equation*}
+  and 
+  \begin{equation*}
+    \text{SD}(X_1 + \ldots  + X_n) = \sigma \sqrt{n}
+  \end{equation*}
+\end{prop}
+
+\begin{remark}
+  The standard deviation of a sum of iid random variables grows more slowly than the sum of the variables
+\end{remark}
+
+\begin{eg}[Compute the vriance of \( X \sim \text{Bin}(n,p) \)]
+ We can express \( X \) as a sum of indicators. Each has teh same variance, \( p(1-p) \), so \( \mathrm{Var}(X) = np(1-p) \) 
+\end{eg}
+
+\subsection{Inequalities}
+\begin{theorem}[Markov's inequality]
+  Intuition: Extreme values of a random variable are unlikely, because we need to balance probability mass around the mean. For a positive random variable \( Y \),
+  \begin{equation*}
+    \mathbb{P}(Y > t) \leq \frac{1}{t} \mathbb{E}[Y]
+  \end{equation*}
+  The tail probability of a positive random variable is bounded by its expected value. 
+\end{theorem}
+
+\begin{theorem}[Chebyshev's inequality]
+  Intuition: If the \( \mathrm{Var}(X) \) is small, then \( X \) is unikely to be far from its mean. The amount a random variable \( X \) with \( \mathrm{Var}(X) < \infty \) can vary from its mean, \( \mu \) is bounded: 
+  \begin{equation*}
+    \mathbb{P}(|X-\mu| \geq t) \leq \frac{\mathrm{Var}(x)}{t^2}, \forall t > 0
+  \end{equation*}
+\end{theorem}
+
+\begin{remark}
+  Markov's inequality leads to the weak law of large numbers
+\end{remark}
+
+\begin{theorem}[Weak law of large numbers]
+  Let \( X \) be the sum of \( n \) iid random variables. When \( \mathrm{Var}(X) < \infty \), we can bound the probability that the average of the \( X_1 , \ldots  , X_n \) deviates from the mean of the random variables: 
+  \begin{equation*}
+    \mathbb{P} \left( \left| \frac{X_1 + \ldots  + X_n}{n} - \mu \right| < \varepsilon \right) \leq \frac{\sigma^2}{\varepsilon^2 n}
+  \end{equation*}
+  And even if \( \mathrm{Var}(X) \) is infinite, if \( \mathbb{E}[X] < \infty \),
+  \begin{equation*}
+    \lim_{n \rightarrow \infty} \mathbb{P} \left( \left| \frac{X_1 + \ldots  + X_n}{n} - \mu \right| > \varepsilon \right) = 0
+  \end{equation*}
+\end{theorem}
+
+
+\end{document}
+
+
+
+
