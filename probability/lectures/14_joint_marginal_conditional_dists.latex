@@ -76,7 +76,10 @@
 
 \subsection*{Definition of distributions}
 \begin{definition}[joint distribution]
-  Let \( X \) and \( Y \) be two discrete random variables. The joint distribution is \( \mathbb{P}(X=k, Y=j) \) for \( k \in R(X), j \in R(Y) \). 
+  Let \( X \) and \( Y \) be two discrete random variables. Their joint distribution is 
+  \begin{equation*}
+    \mathbb{P}(X=k, Y=j) \text{ for } k \in R(X), j \in R(Y)
+  \end{equation*}
 \end{definition}
 
 \begin{remark}
@@ -96,7 +99,7 @@
 
 
 \begin{definition}[Conditional distribution]
-  Let \( X \) and \( Y \) be discrete random variables. A conditional distribution looks like \( \mathbb{P}(X=k|Y-j) \). Note that
+  Let \( X \) and \( Y \) be discrete random variables. A conditional distribution looks like \( \mathbb{P}(X=k|Y=j) \). The conditional distribution is given by:
   \begin{equation*}
     \mathbb{P}(X=k|Y=j) = \frac{\mathbb{P}(X=k, Y=j}{\mathbb{P}(Y=j)}
   \end{equation*}

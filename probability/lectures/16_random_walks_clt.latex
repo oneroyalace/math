@@ -78,7 +78,7 @@
 \begin{theorem}[Ballot theorem]
   Consider \( N_n^+(0,b) \): paths from \( S_0=0 \) to \( S_n=b \) for which \( S_k > 0  \forall k \in \{1, \ldots , n\} \). We can think of \( S_k \) as how many votes ahead candidate X is over candidate Y on election night. 
   \begin{equation*}
-    \forall b \neq 0, N_n+(0,b) = \frac{|b|}{n} N_n(0,b)
+    \forall b \neq 0, {N_n}^+(0,b) = \frac{|b|}{n} N_n(0,b)
   \end{equation*}
 
   \( |b|/n \) is the fraction of paths that don't touch the \( x \)-axis (never go negative). 
@@ -91,7 +91,7 @@
 \begin{eg}[CLT random walks]
   Consider the following probability measure (bakes in equal parity)
   \begin{equation*}
-    \mathbb{P}_n^0 (S_2n=2k) = {2n \choose {n+k}} 2^{-(2n)}
+    {\mathbb{P}_n}^0 (S_{2n}=2k) = {2n \choose {n+k}} 2^{-(2n)}
   \end{equation*}
   Let \( X_k \) be a random variable denoting how much we move on step \( k \). 
   \begin{equation*}
@@ -124,10 +124,10 @@
 \subsubsection*{General CLT}
 \begin{theorem}[Central Limit Theorem]
 
-Suppose \( X_1, \ldots , X_n \) is a sequence of i.i.d random variables with \( ;u = \mathbb{E}[X_i], \sigma^2 = \mathrm{Var}(X_i) \) and \( \mathbb{E}[{X_i}^4 < \infty \). 
+  Suppose \( X_1, \ldots , X_n \) is a sequence of i.i.d random variables with \( ;u = \mathbb{E}[X_i], \sigma^2 = \mathrm{Var}(X_i) \) and \( \mathbb{E}[{X_i}^4] < \infty \). 
   For any \( \alpha, \beta \)
   \begin{equation*}
-    \lim_{n \rightarrow \infty} \mathbb{P}_n^\alpha \left( \alpha \leq \frac{(X_1 + \ldots  + X_n) - \mu_n}{\sqrt{n \sigma ^2}} \leq \beta \right) = \int_{\alpha}^{\beta} \frac{e^{- \frac{y^2}{2}}}{\sqrt{2 \pi}} dy
+    \lim_{n \rightarrow \infty} \mathbb{P}_n^\alpha \left( \alpha \leq \frac{(X_1 + \ldots  + X_n) - \mu_n}{\sqrt{n \sigma ^2}} \leq \beta \right) = \int_{\alpha}^{\beta} \frac{e^{- \frac{y^2}{2}}}{\sqrt{2 \pi}} dy = \Phi(\beta) - \Phi(\alpha)
   \end{equation*}
 \end{theorem}
 

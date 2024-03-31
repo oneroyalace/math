@@ -77,7 +77,11 @@
 
 \subsection*{Joint density} 
 \begin{definition}[joint density]
-  \( X \) and \( Y \) have a joint density \( f(x,y) \) if \( \mathbb{P}((x,y) \in B) = \int \int_B f(x,y) dx dy \) for all open \( B \subset \mathbb{R}^2 \). 
+  \( X \) and \( Y \) have the joint density \( f(x,y) \) if 
+  \begin{equation*}
+     \mathbb{P}((x,y) \in B) = \int \int_B f(x,y) dx dy   
+  \end{equation*}
+  for all open  \( B \subset \mathbb{R}^2 \).
 \end{definition}
 
 \begin{remark}

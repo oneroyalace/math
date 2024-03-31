@@ -92,10 +92,10 @@
 \begin{definition}[Cummulative distribution function (CDF)]
   Let \( X \) be any real-valued r.v.. The CDF of \( X \) is 
   \begin{equation*}
-    F(z) = \mathbb{P}(X \leq z) = \mathbb{P}(X \in ( -\infty z))
+    F(z) = \mathbb{P}(X \leq z) = \mathbb{P}(X \in ( -\infty, z))
   \end{equation*}
+  Note that \( F: \mathbb{R} \mapsto [0,1] \)
 \end{definition}
-And note that \( F: \mathbb{R} \mapsto [0,1] \)
 
 \begin{definition}[continuous r.v.]
   Formally, a random variable is \textbf{continuous} if its CDF is continuous (and can thus be integrated to recover a density function). 
@@ -122,11 +122,12 @@ And note that \( F: \mathbb{R} \mapsto [0,1] \)
     if \( l < a < b < r \). 
     \item Exp(\( \lambda \)): exponential distribution w/ paramter \( \lambda \). 
       \begin{align*}
-        F(t) &= \mathbb{P}(X \leq t) = \begin{cases}
+        &\mathbb{P}(X > t) = e^{-\lambda t} \\
+        &F(t) = \mathbb{P}(X \leq t) = \begin{cases}
           1 - e^{-\lambda t} & t \geq 0 \\
           0 & t <   0
         \end{cases} \\
-          f(t) &= F'(t) = \begin{cases}
+        &f(t) = F'(t) = \begin{cases}
           \lambda e^{-\lambda t} & t \geq 0 \\
           0 & t <   0
         \end{cases}
@@ -137,6 +138,7 @@ And note that \( F: \mathbb{R} \mapsto [0,1] \)
       Let \( \mu \in R, \sigma^2 > 0 \). \( X \sim \text{Normal}(\mu, \sigma ^2) \) if 
       \begin{align*}
         f(x) &= \frac{e^{ \frac{-(x-\mu)^2}{2 \sigma ^2}}}{ \sigma \sqrt{2 \pi }} \\
+        F(x) &= \frac{1}{\sqrt{2 \pi}}\int_{0}^x e^{- \left(\frac{x - \mu}{\sigma}\right)^2/2}
       \end{align*}
       \begin{remark}
         \( N(0,1) \) with \( \mu = 0, \sigma^2 = 1 \) is called the standard normal. 
