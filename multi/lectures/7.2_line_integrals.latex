@@ -68,6 +68,8 @@
   \import{./figures/}{#1.pdf_tex}
 }
 
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
 \title{Math 222: (Line integrals)}
 \author{Asa Royal (ajr74)}
 \date{March 8, 2024}
@@ -75,28 +77,76 @@
 \begin{document}
 \maketitle
 
-\begin{definition}[line integral]
-  A line integral is the analog of a path integral but for vector fields. It helps us determine the work a vector field does moving a particle. 
+\begin{definition}[Line integral of scalar field]
   \begin{equation*}
-    \text{work} = \int_{c} \vec{F} \cdot ds = \int_{a}^b \vec{F}(\vec{c}(t)) \cdot \pvec{c}'(t) dt
+    \int_{c} f(x,y) ds = \int_{a}^b f\left( x(t), y(t) \right) \sqrt{\left( \frac{dx}{dt} \right)^2 + \left( \frac{dy}{dt} \right)^2} dt 
   \end{equation*}
 \end{definition}
 
-\begin{proof}
+\begin{remark}
+  An intuitive explanation of how we trasnsform ds::
+  \begin{align*}
+    ds &= \sqrt{(dx)^2 + (dy)^2} \text{ (by pythagorean)}\\
+       &= \frac{dt}{dt}\sqrt{(dx)^2 + (dy)^2} \\
+       &= \sqrt{\left( \frac{dx}{dt} \right)^2 + \left( \frac{dy}{dt} \right) ^2 }dt
+  \end{align*}
+\end{remark}
+
+\begin{definition}[line integral of vector field]
+  A line integral is the analog of a path integral but for vector fields. It helps us determine the work a vector field does moving a particle along a path. Imagine a particle travels along some path \( c(t) \) from  \( a \) to \( b \) and is influenced by field \( \vec{F} \). The work done by the field is given by 
+  \begin{equation*}
+    \text{work} = \int_{c} \vec{F} \cdot d \vec{s} = \int_{a}^b \vec{F}(\vec{c}(t)) \cdot \pvec{c}'(t) dt
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  Why the dot product? It tells us how much the direction of the field \( \vec{F} \) aligns with with the direction of the particle's path \( d \vec{s} \), thus enabling us determine how much of the force applied translates to work. 
+\end{remark}
+
+\begin{remark}
+  Quick derivation of \( d \vec{s} = \pvec{c}'(t) \)
   \begin{equation*}
     \frac{ds}{dt} = x'(t) \hat{i} + y'(t) \hat{j} + z'(t) \hat{k}
   \end{equation*}
   So 
   \begin{equation*}
-    ds = \left( x'(t) \hat{i} + y'(t) \hat{j} + z'(t) \hat{k} \right) dt
+    ds = \left( x'(t) \hat{i} + y'(t) \hat{j} + z'(t) \hat{k} \right) dt = \pvec{c}'(t) dt
   \end{equation*}
-\end{proof}
-
-\begin{remark}
-  Why the dot product? It tells us how much the direction of the field at a given point actually aligns with the particles movement. Let's us determine how much of the force applied trnaslates to work. 
 \end{remark}
 
+\subsection{Reparameterization}
 
+\begin{definition}[Reparameterization]
+  Let \( h: I \mapsto I_1 \) be a real-valued function that is a 1:1 map fo an interval \( I = [a,b] \) onto another interval \( I_1 = [a_1, b_1] \). Let \( \vec{c} \) be a piecewise \( C_1 \) path. Then \( \vec{p}(t) = \vec{c}(h(t)) \) is called a \textbf{reparameterization}  of \( \vec{c} \).  \\
+  \\
+  A reparameterization is orientation-preserving if \( p(a) = c(a), p(b) = c(b) \). It is non-orientation-preserving if \( p(a) = c(b), p(b) = c(a) \).  
+\end{definition}
+
+\begin{remark}
+  A line integral of a scalar field over a path and its reparameterization is equivalent, even if the reparameterization is non-orientation-preserving. \( ds \) is always positive, and \( f(x,y) \) is, too.  
+\end{remark}
+\begin{theorem}[vector field line integral of reparameterization]
+  If a reparameterization, \(  p \),  is orientation-preserving, 
+  \begin{equation*}
+    \int_{p} \vec{F} \cdot ds  = \int_{c} \vec{F} \cdot ds 
+  \end{equation*}
+  Otherwise, 
+  \begin{equation*}
+    \int_{p} \vec{F} \cdot ds  = - \int_{c} \vec{F} \cdot ds 
+  \end{equation*}
+\end{theorem}
+
+
+\begin{theorem}[Fundamental theorem of line integrals]
+  Suppose \( f: \mathbb{R}^3 \mapsto R \) is of class \( C^1 \) and that \( \vec{c}: [a,b,] \mapsto \mathbb{R}^3 \) is a piecewise \( C^1 \) path. Then 
+  \begin{equation*}
+    \int_c \nabla f \cdot d \vec{s} = f(\vec{c}(b)) - f(\vec{c}(a))
+  \end{equation*}
+\end{theorem}
+
+\begin{remark}
+  The work done by a gradient vector field moving a particle along the path only depends on the endpoints of the path, not the path itself! 
+\end{remark}
 \end{document}
 
 
