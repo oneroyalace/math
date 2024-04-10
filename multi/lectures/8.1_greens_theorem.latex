@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{Math 222: (Green's Theorem)}
+\author{Asa Royal (ajr74)}
+\date{March 8, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{remark}
+  Green's theorem lets us calculate the line integral of a vector field without needing to parameterize the path. 
+\end{remark}
+
+\subsection{Using Green's Theorem to calculate circulation}
+
+\begin{prop}
+  The circulation around a tiny recangle with vertices \( (x,y), (x + \Delta x, y), (x, y + \Delta y), (x + \Delta x, y + \Delta y) \) is \( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \)
+\end{prop}
+
+\begin{proof}
+  https://www.youtube.com/watch?v=JB99RbQAilI\&list=PLHXZ9OQGMqxfW0GMqeUE1bLKaYor6kbHa\&index=18
+\end{proof}
+
+\begin{remark}
+  Can conceptualize Green's Thm as allowing us to calculate the circulation around a path by summing up the circulation around all infinitesmial internal areas within the region bounded by the path. \( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \) is the circulation density (flux) at a tiny rectangle with length/width \( dx dy \). So...
+\end{remark}
+
+\begin{theorem}[Green's Theorem]
+  Let \( D \) be a simple region and \( C \) be its boundary. Let \( \vec{F} = P(x,y) \hat i + Q(x,y) \hat j \)
+  \begin{equation*}
+    \int_{C} \vec{F} \cdot ds = \int \int_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial Y} \right) dx dy 
+  \end{equation*}
+\end{theorem}
+
+\subsection{Using Green's Theorem to calculate flux}
+\begin{remark}
+  We can similarly calculate the flux of \( \vec{F} \) across some path \( c \) by summing up the flux across all the infinitesimal areas within the region bounded by \( c \). \\
+\end{remark}
+
+\begin{prop}
+  The circulation around a tiny recangle with vertices \( (x,y), (x + \Delta x, y), (x, y + \Delta y), (x + \Delta x, y + \Delta y) \) is \( \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} \)
+\end{prop}
+
+\begin{proof}
+  trefor 19
+\end{proof}
+
+\begin{theorem}[Green's theorem (divergence form)]
+  Let \( D \) be a simple region and \( C \) be its boundary. Let \( \vec{F} = P(x,y) \hat i + Q(x,y) \hat j \)
+  \begin{align*}
+    \int_{C} \vec{F} \cdot \vec{n} ds &= \int \int_D \text{div }\vec{F} dA \\
+                                      &= \int \int_D \left( \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial Y} \right) dx dy  \\
+                                      &= \int \int_D \vec{\nabla} \cdot \vec{F} dxdy
+  \end{align*}
+  
+\end{theorem}
+
+\end{document}
+
+
+
+
+
