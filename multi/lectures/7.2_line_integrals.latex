@@ -137,15 +137,25 @@
 \end{theorem}
 
 
+\subsection{Fundamental theorem of line integrals}
+\begin{remark}
+  Recall that \( \int_{a}^b f'(x) dx = f(b)-f(a) \)
+\end{remark}
 \begin{theorem}[Fundamental theorem of line integrals]
-  Suppose \( f: \mathbb{R}^3 \mapsto R \) is of class \( C^1 \) and that \( \vec{c}: [a,b,] \mapsto \mathbb{R}^3 \) is a piecewise \( C^1 \) path. Then 
+
+  Suppose \( f: \mathbb{R}^3 \mapsto R \) is of class \( C^1 \) and that \( \vec{c}: [a,b,] \mapsto \mathbb{R}^3 \) is a piecewise \( C^1 \) path. Then  for \( \vec{F} = \nabla f \)
   \begin{equation*}
-    \int_c \nabla f \cdot d \vec{s} = f(\vec{c}(b)) - f(\vec{c}(a))
+    \int_c F \cdot d \vec{s} = f(\vec{c}(b)) - f(\vec{c}(a))
   \end{equation*}
+
 \end{theorem}
 
 \begin{remark}
   The work done by a gradient vector field moving a particle along the path only depends on the endpoints of the path, not the path itself! 
+\end{remark}
+
+\begin{remark}
+  If the path integral of a vector field only depends on the endpoints of the path, we call the vector field conservative. Every conservative vector field is the gradient of some other vector field. 
 \end{remark}
 \end{document}
 
