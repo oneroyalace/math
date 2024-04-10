@@ -104,11 +104,11 @@
 
 \subsection{Using Green's Theorem to calculate flux}
 \begin{remark}
-  We can similarly calculate the flux of \( \vec{F} \) across some path \( c \) by summing up the flux across all the infinitesimal areas within the region bounded by \( c \). \\
+  We can similarly calculate the flux of \( \vec{F} \) across some path \( c \) by summing up the flux across (i.e. divergence in) all the infinitesimal areas within the region bounded by \( c \). \\
 \end{remark}
 
 \begin{prop}
-  The flux around a tiny recangle with vertices \( (x,y), (x + \Delta x, y), (x, y + \Delta y), (x + \Delta x, y + \Delta y) \) is \( \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} \)
+  The flux around a tiny recangle with vertices \( (x,y), (x + \Delta x, y), (x, y + \Delta y), (x + \Delta x, y + \Delta y) \) is \( \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} \), which is divergence! 
 \end{prop}
 
 \begin{proof}
@@ -123,6 +123,18 @@
                                       &= \int \int_D \vec{\nabla} \cdot \vec{F} dxdy
   \end{align*}
   
+\end{theorem}
+
+\subsection{Stoke's Theorem}
+
+\begin{remark}
+  The circulation around a surface is the sum of the curl on infinitesimal areas of the surface
+\end{remark}
+
+\begin{theorem}[Stoke's THeorem]
+  \begin{equation*}
+    \int_C = \int \int_D \text{curl} \vec{F} \cdot d \vec{s}
+  \end{equation*}
 \end{theorem}
 
 \end{document}
