@@ -108,7 +108,7 @@
 \end{remark}
 
 \begin{prop}
-  The circulation around a tiny recangle with vertices \( (x,y), (x + \Delta x, y), (x, y + \Delta y), (x + \Delta x, y + \Delta y) \) is \( \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} \)
+  The flux around a tiny recangle with vertices \( (x,y), (x + \Delta x, y), (x, y + \Delta y), (x + \Delta x, y + \Delta y) \) is \( \frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} \)
 \end{prop}
 
 \begin{proof}
