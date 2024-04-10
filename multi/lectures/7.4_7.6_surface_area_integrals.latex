@@ -1,0 +1,155 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{Math 222: (Area of surfaces, surface integrals)}
+\author{Asa Royal (ajr74)}
+\date{March 8, 2024}
+
+\begin{document}
+\maketitle
+
+\subsection{Tangent vectors}
+
+\begin{definition}[tangent vector to a parametrized surface]
+  Per the definition of a partional derivative, 
+  \begin{equation*}
+    \frac{\partial \Phi}{\partial u} = \lim_{u \rightarrow \infty} \frac{\Phi(u + \Delta u, v) - \Phi(u,v)}{\Delta u}
+  \end{equation*}
+  Loosening rigor, we can kinda think of \( \frac{\partial \Phi}{\partial U} \) as 
+  \begin{equation*}
+    \frac{\partial \Phi}{\partial u} = \frac{\Phi(u + du, v) - \Phi(u,v)}{du}
+  \end{equation*}
+  Which means
+  \begin{equation*}
+    \frac{\partial \Phi}{\partial u} du = \vec{T}_u du = \Phi(u + du, v) - \Phi(u,v)
+  \end{equation*}
+\end{definition}
+
+\subsection{Calculating area of a parametrized surface}
+\begin{remark}
+  \( \vec{T}_u \times \vec{T}_v = \frac{\partial \Phi}{\partial u}du \times \frac{\partial \Phi}{\partial v}dv \) forms a parallelogram (\( d\sigma) \)on the surface. The total area of the surface is the sum of all such parallelograms \( (\int \int_{\Sigma} d\sigma) \). But it's difficult to count how many parallelograms that would be. So instead, we count using \( u, v \): 
+
+\end{remark}
+
+\begin{theorem}[Surface of area]
+  Imagine some surface is parametrized by \( \Phi(u,v) = (x,y,z) \). We can calculate its surface area as
+  \begin{align*}
+    \text{Area}(s) &= \int \int_D {\lVert \vec{T}_u \times \vec{T}_v \rVert} du dv \\
+    &= \int \int_D \sqrt{ \left(\frac{\partial (x,y)}{\partial (u,v)} \right)^2 + \left(\frac{\partial (y,z)}{\partial (u,v)}\right) ^2 + \left(\frac{\partial (x,z)}{\partial (u,v)}\right) ^2}
+  \end{align*}
+\end{theorem}
+
+\begin{remark}
+Recall, the arc length of a path \( c(t) \) is given by \( \int_{a}^b {\lVert \pvec{c}'(t) \rVert} dt \). When we calculate surface area of \( S \), \( {\lVert \vec{T}_u \times \vec{T}_v \rVert} \) is the analog fo \( {\lVert \pvec{c}'(t) \rVert} \)
+\end{remark}
+
+
+\begin{corollary}
+  Special case: The surface area of a graph \( z=g(x,y) \) is given by 
+  \begin{align*}
+    SA &= \int \int_{D} \sqrt{ \left( \frac{\partial g}{\partial x} \right)^2 + \left( \frac{\partial g}{\partial y} \right)^2 + \left( \frac{\partial g}{\partial z} \right) ^2 }dxdy \\
+       &= \int \int_{D} \sqrt{ \left( \frac{\partial g}{\partial x} \right)^2 + \left( \frac{\partial g}{\partial y} \right)^2 + 1}dxdy
+  \end{align*}
+  Parametrization: imagine \( x=u, y=v, z=g(u,v) \)
+\end{corollary}
+
+\subsection{Surface integrals of scalar functions}
+
+\begin{theorem}[Surface integral of scalar function]
+  Let \( f \) be a continuous scalar function defined on a parametrized surface \( S \). The integral of \( f \) over \( S \) integrals
+  \begin{equation*}
+    \int \int_{S} f dS = \int \int_{\Phi} f dS = \int \int_{D} f(\Phi(u,v)) {\lVert \vec{T}_u \times \vec{T}_v \rVert} du dv
+  \end{equation*}
+  where \( \Phi: D \mapsto S \). 
+\end{theorem}
+
+\begin{remark}
+  If \( f = \delta \) is a density function, \( \int \int_S f ds = \text{mass} \). 
+\end{remark}
+
+\begin{theorem}[Surface integral of vector functions]
+  Let \( \vec{F} \) be a vector field defined on \( S \), the image of a parametrized surface \( \Phi \). The surface integral of \( \vec{F} \) over \( S \) is: 
+  \begin{align*}
+    \int \int_S \vec{F} \cdot dS &= \int \int_d \vec{F}(\Phi(u,v,)) \cdot (\vec{T}_u \times \vec{T}_v ) du dv \\
+                                 &=\int \int_D \vec{F}(\Phi(u,v,)) \cdot \vec{N}  {\lVert \vec{T}_u \times \vec{T}_v \rVert}du dv
+  \end{align*}
+  Where \( \vec{N} \) is the unit normal vector to the surface. 
+  \begin{remark}
+    The surface integral of a vector function lets us calculate flux: how much of a fluid (or vector field) flows through the surface. Each \( dS \) is a tiny bit of surface.  
+  \end{remark}
+\end{theorem}
+
+\end{document}
+
+
+
+
