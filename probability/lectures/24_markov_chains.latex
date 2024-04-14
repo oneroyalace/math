@@ -1,0 +1,137 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 24 Markov Chains (2)}
+\author{Asa Royal (ajr74)}
+\date{April 11, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{remark}
+\end{remark}
+
+\subsection{N-step probability distributions with random start}
+\begin{prop}
+  Assume \( X_0 \sim \nu \) (i.e. \( \mathbb{P}(X_0=x_0) = \nu_{x_0} \) ). Then the distribution of \( X_n \) is given by 
+  \begin{equation*}
+    \mathbb{P}(X_n=y) = \nu ({P^n})_{y} = \sum_{x \in S} \nu_x  (P^n)_{x,y}  % = \nu^{\intercal} \cdot (P^n)_{x_n}
+  \end{equation*}
+  Note that \( \nu \) is a \( 1 \times m \) row vector where \( m = |S| \). \( P \) is obviously \( m \times m \). 
+\end{prop}
+
+\begin{proof}
+  \begin{align*}
+    \mathbb{P}(X_n=x_n) &= \sum_{x_0 \in S} \mathbb{P}(X_n = x_n | X_0 = x_0) \mathbb{P}(X_0 = x_0) \\ \\
+                        &= \sum_{x_0 \in S} P^{(n)} (x_0,x_n) \nu(x_0) & \text{n-step prob} \\
+                        &= \sum_{x_0 \in S} \nu(x_0) P^{(n)} (x_0,x_n) \\
+                        &= \nu P^{(n)} (x_n) & \text{ matrix-vec mult.}
+  \end{align*}
+\end{proof}
+
+\subsection{Stationary distributions}
+
+\begin{definition}[Stationary distribution]
+  A distribution \( \pi \) on \( S \) is stationary if \( \pi P = \pi \). This means
+  \begin{equation*}
+    \mathbb{P}(X_n = y | X_0 \sim \pi) = \mathbb{P}(X_{n-1} = y | X_0 \sim \pi)  = \ldots  = \mathbb{P}(X_{1} = y | X_0 \sim \pi) = \pi(y)
+  \end{equation*}
+  Or in English, the chance of hopping to state \( y \in S \) is the same regardless of our current state. 
+  Also, note that \( P \) can be thought of as a linear transformation so 
+    \begin{equation*}
+      \pi P = \pi \implies \pi P^{(n)} = \pi
+    \end{equation*}
+\end{definition}
+
+\begin{remark}
+  If the distribution \( \pi \) on \( S \) is stationary, \( \pi \) is a left eigenvector of \( P \) with eigenvalue \( 1 \). 
+\end{remark}
+
+\begin{eg}[stationary distribution]
+  Consider 
+  \begin{equation*}
+    \pi = \begin{bmatrix} 0.54 & 0.41 & 0.05 \end{bmatrix}, P= \begin{bmatrix}
+      0.7 & 0.2 & 0.1 \\
+      0.4 & 0.6 & 0 \\
+      0 & 1 &  0 
+      \end{bmatrix}
+  \end{equation*}
+  Think about \( (\pi P)_1 \). This is the probability that given \( x_0 \sim \pi \), after one jump in the Markov chain, we end up at state 1. To find \( (\pi P)_1 \) we consider the probability of every path to \( X_1 = 1 \) (i.e. \( P_{x,1}* \pi_x  \) for \( x \in S \)). 
+  \begin{equation*}
+    (\pi P)_1 = \sum_{x \in S} \pi_x P_{x,1} = (0.54)(0.7) * (0.41)(0.4) * (0.05)(0) \approx 0.54
+  \end{equation*}
+\end{eg}
+
+\end{document}
+
+
+
+
+
