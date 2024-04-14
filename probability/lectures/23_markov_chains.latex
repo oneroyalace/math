@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 23 Markov Chains (1)}
+\author{Asa Royal (ajr74)}
+\date{April 9, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{remark}
+  Markov chains are useful because they reduce conditional probability calculations to matrix operations
+\end{remark}
+
+\subsection{Overview of Markov Chains}
+
+\begin{definition}[Markov chain]
+  A \textbf{Markov Chain} is a sequence of rnadom variables \( X_1, \ldots , X_n \) that takes values in some "state space" \( S \) and satisfy the Markov property. The Markov Property states that the future is independent of the past but conditioned on the present. Formally, 
+  \begin{equation*}
+    \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n, X_{n-1}=x_{n-1}, \ldots, X_0=x_0) = \mathbb{P}(X_{n+1}=x_{n+1}|X_n=x_n)
+  \end{equation*}
+\end{definition}
+
+\begin{definition}[time-homogenous Markov Chain]
+  If we assume that \( \mathbb{P}(X_{n+1} = y | X_n = x) \) does not depend on \( n \), we say that the chain is time-homogenous. If a Markov Chain is time-homogenous, we can define a transition matrix, \( P \), which includes the transition probability between all states in the state space. 
+\end{definition}
+
+\begin{theorem}[Properties of the transition matrix P]
+  Let \( P \) be a transition matrix. Then
+  \begin{enumerate}
+    \item \( 0 \leq P(x,y) \leq 1 \) 
+    \item \( \forall x, \sum_{y \in S} P(x,y) = 1 \). ( Interpretation: If we're at state \( x \), we must move somewhere)
+  \end{enumerate}
+\end{theorem}
+
+\subsection{Examples of markov chains}
+\begin{eg}[Simple random walk]
+  A simple random walk on \( \mathbb{Z} \) is a Markov Chain with \( S = \mathbb{Z} \) and 
+  \begin{equation*}
+    P(x,y) = \begin{cases}
+      0 & \text{if } |x-y| \neq 1  \\
+      p & \text{if } |x-y| = 1
+    \end{cases}
+  \end{equation*}
+\end{eg}
+\begin{eg}[Other examples]
+  Simple walk on graph, random process with urn of red/blue marbles where num of given color of marbles change when we pick one of its kind. 
+\end{eg}
+
+\subsection{n-step transitions}
+  Motivating question: What is the distribution of \( X_n \) given we're at some current state \( X_0 \)? 
+
+  \begin{prop}
+    \begin{equation*}
+      \mathbb{P}(X_n=y|X_0=x) = P^{(n)}(x,y)
+    \end{equation*}
+    Where \( P^{(n)} \) is the \( n \)th power of the transition matrix \( P \). 
+  \end{prop}
+
+  \begin{eg}[Finding two step transition probabilities]
+    \begin{align*}
+      \mathbb{P}(X_2 = x_2|X_0 = x_0) &= \sum_{x_1 \in S} (X_2=x_2,X_1=x_1|X_0=x_0) & \text{partitioning} \\
+                                      &= \sum_{x_1 \in S} \frac{\mathbb{P}(X_2 = x_2, X_1 = x_1, X_0 = x_0)}{\mathbb{P}(X_0=0)} & \text{cond. prob} \\
+                                      &= \sum_{x_1 \in S} \frac{\mathbb{P}(X_2 = x_2 | X_1 = x_1, X_0 = x_0) \mathbb{P}(X_1=x_1, X_0=x_0)}{\mathbb{P}(X_0=0)} & \text{cond. prob} \\
+                                      &= \sum_{x_1 \in S} \frac{\mathbb{P}(X_2 = x_2 | X_1 = x_1) \mathbb{P}(X_1=x_1, X_0=x_0)}{\mathbb{P}(X_0=0)} & \text{Markov property} \\
+                                      &= \sum_{x_1 \in S} \frac{\mathbb{P}(X_2 = x_2 | X_1 = x_1) \mathbb{P}(X_1=x_1 | X_0=x_0) \mathbb{P}(X_0=0)}{\mathbb{P}(X_0=0)} & \text{cond. prob} \\
+                                      &= \sum_{x_1 \in S} \mathbb{P}(X_2 = x_2 | X_1 = x_1) \mathbb{P}(X_1=x_1 | X_0=x_0)  & \text{cond. prob} \\
+                                      & = \sum_{x_1 \in S}  P(x_0,x_1) P(x_1,x_2) \text{trans. matrix} \\
+                                      &= P^{(2)}(x,y) & \text{def. matrix mult}
+    \end{align*}
+  \end{eg}
+
+
+
+\end{document}
+
+
+
+
