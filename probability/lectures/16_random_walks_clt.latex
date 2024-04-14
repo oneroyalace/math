@@ -124,12 +124,16 @@
 \subsubsection*{General CLT}
 \begin{theorem}[Central Limit Theorem]
 
-  Suppose \( X_1, \ldots , X_n \) is a sequence of i.i.d random variables with \( ;u = \mathbb{E}[X_i], \sigma^2 = \mathrm{Var}(X_i) \) and \( \mathbb{E}[{X_i}^4] < \infty \). 
+  Suppose \( X_1, \ldots , X_n \) is a sequence of i.i.d random variables with \( \mu = \mathbb{E}[X_i], \sigma^2 = \mathrm{Var}(X_i) \) and \( \mathbb{E}[{X_i}^4] < \infty \). 
   For any \( \alpha, \beta \)
   \begin{equation*}
-    \lim_{n \rightarrow \infty} \mathbb{P}_n^\alpha \left( \alpha \leq \frac{(X_1 + \ldots  + X_n) - \mu_n}{\sqrt{n \sigma ^2}} \leq \beta \right) = \int_{\alpha}^{\beta} \frac{e^{- \frac{y^2}{2}}}{\sqrt{2 \pi}} dy = \Phi(\beta) - \Phi(\alpha)
+    \lim_{n \rightarrow \infty} \mathbb{P} \left( \alpha \leq \frac{(X_1 + \ldots  + X_n) - \mu n}{\sqrt{n \sigma ^2}} \leq \beta \right) = \int_{\alpha}^{\beta} \frac{e^{- \frac{y^2}{2}}}{\sqrt{2 \pi}} dy = \Phi(\beta) - \Phi(\alpha)
   \end{equation*}
 \end{theorem}
+
+\begin{remark}
+  \( \sqrt{ n \sigma^2} \) is the standard deviation for a sum of iid \( X_1 , \ldots, X_n \). If \( X_1 + \ldots  + X_n \) were replaced by some other random variable that is a sum of components (e.g. a Poisson arrival process variable), the denominator of the CLT would reflect the SD of that random variable. 
+\end{remark}
 
 \begin{remark}
   Note that the CLT for random walks is a particular case of the general CLT where \( S_n \) is a sum of random step variables with mean zero and variance 1. 
