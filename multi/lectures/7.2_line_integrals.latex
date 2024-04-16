@@ -78,9 +78,10 @@
 \maketitle
 
 \begin{definition}[Line integral of scalar field]
-  \begin{equation*}
-    \int_{c} f(x,y) ds = \int_{a}^b f\left( x(t), y(t) \right) \sqrt{\left( \frac{dx}{dt} \right)^2 + \left( \frac{dy}{dt} \right)^2} dt 
-  \end{equation*}
+  \begin{align*}
+    \int_{c} f(x,y) ds &= \int_{a}^b f(c(t)) {\lVert \pvec{c}'(t) \rVert} dt \\
+                       &= \int_{a}^b f\left( x(t), y(t) \right) \sqrt{\left( \frac{dx}{dt} \right)^2 + \left( \frac{dy}{dt} \right)^2} dt 
+  \end{align*}
 \end{definition}
 
 \begin{remark}
