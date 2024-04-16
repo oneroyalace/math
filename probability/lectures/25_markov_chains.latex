@@ -1,0 +1,131 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 24 Markov Chains (2)}
+\author{Asa Royal (ajr74)}
+\date{April 11, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{remark}
+\end{remark}
+
+\subsection{State properties}
+\begin{definition}[recurrent/transient states]
+  A state is \textbf{recurrent} if \( \mathbb{P}(X_n = x \text{ for some } n \geq 1 | X_0 = x) = 1 \). That is, a state is recurrent if we are guaranteed to eventually return to it.  \\
+  If a state is not recurrent, it is \textbf{transient}. That means that there is some probability that after visiting it, we may never return to it. 
+\end{definition}
+
+\begin{definition}[Absorbing state]
+  An \textbf{absorbing state} \( x \in S\) is a state with \( P_{x,x} = 1 \). Once the Markov chain reaches an absorbing state, it never moves from it (think of species extinction in a ecosystem population model). 
+\end{definition}
+
+\begin{definition}[irreducible/reducible]
+  A Markov chain is \textbf{irreducible} if it is possible with positive probability to get from any state to any other state. If a chain is not irreducible, it is \textbf{reducible}. An irreducible Markov chain is kind of like a connected graph. \\
+  \\
+  Two states \( x,y \in S \) \textbf{communicate} \( (x \longleftrightarrow y  \) if it is possible to navigate from either state to the other. i.e. \( P^n_{x,y} > 0 \) and \( P^m_{y,x} > 0 \) for \( m,n > 0 \). If all states communicate, a graph is irreducible. 
+\end{definition}
+
+% \begin{theorem}[Irreducible stationary distributions]
+%   For any irreducible Markov Chain (with finitely many states), 
+%   \begin{enumerate}
+%     \item A unique stationary distribution \( \pi \) exists
+%     \item 
+%   \end{enumerate}
+% \end{theorem}
+\subsection{Connection between state and chain properties}
+\begin{theorem}[Markov chain <-> state properties]
+  If a Markov chain is irreducible, either
+  \begin{enumerate}
+    \item All of its states are transient (and \( |S| = \infty \))
+    \item All of its states are recurrent (and \( |S| < \infty \))
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Convergence to stationary distribution]
+  If a Markov chain is irreducible and has finitely many states, 
+    \begin{enumerate}
+      \item A unique stationary distribution \( \pi \) exists for the Markov Chain s.t. 
+        \begin{equation*}
+          \pi_i = \frac{1}{r_i}
+        \end{equation*}
+        where \( r_i \) is the average return time to state \( i \). 
+      \item If \( P^m \) is strictly positive for some \( m \), then \( \mathbb{P}(X_n = i) \rightarrow \pi_i \) as \( n \rightarrow \infty \).  (i.e. the distribution of \( X_n \) converges to the stationary distribution). As such, for irreducible chains with finitely many states, the stationary distribution can be thought of as giving the long-run average \% of time a chain will spend at its states. 
+    \end{enumerate}
+\end{theorem}
+
+\end{document}
+
+
+
+
+
+
