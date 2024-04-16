@@ -92,15 +92,21 @@
 \end{proof}
 
 \begin{remark}
-  Can conceptualize Green's Thm as allowing us to calculate the circulation around a path by summing up the circulation around all infinitesmial internal areas within the region bounded by the path. \( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \) is the circulation density (flux) at a tiny rectangle with length/width \( dx dy \). So...
+  Can conceptualize Green's Thm as allowing us to calculate the circulation around a path by summing up the circulation around all infinitesmial internal areas within the region bounded by the path. \( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \) is the circulation density at a tiny rectangle with length/width \( dx dy \). So...
 \end{remark}
 
 \begin{theorem}[Green's Theorem]
   Let \( D \) be a simple region and \( C \) be its boundary. Let \( \vec{F} = P(x,y) \hat i + Q(x,y) \hat j \)
   \begin{equation*}
-    \int_{C} \vec{F} \cdot ds = \int \int_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial Y} \right) dx dy 
+    \int_{C} \vec{F} \cdot d \vec{s} = \int \int_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dxdy = \int \int_D (\vec{\nabla} \times \vec{F}) \cdot \vec{k} dA
   \end{equation*}
+
 \end{theorem}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/8.1_greens.png}
+    \caption{Green's theorem is a specific case of Stokes' Theorem where \( \vec{n} = \vec{k} \). Note \( \text{curl}(\vec{F}) \cdot \vec{k} = \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \)}
+  \end{figure}
 
 \subsection{Using Green's Theorem to calculate flux}
 \begin{remark}
@@ -115,7 +121,7 @@
   trefor 19
 \end{proof}
 
-\begin{theorem}[Green's theorem (divergence form)]
+\begin{theorem}[Green's theorem (2d version of divergence theorem)]
   Let \( D \) be a simple region and \( C \) be its boundary. Let \( \vec{F} = P(x,y) \hat i + Q(x,y) \hat j \)
   \begin{align*}
     \int_{C} \vec{F} \cdot \vec{n} ds &= \int \int_D \text{div }\vec{F} dA \\
@@ -128,14 +134,49 @@
 \subsection{Stoke's Theorem}
 
 \begin{remark}
-  The circulation around a surface is the sum of the curl on infinitesimal areas of the surface
+  The circulation around a surface is the sum of the curl on infinitesimal areas of the surface. \\
+  \\
+  Or more formally, the normal component of the curl of a vector field \( \vec{F} \) over a surface \( S \) is equal to the integral of the tangential component of \( \vec{F} \) over \( \partial S \). 
 \end{remark}
 
-\begin{theorem}[Stoke's THeorem]
+\begin{theorem}[Stoke's Theorem]
   \begin{equation*}
-    \int_C = \int \int_D \text{curl} \vec{F} \cdot d \vec{s}
+    \int_{\partial S} \vec{F} \cdot d \vec{s} = \int \int_{S} \text{curl } \vec{F} \cdot d \vec{S} = \int \int_{S} (\nabla \times \vec{F}) \cdot \vec{n} d \vec{S}
   \end{equation*}
+
+  \begin{remark}
+    \( (\nabla \times \vec{F}) \cdot \vec{n}\) gives us the component of the curl that's within \( S \). 
+  \end{remark}
 \end{theorem}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/8.1_stokes_curl.png}
+  \caption{The curl within the surface at each bit of area (\( \sigma \)) in the surface sums up to the total circulation around the surface} 
+\end{figure}
+
+
+\begin{remark}
+  Green's theorem is a special case of Stoke's theorem where a surface is flattened out and in the X-Y plane.  (See Thm 2 on this page). \( \vec{n} = \vec{k} \) in Green's theorem. The \( k \) component of \( \nabla \times \vec{F} \) is \( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \). 
+\end{remark}
+
+\begin{remark}
+  If we're trying to find \( \int_c \vec{F} \cdot d \vec{s} \), we can calculate \( \int \int_S \vec{F} \cdot n d\sigma \) for any \( S \) that has boundary \( c \)! Oftentimes, if \( c \) lies within the plane, it's easiest to compute the surface integral of a flat disk. See Trefor 34. 
+\end{remark}
+
+\subsection{Divergence theorem (3d)}
+
+\begin{theorem}[Divergence theorem (3d)]
+  The 3D divergence theorem lets us relate the flux across a surface to the divergence within the region it encloses. Specifically, the flux across the surface is the inf sum of the divergence at every infinitesmal bit of volume within the region. 
+  \begin{align*}
+    \int \int_{\partial V} ( \vec{F} \cdot \vec{n} ) ds &= \int \int \int_R \text{div} \vec{F} dV \\
+                                                        &= \int \int \int_{R} \nabla \cdot \vec{F} dV
+  \end{align*}
+\end{theorem}
+
+\begin{remark}
+  Note the close parallels between the 3d divergence theorem and the 2d divergence theorem (thm 4)
+\end{remark}
 
 \end{document}
 
