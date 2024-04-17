@@ -68,31 +68,47 @@
   \import{./figures/}{#1.pdf_tex}
 }
 
-\title{Math 340: Lec 24 Markov Chains (2)}
+\title{Math 340: Lec 25 Markov Chains (3)}
 \author{Asa Royal (ajr74)}
-\date{April 11, 2024}
+\date{April 16, 2024}
 
 \begin{document}
 \maketitle
 
-\begin{remark}
-\end{remark}
+\subsection{Chain properties}
+\begin{definition}[irreducible/reducible]
+  A Markov chain is \textbf{irreducible} if it is possible with positive probability to get from any state to any other state. If a chain is not irreducible, it is \textbf{reducible}. An irreducible Markov chain is kind of like a connected graph. \\
+  \\
+  Two states \( x,y \in S \) \textbf{communicate} \( (x \longleftrightarrow y  \) if it is possible to navigate from either state to the other. i.e. \( P^n_{x,y} > 0 \) and \( P^m_{y,x} > 0 \) for \( m,n > 0 \). If all states communicate, a graph is irreducible. 
+\end{definition}
 
 \subsection{State properties}
 \begin{definition}[recurrent/transient states]
   A state is \textbf{recurrent} if \( \mathbb{P}(X_n = x \text{ for some } n \geq 1 | X_0 = x) = 1 \). That is, a state is recurrent if we are guaranteed to eventually return to it.  \\
-  If a state is not recurrent, it is \textbf{transient}. That means that there is some probability that after visiting it, we may never return to it. 
+  If a state is not recurrent, it is \textbf{transient}. That means that there is some probability that after visiting it, we may never return to it: \( \mathbb{P}(X_n = x \text{ for some }n \geq 1 | X_0=x) < 1 \) 
 \end{definition}
 
 \begin{definition}[Absorbing state]
   An \textbf{absorbing state} \( x \in S\) is a state with \( P_{x,x} = 1 \). Once the Markov chain reaches an absorbing state, it never moves from it (think of species extinction in a ecosystem population model). 
 \end{definition}
 
-\begin{definition}[irreducible/reducible]
-  A Markov chain is \textbf{irreducible} if it is possible with positive probability to get from any state to any other state. If a chain is not irreducible, it is \textbf{reducible}. An irreducible Markov chain is kind of like a connected graph. \\
-  \\
-  Two states \( x,y \in S \) \textbf{communicate} \( (x \longleftrightarrow y  \) if it is possible to navigate from either state to the other. i.e. \( P^n_{x,y} > 0 \) and \( P^m_{y,x} > 0 \) for \( m,n > 0 \). If all states communicate, a graph is irreducible. 
+\subsubsection{Periodicity}
+\begin{definition}[periodicity]
+  The \textbf{period} of a state \( x \in S \) is 
+  \begin{equation*}
+    d(x) = \text{gcd}\{n \geq 1 | (P^n)_{x,x} > 0\}
+  \end{equation*}
+  This is the gcd of length of all paths that loop from \( x \) to \( x \). 
 \end{definition}
+
+\begin{corollary}
+  If a chain is irreducible and \( P_{x,x} > 0 \), then \( d(x) = 1 \) because we can go from \( x \) to \( x \) in one step. Thus, any irreducible chain with a self-loop is aperiodic. 
+\end{corollary}
+
+\begin{prop}
+  If a chain is irreducible, all its states have the same period. We then define the common period to be the period of the chain. We call a chain \textbf{aperiodic} if the period is 1. To show aperiodicity, we can show that the lengths of two return paths to a node are relatively prime. 
+\end{prop}
+
 
 % \begin{theorem}[Irreducible stationary distributions]
 %   For any irreducible Markov Chain (with finitely many states), 
@@ -105,22 +121,51 @@
 \begin{theorem}[Markov chain <-> state properties]
   If a Markov chain is irreducible, either
   \begin{enumerate}
-    \item All of its states are transient (and \( |S| = \infty \))
-    \item All of its states are recurrent (and \( |S| < \infty \))
+    \item All of its states are transient 
+    \item All of its states are recurrent 
   \end{enumerate}
 \end{theorem}
 
-\begin{theorem}[Convergence to stationary distribution]
-  If a Markov chain is irreducible and has finitely many states, 
-    \begin{enumerate}
-      \item A unique stationary distribution \( \pi \) exists for the Markov Chain s.t. 
-        \begin{equation*}
-          \pi_i = \frac{1}{r_i}
-        \end{equation*}
-        where \( r_i \) is the average return time to state \( i \). 
-      \item If \( P^m \) is strictly positive for some \( m \), then \( \mathbb{P}(X_n = i) \rightarrow \pi_i \) as \( n \rightarrow \infty \).  (i.e. the distribution of \( X_n \) converges to the stationary distribution). As such, for irreducible chains with finitely many states, the stationary distribution can be thought of as giving the long-run average \% of time a chain will spend at its states. 
-    \end{enumerate}
+\begin{corollary}
+  If a Markov chain is irreducible and \( |S| < \infty \), there must be at least 1 recurrent state, which means all states are recurrent. 
+\end{corollary}
+
+% \begin{theorem}[Convergence to stationary distribution]
+%   If a Markov chain is irreducible and has finitely many states, 
+%     \begin{enumerate}
+%       \item A unique stationary distribution \( \pi \) exists for the Markov Chain s.t. 
+%         \begin{equation*}
+%           \pi_i = \frac{1}{r_i}
+%         \end{equation*}
+%         where \( r_i \) is the average return time to state \( i \). 
+%       \item If \( P^m \) is strictly positive for some \( m \), then \( \mathbb{P}(X_n = i) \rightarrow \pi_i \) as \( n \rightarrow \infty \).  (i.e. the distribution of \( X_n \) converges to the stationary distribution). As such, for irreducible chains with finitely many states, the stationary distribution can be thought of as giving the long-run average \% of time a chain will spend at its states. 
+%     \end{enumerate}
+% \end{theorem}
+
+\subsection{stationary distributions}
+
+\begin{theorem}[limit converges to stationary]
+  Assume \( |S| < \infty \). If a chain is irreducible, then there is a unique invariant (stationary) probability distribution \( \pi \). Furthermore, if the chain is aperiodic, for any initial distribution \( \nu \), 
+  \begin{equation*}
+    \lim_{n \rightarrow \infty} \nu P^n = \pi
+  \end{equation*}
+  i.e.
+  \begin{equation*}
+    \lim_{n \rightarrow \infty} \mathbb{P}(X_n = y|X_0 \sim \nu) = \pi(y)
+  \end{equation*}
+  The distribution of the \( n \)th step of the Markov Chain is given by \( \pi \), no matter our starting place. 
 \end{theorem}
+
+\begin{theorem}[Ergodic theorem]
+  If a Markov chain is aperiodic and irreducible, for any function \( F: S \mapsto \mathbb{R} \) (function on a state), the following holds with probability 1:
+  \begin{equation*}
+    \underbrace{ \lim_{n \rightarrow \infty} \frac{1}{n} \sum_{k=1}^n F(X_k)}_{\text{temporal avg}} = \underbrace{\sum_{x \in S} F(x) \pi(x)}_{\text{spacial average}}
+  \end{equation*}
+\end{theorem}
+
+\begin{remark}
+  We can think of \( F \) as a cost or reward function that tells us how much it costs or how much we're rewarded for being at some state \( k \). Over time, the average cost will be \( F(\mathbb{E}[\pi]) \), where \( \pi \) is the stationary distribution.  Note that the RHS of theorem 11 looks like an expected value of \( F \) on the state space (because it is one...)
+\end{remark}
 
 \end{document}
 
