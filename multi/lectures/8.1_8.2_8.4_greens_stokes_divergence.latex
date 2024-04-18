@@ -92,7 +92,7 @@
 \end{proof}
 
 \begin{remark}
-  Can conceptualize Green's Thm as allowing us to calculate the circulation around a path by summing up the circulation around all infinitesmial internal areas within the region bounded by the path. \( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \) is the circulation density at a tiny rectangle with length/width \( dx dy \). So...
+  Can conceptualize Green's Thm as allowing us to calculate the circulation around a path by summing up the circulation around all infinitesimal internal areas within the region bounded by the path. \( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \) is the circulation density at a tiny rectangle with length/width \( dx dy \). So...
 \end{remark}
 
 \begin{theorem}[Green's Theorem]
@@ -167,9 +167,9 @@
 \subsection{Divergence theorem (3d)}
 
 \begin{theorem}[Divergence theorem (3d)]
-  The 3D divergence theorem lets us relate the flux across a surface to the divergence within the region it encloses. Specifically, the flux across the surface is the inf sum of the divergence at every infinitesmal bit of volume within the region. 
+  The 3D divergence theorem lets us relate the flux across a surface to the divergence within the region it encloses. Specifically, the flux across the surface is the inf sum of the divergence at every infinitesimal bit of volume within the region. 
   \begin{align*}
-    \int \int_{\partial V} ( \vec{F} \cdot \vec{n} ) ds &= \int \int \int_R \text{div} \vec{F} dV \\
+    \int \int_{\partial V} ( \vec{F} \cdot \vec{n} ) dS &= \int \int \int_R \text{div} \vec{F} dV \\
                                                         &= \int \int \int_{R} \nabla \cdot \vec{F} dV
   \end{align*}
 \end{theorem}
