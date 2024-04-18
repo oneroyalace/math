@@ -64,7 +64,7 @@
 \maketitle
 
 \begin{enumerate}
-  \item .
+  \item
   \begin{enumerate}[label=(\roman*)]
     \item Is the chain irreducible?  \\
     \\
@@ -88,7 +88,9 @@
         \end{center}
 
 
-      \item What is the period of each state?  
+      \item What is the period of each state? \\
+      \\
+        \textbf{1}. Every state in an irreducible Markov chain has the same period, so to answer this question, we need only find the period of a single state. Note that we can navigate from state \( 1 \) back to state \( 1 \) by way of a 3-length path (\( 1 \rightarrow 3 \rightarrow 2 \rightarrow 1 \)) and a 4-length path (\( 1 \rightarrow 3 \rightarrow 4 \rightarrow  2 \rightarrow 1 \)). Since these lengths are relatively prime, \textbf{the period of state 1 (and all other states) is 1}. 
 
       \item Are there any transient states?  \\
       \\
@@ -124,7 +126,7 @@
       \end{align*}
       This set of linear equations satisfied by \( a = \frac{3-c}{3} \) and \( b = \frac{1-d}{3} \). More than one set of \( (a,b,c,d) \) satisfy these constraints, so \framebox{\( P \), the choice of transition probabilities, is not unique}. 
 
-    \item ..
+    \item 
       \begin{enumerate}[label=(\roman*)]
         \item Given that \( X_0 = 1 \), what is the probability that \( X_n = 1 \) for all \( n = 1,2,3,4,5 \)? \\
           This is the probability that the chain makes the transition from state 1 to state 1 five times in a row, which is \( (P_{1,1})^5 = (0.3)^5 = \framebox{.00243} \). 
@@ -183,7 +185,9 @@
             0.375 & 0.275 & 0.35 
           \end{bmatrix}
         \end{equation*}
-        Thus, \framebox{\( \pi = \lim_{n \rightarrow \infty} X_n = \begin{bmatrix} 0.375 & 0.275 & 0.35 \end{bmatrix}\)}. We know \( \pi \) is a left eigenvector of \( P \) with eigenvalue 1. Thus, \( \pi \) should satisfy \( \pi P = \pi \). And indeed
+        Thus, \( \pi = \lim_{n \rightarrow \infty} X_n = \begin{bmatrix} 0.375 & 0.275 & 0.35 \end{bmatrix}\). \framebox{The long-run average fraction of time \( X_n=1 \) is given by \( \pi_1: 0.375 \)}.\\
+        \\
+        Note: We know \( \pi \) is a left eigenvector of \( P \) with eigenvalue 1 so \( \pi \) should satisfy \( \pi P = \pi \). And indeed
         \begin{equation*}
           \begin{bmatrix} 0.375 & 0.275 & 0.35 \end{bmatrix} 
           \begin{bmatrix}
@@ -193,6 +197,8 @@
           \end{bmatrix} = 
           \begin{bmatrix} 0.375 & 0.275 & 0.35 \end{bmatrix} 
         \end{equation*}
+
+
         % \begin{equation*}
         %   \pi (A-\lambda I_n) = \pi(A-I) = \pi \begin{bmatrix}
         %     -0.7 & 0.4 & 0.3 \\
@@ -210,5 +216,58 @@
         % \end{equation*}
       \end{enumerate}
 
+    \pagebreak
+
+    \item 
+      \begin{enumerate}[label=(\roman*)]
+        \item Identify this game with a Markov chain. Find the transition probability matrix and represent the chain graphically. 
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.5\textwidth]{figures/hw9_4iii.png}
+            \caption{Graphical representation of Markov chain. Created with https://mikhad.github.io/graph-builder/}
+          \end{figure}
+
+        Transition matrix: 
+          \begin{center}
+            \begin{tabular}{ |c|c|c|c|c|c|c| }
+              \hline
+              & Loss & 1 & 2 & 3 & Win  \\
+              \hline
+              Loss & 1 & 0 & 0 & 0 & 0 \\
+              \hline 
+              1 & 1/2 & 0 & 1/2 & 0 & 0 \\
+              \hline
+              2 & 0 & 3/4 & 0 & 1/4 & 0 \\
+              \hline
+              3  & 0 & 0 & 7/8 & 0 & 1/8 \\
+              \hline
+              Win & 0 & 0 & 0 & 0 & 1 \\
+              \hline
+            \end{tabular}
+          \end{center}
+
+        \item What is the probability that a person at level 1 will eventually win the prize? \\
+        \\
+          Let \( h(x) \) be the probability that a Markov chain starting at \( x \) will reach \( b \) before \( a \).
+          \begin{equation*}
+            h(x) = \sum_{y \in S} h(y) P_{xy} 
+          \end{equation*}
+
+          We are interested in \( h(1) \), the probability of starting at state \( 1 \) and hitting the "Win" state before the "Loss" state. Note that the following system of equations holds:
+          \begin{align}
+          h(1) &=  P_{1,L} \underbrace{h(L)}_{0} + \underbrace{P_{1,1}}_{0}h(1) + P_{1,2} h(2) + \underbrace{P_{1,3}}_0 h(3) + \underbrace{P_{1,W}}_0 h(L) = \frac{1}{2} h(2)\\
+            h(2) &=  \underbrace{P_{2,L} h(L)}_{0} + P_{2,1}h(1) + \underbrace{P_{2,2}}_0 h(2) + P_{2,3} h(3) + \underbrace{P_{2,W}}_0 h(L) = \frac{3}{4} h(1) + \frac{1}{4} h(3) \\
+            h(3) &=  \underbrace{P_{3,L} h(L)}_{0} + \underbrace{P_{3,1}}_{0} h(1)  + P_{3,2} h(2) + \underbrace{P_{3,3}}_0 h(3) + P_{3,W} \underbrace{h(W)}_1  = \frac{7}{8} h(2) + \frac{1}{8}
+            \intertext{We thus solve the system for \( h(1) \):} 
+            h(2) &= \left(\frac{3}{4} \right) \left( \frac{1}{2} \right)h(2)  = \frac{3}{8} h(2) + \frac{1}{4} h(3) && (1) \rightarrow (2) \\
+            h(2) &= \frac{2}{5} h(3) && \text{simplify (4)} \\
+            h(3) &= \left(\frac{7}{8} \right) \left(\frac{2}{5}\right) h(3) + \frac{1}{8}= \frac{7}{20} h(3)+ \frac{1}{8} && (5) \rightarrow (3) \\
+            h(3) &= \frac{5}{26} && \text{simplify } (6) \\
+            h(2) &= \left( \frac{2}{5} \right) \left( \frac{5}{26} \right) = \frac{1}{13} && (7) \rightarrow (5) \\
+            h(1) &= \left( \frac{1}{2} \right) \left( \frac{1}{13} \right) = \frac{1}{26} && (8) \rightarrow (1)
+          \end{align}
+
+          \framebox{So the probability that a person at level 1 will eventually win a prize is \( 1/26 \). }
+      \end{enumerate}
 \end{enumerate}
 \end{document}

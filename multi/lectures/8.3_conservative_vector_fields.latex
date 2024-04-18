@@ -1,0 +1,142 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\newcommand{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
+
+\title{Math 222: Conservative fields etc}
+\author{Asa Royal (ajr74)}
+\date{April 12, 2024}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[conservative vector field]
+  Let \( \vec{F} \) be a \( C^1 \) vector field. \( \vec{F} \) is conservative if it is the gradient of a continuously differentiable function \( f \). I.e. 
+  \begin{equation*}
+    \vec{F} \text{ is conservative } \iff  F = \nabla f 
+  \end{equation*}
+  for some "potential" function \( f \). 
+\end{definition}
+
+
+\begin{theorem}
+ Let \( W \subset \mathbb{R}^3 \) and \( \vec{F} \) be a vector field on \( W \). TFAE:
+ \begin{enumerate}
+   \item \( \vec{F} \) is conservative
+   \item For any closed \( C \subset W \), 
+     \begin{equation*}
+       \oint \vec{F} \cdot d \vec{s} = 0 \text{ by Fundamental theorem of line integrals}
+     \end{equation*}
+   \item For any two oriented simple curves \( C_1 \), \( C_2 \) with the same endpoints:
+     \begin{equation*}
+       \oint_{C_1} \vec{F} \cdot d \vec{s} = \oint_{C_2} \vec{F} \cdot d\vec{s}
+     \end{equation*}
+ \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Conservative fields <-> curl-free field?]
+  Relationship between curl and conservative fields:
+  \begin{enumerate}
+    \item If \( \vec{F} \) is conservative, it is the gradient of some potential function \( f \), so it must be curl-free. 
+    \item If \( \vec{F} \) is curl-free and \( W \) is "simply connected", then \( \vec{F} \) is a conservative field.
+  \end{enumerate}
+\end{theorem}
+
+\begin{definition}[Divergence free field]
+  \( \vec{F} \) is a divergence free field if \( \vec{\nabla} \cdot \vec{F} = 0 \). 
+\end{definition}
+
+\begin{theorem}[divergence free field <-> curl field>]
+  Relationship between curl and conservative fields:
+  \begin{enumerate}
+    \item If \( \vec{F} \) is a curl field, it is divergence free since \( \vec{ \nabla } \cdot \nabla f = 0 \)
+    \item If \( \vec{F} \) is divergence free and  and every surface in \( W \) is the boundary of a bounded solid in \( W \), \( \vec{F} \) is a curl field. 
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[curl field stuff]
+  TFAE: 
+  \begin{enumerate}
+    \item \( G \) is a curl field
+    \item  For any closed surface \( S \subset W \), \( \oint \vec{G} \cdot d \vec{s} = 0 \)
+    \item For any \( S_1, S_2 \subset W \) with \( \partial S_1 = \partial S_2 \), 
+      \begin{equation*}
+        \int \int_{S_1} \vec{G} \cdot d \vec{S_1}  = \int \int_{S_2} \vec{G} \cdot d \vec{S_2}
+      \end{equation*}
+  \end{enumerate}
+\end{theorem}
+
+\end{document}
+
+
+
+
+
+
