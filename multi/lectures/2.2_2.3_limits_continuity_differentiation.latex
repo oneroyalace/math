@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 222 Lec 3}
+\author{Asa Royal (ajr74)}
+\date{January 19, 2024}
+
+\begin{document}
+\maketitle
+
+\section{Limits and continuity}
+\begin{definition}[Limit]
+  \begin{equation*}
+    \lim_{x \rightarrow x_0} = L \iff f(x) \in \text{nbd}(L)
+  \end{equation*}
+  In english, the \textbf{limit} of \( f(x_0 = L) \) if all points \( x \) in the neighborhood of \( x_0 \) have \( f(x) \) in the neighborhood of \( f(x_0) \). 
+\end{definition}
+
+\begin{remark}
+  Tips for computing limts of multivariable functions
+  \begin{enumerate}
+    \item Apply l'hospital's to "simplify" limits. 
+      \begin{enumerate}
+        \item \( \lim_{x \rightarrow 0} \frac{\sin x}{x} = 1 \)
+      \end{enumerate}
+    \item Replace complicated terms like \( xy \) in \( \lim_{x \rightarrow 0} \frac{\cos xy}{xy} \) with a simple parameter \( t \), yielding the simpler limit \( \lim_{x \rightarrow 0} \frac{\cos t}{t} \), which is \( 1 \) by L'hospital's rule. 
+    \item If you don't see a way to simplify the limit, the limit may not exist. Try pluging in approaches to \( x \) from various paths. 
+  \end{enumerate}
+\end{remark}
+
+
+\begin{theorem}[epsilon-delta def of limits]
+  Let \( f: A \subset \mathbb{R}^n \mapsto \mathbb{R}^m \) nad let \( \vec{x}_0 \) be a boundary point of \( A \). THen \( \lim_{x \rightarrow x0} f(x) = \vec{b} \) iff for every number \( \varepsilon > 0 \), there is a \( \delta > 0 \) such that for any \( \vec{x} \in A \) satisfying \( 0 < {\lVert \vec{x} - \vec{x}_0 \rVert} < \delta \), we have \( {\lVert f(\vec{x}) - \vec{b} \rVert}  < \varepsilon \). 
+\end{theorem}
+\begin{definition}[Alt epsilon-delta def of limits]
+  \( \lim_{x \rightarrow x_0} f(x) = L  \) means \( \forall \varepsilon > 0, \exists \delta > 0  \) such that 
+  \begin{equation*}
+    0 < {\lVert \vec{x} - \vec{x}_0 \rVert} < \delta \implies {\lVert f(x)  - L \rVert} < \varepsilon 
+  \end{equation*}
+\end{definition}
+
+\subsection{Epsilon-delta proofs of existence of limit}
+
+\begin{remark}
+  When carrying out an epsilon delta proof, we want to show that given any \( \varepsilon \), we can find a \( \delta \) such that 
+
+  \begin{equation*}
+    0 < {\lVert \vec{x} - \vec{x}_0 \rVert} < \delta \implies {\lVert f(x) - L \rVert} < \varepsilon 
+  \end{equation*}
+  i.e. Imagine there's some neighborhood \( U \) of radius \( \varepsilon \) around \( L \). We want a radius \( \delta \) that defines a neighborhood \( V \) around  \( x_0 \) such that any \( \vec{x} \in V \) has \( f(\vec{x}) \in U \).  \\
+
+  \begin{enumerate}
+    \item Write out "Assume \( {\lVert f(\vec{x}) - L  \rVert} < \varepsilon \) for some \( \varepsilon \)". "given \( \varepsilon > 0 \), choose \( \delta = \ldots  \)"
+    \item Continue "We will find a \( \delta \) s.t. \( 0 < {\lVert \vec{x} - \vec{x_0} \rVert} < \delta \)" that satisfies the assumption. 
+    \item Find such a delta by showing that \( {\lVert \textbf{f(x)} - L \rVert}  < c \delta = \varepsilon \) **
+      \begin{enumerate}
+        \item I.e. change the LHS to be some multiple of \( \delta \), showing that \( {\lVert \textbf{f(x)} - L \rVert}  < c \delta \). Since \( {\lVert \textbf{f(x)} - L \rVert} < \varepsilon\), \( c \delta = \varepsilon \) satisfies our hunt for a \( \delta \), thus showing that there's some way to limit the domain while ensuring that the output of \( f \) is in \( \varepsilon \)-neighborhood of \( f \). 
+        \item if in evaluating \( {\lVert \textbf{f(x) - L} \rVert} \), we end up with some multiple of our \( \delta \) bound times a factor involving \( x \) (call it \( \beta \)), we need to take an add'l step
+        \item Note that \( \delta = min(1, ValueWeSolveFor) \). Then \( {\lVert \textbf{x - a} \rVert} < 1  \) and \( -1 < {\lVert \textbf{x-a} \rVert} < 1 \). Manipulate this inequality so that the \( x-a \) term resembles \( \beta \). Then note that \( \beta < 1 \)... Plug that back into **, thus concluding that \( \delta = min(1, d\varepsilon \) for some \( d \), which means \( \delta \leq d\varepsilon \). 
+      \end{enumerate}
+  \end{enumerate}
+\end{remark}
+
+\begin{remark}
+  Tips for \( \varepsilon-\delta \) proof:
+  Remember:
+  \begin{enumerate}
+    \item Triangle inequality: \( {\lVert \textbf{a+b} \rVert} \leq {\lVert \textbf{a} \rVert} + {\lVert \textbf{b} \rVert} \)
+    \item Any term under a radical will always be positive. Applying this will often let us simplify inequalities by striking out radical terms. 
+    \item Convert to polar to simplify fractions!
+    \item We can add positive terms at will to the RHS of a \( \leq \) inequality. 
+    \item Have a product of \( {\lVert xyz \rVert}\)? Remember that \( |x| = \sqrt{x^2} \leq \sqrt{x^2 + y^2 + z^2} \). Symmetry for \( y \) and \( z \). Thus if \( (x,y,z) \rightarrow (0,0,0), \delta \geq \sqrt{x^2 + y^2 + z^2} \) and  thus \( {\lVert xyz \rVert} \leq \delta^{3} \)
+  \end{enumerate}
+\end{remark}
+
+\begin{eg}[epsilon-delta proof]
+  Show \( \lim_{(x,y) \rightarrow (0,0)} x = 0 \). 
+Steps for \( \varepsilon-\delta \) proof: \\
+\\
+\end{eg}
+
+
+\section{Continuity}
+
+\begin{definition}[continuous function]
+  A function is \textbf{continuous} iff \( \forall x \in \text{nbd}(x_0) \), 
+  \begin{equation*}
+    \lim_{x \rightarrow x_0} f(x) = f(x_0)
+  \end{equation*}
+\end{definition}
+
+\section{Differentiability}
+
+\begin{definition}[Partial derivative]
+  The partial derivative of a function \( f(x_1, x_2, \ldots , x_n) \) at point \( \vec{x} = (x_0, \ldots, x_n) \) is given by 
+  \begin{equation*}
+    \frac{\partial f}{\partial x_i} = \lim_{h \rightarrow 0}  \frac{f(x_1, x_2, \ldots  x_{i-1}, x_i + h, x_{i+1}, \ldots , x_n) - f(\vec{x}) }{h}
+  \end{equation*}
+\end{definition}
+
+\begin{remark}
+  A function can have partials at a point \( x,y \) even if the function is discontinuous at that point. 
+\end{remark}
+
+\begin{definition}[Differentiable]
+  \( f: U \subset \mathbb{R}^n \mapsto \mathbb{R}^m \) is \textbf{differentiable} at \( \vec{x_0} \) if 
+  \begin{enumerate}
+    \item All partial derivatives of \( f \) exist at \( \vec{x_0} \) 
+    \item  The tangent plane at \( \vec{x_0} \) provides a linear approximation of \( f(\vec{x})=f(x,y) \) near \( \vec{x_0} \)
+      In the 3d graph case, The linear approximation is 
+      \begin{equation*}
+        f(\vec{x}) \approx \textcolor{blue}{f(\vec{x_0}) + \begin{bmatrix}
+           \frac{\partial f}{\partial x} && \frac{\partial f}{\partial y} 
+        \end{bmatrix} 
+        \begin{bmatrix}
+          x-x_0 \\
+          y - y_0
+      \end{bmatrix}}
+      \end{equation*}
+      So if the linear approximation is "good",
+      \begin{equation*}
+        \lim_{x \rightarrow \vec{x_0}} \frac{{\lVert f(\vec{x}) - \textcolor{blue}{[f(\vec{x_0}) + Df(\vec{x_0})(\vec{x}-\vec{x_0})]} \rVert}}{{\lVert \vec{x} - \vec{x_0} \rVert}} = 0
+      \end{equation*}
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[\( C^1 \)]
+  Let \( f: U \subset \mathbb{R}^n \mapsto \mathbb{R}^m \). \( f \in C^1 \) iff the partials of \( f \) exist and are \textbf{continuous} 
+\end{definition}
+
+\begin{remark}
+  \( f \in C^1 \) (is continuous and has continuous partials) \(\implies f \) is differentiable \( \implies f \in C^0 \) (is continuous)
+\end{remark}
+
+
+\end{document}
