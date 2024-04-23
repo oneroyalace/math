@@ -84,18 +84,16 @@
   The gradient is denoted \( \nabla f(x, y, z) \). It is really just the matrix of the derivative \( \textbf{D}f \) written as a vector ( \( f \)  is a real-valued function). 
 \end{definition}
 
-\begin{remark}
-  The gradient is a tool for computing directional derivatives. 
-\end{remark}
-
 \begin{definition}[directional derivative]
-  \( D_{\vec{v}} \) is the directional derivative in a direction \( \vec{v} \). It quantifies how the output of \( f \) changes with a nudge in the direction of \( \vec{v} \). 
+  \( D_{\vec{v}} \) is the directional derivative in a direction \( \vec{v} \). It quantifies how the output of \( f \) changes with a nudge in the direction of \( \vec{v} = (v_1,v_2) \).  \\ \\
+  We can express the same idea using limits. Let \( \vec{x_0} = (x_0,y_0) \). Additionially, assume we are operating on a 3d graph, so \( \vec{v} = (v_1, v_2) \), where \( v_1 \) is the x-component of the vector, \( v_2 \) is the y-component. Then 
   \begin{equation*}
-    D_{\vec{v}}(f) = \nabla f \cdot \vec{v}
+    D_{\vec{v}} f(\vec{x}) = \lim_{h \rightarrow 0} \frac{f(x_0 + hv_1, y_0 + hv_2) - f(x_0,y_0)}{h} = \lim_{h \rightarrow 0} \frac{f(\vec{x} + h\vec{v})  - f(\vec{a}) }{h}
   \end{equation*}
-  We can express the same idea using limits: 
+  Note that the directional derivative is the slope of the secant line between \( (x_0,y_0,z_0) \) and \( (x_0+hv_1, y_0 + hv_2, f(x_0+hv_1,y_0+hv_2)) \)
+  We can easily calculate the directional derivative by noting that 
   \begin{equation*}
-    D_{\vec{v}} f(\vec{a}) = \lim_{h \rightarrow 0} \frac{f(\vec{a} + h\vec{v})  - f(\vec{a}) }{h}
+    D_{\vec{v}}(f) = \left(\frac{\partial f}{\partial x} \right) v_1 +  \left(\frac{\partial f}{\partial y} \right) v_2 = \nabla f \cdot \vec{v}
   \end{equation*}
   The directional derivative is sometimes written as \( \nabla_{\vec{v}} f \) or \( \frac{\partial f}{\partial \vec{v}} \)
 \end{definition}
