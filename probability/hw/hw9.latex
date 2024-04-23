@@ -269,5 +269,42 @@
 
           \framebox{So the probability that a person at level 1 will eventually win a prize is \( 1/26 \). }
       \end{enumerate}
+
+
+      \pagebreak
+
+
+    \item 
+      \begin{enumerate}[label=(\roman*)]
+        \item \( \nu \) and \( \pi \) are invariant distributions, so the two vectors' values represent long-term average fractions of time the Markov chain spends at given states. A negative value would be meaningless, because a negative fraction of time is nonsensical. A 0 value at some position \( x \in S \) would indicate that in the long-run, it is impossible for a chain to reach given state \( x \), a violation the irreducibility assumption. Since values of \( \nu \) and \( \pi \) are never 0 or negative, the minimum value in both vectors must be positive. 
+
+
+        \item Consider the two vectors \( \nu \) and \( \pi \). For non-negative \( i < |S| \), let
+          \begin{equation*}
+            \varepsilon = \text{min}(\nu_i/\pi_i)
+          \end{equation*}
+          i.e.,  Let \( \varepsilon \) equal to the lowest ratio between elements of \( \nu \) and \( \pi \). Then for all non-negative \( i < |S| \)
+          \begin{equation}
+            \varepsilon \pi_i <= \nu_i
+          \end{equation}
+          Since \( \nu \) and \( \pi \) contain exclusively positive entries, \( r = \nu - \varepsilon\pi_i \), applying \( (10) \), \( r \) has all non-negagtive entries, and, as desired,
+          \begin{align*}
+            \nu(x) = \varepsilon \pi(x) + r(x), & \text{ for all \( x \in S \)}
+          \end{align*}
+
+
+        \item Applying \( P  \) to \( \nu \), 
+          \begin{align*}
+            \nu &= \nu P & \text{def of stationary dist} \\
+                &= (\varepsilon\pi + r)P & \text{per 5ii} \\
+                &= \varepsilon\pi + rP & \text{def of stationary dist}
+          \end{align*}
+
+        \item The Markov Chain in question has \( P_{x,y} > 0 \) for all \( x,y \in S \). That is, the chain can transition from any state to any other state in a single step. \( rP \) can be thought of as \( \mathbb{P}(X_{n+1}=X)|X_n \sim r) \). Unless \( r = \vec{0} \), there must be some positive chance we transition to any state, so \( rP \) must have all positive entries.
+
+        \item Assume that at least one entry in \( r \) is positive. Then \( rP \) has all positive values. Per our construction of \( \varepsilon \) in 5ii, for some \( i \), \( \nu_i = \varepsilon \pi_i \). But \( \nu = \varepsilon\pi + rP \), so \( rP \) must have at least one zero value. By 5iv, that means \( r \) is a vector with all 0 values! \\
+        \\
+        We have shown \( \nu = \varepsilon \pi \). But \( \nu \) and \( \pi \) are both unit vectors by the definition of invariant distributions. So if one is a scalar multiple of the other, the scalar must be 1! Thus, \( \nu = \pi \). 
+      \end{enumerate}
 \end{enumerate}
 \end{document}
