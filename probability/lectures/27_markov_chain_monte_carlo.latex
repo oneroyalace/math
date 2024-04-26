@@ -1,0 +1,142 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{url}
+
+\usepackage{geometry}
+\newgeometry{left=12mm, right=17mm, top= 12mm, bottom=12mm}
+
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Reset line counter for each align environment
+\usepackage{etoolbox}
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{enumitem} % alphanumeric enumerate
+% horizontal rule
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+
+\usepackage{tikz}
+\usepackage{tikz-cd}
+
+% theorems
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt}
+
+\theoremstyle{definition}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmgreenbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak } ]{thmredbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmbluebox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont]{thmblueline}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ rightline=false, topline=false, bottomline=false, }, qed=\qedsymbol ]{thmproofbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false } ]{thmexplanationbox}
+\declaretheorem[style=thmgreenbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmredbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmredbox, name=Proposition]{prop}
+\declaretheorem[sibling=definition, style=thmredbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmredbox, name=Lemma]{lemma}
+\declaretheorem[numbered=no, style=thmexplanationbox, name=Proof]{explanation}
+\declaretheorem[numbered=no, style=thmproofbox, name=Proof]{replacementproof}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Exercise]{ex}
+\declaretheorem[style=thmbluebox,  numbered=no, name=Example]{eg}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmblueline, numbered=no, name=Note]{note}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+\usepackage{subcaption}
+
+% include figure stored at ./figures/name.pdf_tex
+\newcommand{\incfig}[1]{
+  \def\svgwidth{0.5\columnwidth}
+  \import{./figures/}{#1.pdf_tex}
+}
+
+\title{Math 340: Lec 27 (Markov Chain Monte Carlo algorithms)}
+\author{Asa Royal (ajr74)}
+\date{April 23, 2024}
+
+\begin{document}
+\maketitle
+
+\section{Motivation for Markov Chain Monte Carlo Algorithms}
+\begin{remark}
+  We might want to sample a probability distribution 
+  \begin{equation*}
+    \pi(x) = \frac{f(x)}{c} \text{ for \( x \in S \) }
+  \end{equation*}
+  where we know \( f(x) \) but cannot calculate \( c = \sum_{x \in S} f(x) \) because the state space is so large. \\
+  \\
+  To efficiently sample from the distribution \( \pi \), we can try to generate a Markov chain that has \( \pi \) as its stationary distribution. 
+\end{remark}
+
+\begin{remark}
+  Examples of applications: 
+  \begin{enumerate}
+    \item In Bayesian statistics, when we try to calculate \( \mathbb{P}(Y=y|X=x) \), the normalizing denominator \( \mathbb{P}(X=x) \) can be very expensive to calculate because it requires us to sum over all possible values of the random variable \( Y \). 
+    \item In cryptography, if we have a substitution cipher, we might create a mapping \( \sigma \) from the cipher alphabet to our normal alphabet. We could then decode an encrypted message using \( \sigma \) and measure how much the decrypted message mimics English letter patterns with some function \( f(\sigma) \). But assuming the cipher alphabet has 26 letters, there are 26! possible \( \sigma \) mappings. So to normalize the score of any \( \sigma \), we'd need to calculate all 26! \( f(\sigma) \)s. Expensive!!
+  \end{enumerate}
+\end{remark}
+
+\section{Markov Chain Monte Carlo Algorithms}
+
+\subsection{Metropolis-Hastings}
+
+\begin{theorem}[Metropolis-Hastings]
+  Objective: sample from \( \pi(x) = \frac{f(x)}{c} \) using a proposal function \( q(x,y) \). Metropolis-Hastings generates a Markov Chain \( X_n \) on \( S \). Given \( X_n = x \), M-H generates \( X_{n+1} \) as follows:
+  \begin{enumerate}
+    \item Propose a new state \( y \in S \) according to the probability transition kernel \( q(x,y) \)
+    \item Accept or reject the Proposition \\
+      \( y \) is accepted with probability 
+      \begin{equation*}
+        \text{min} \left(  1, \frac{\pi(y) q(y,x)}{\pi(x) q(x,y))} \right) = \text{min} \left(  1, \frac{f(y) q(y,x)}{f(x) q(x,y))} \right)
+      \end{equation*}
+  \end{enumerate}
+  If we accept, \( X_{n+1} = y \). Otherwise, \( X_{n+1} = X_n = x \). 
+
+  \begin{remark}
+    \( \pi \) is stationary for this Markov Chain, and with an appropriate kernel \( q \), the chain is irreducible + aperiodic. 
+  \end{remark}
+\end{theorem}
+
+\begin{eg}[Example of accept/reject stage of MH]
+  Imagine we have 
+  \begin{align*}
+    X_n &= \sigma = (1,3,\ldots , 7,9,12)
+    y &= \sigma' = (1,12, \ldots , 7, 9, 3)
+  \end{align*}
+  We check whether \( f(\sigma') > f(\sigma) \). If so, we transition to \( X_{n+1} = \sigma' \) with a decent probability. 
+\end{eg}
+
+\subsection{Gibbs sampling}
+\begin{theorem}[Gibbs sampling]
+  Imagine we have a a graph \( (V,E) \) where the \( m \) vertices are pictures in an image recognititon dataset. Edges represent shared features between images. \( z \) represents the image of a label . We want to calculate \( \pi = f(x)/c \), where \( f(x) \) is some function involving the degree of a vertex. But there are so many edges and vertices that calculating \( c \) is impractical. Instead, we find \( \pi \) as follows: 
+  \begin{enumerate}
+    \item Pick an index \(  i \in \{1,\ldots ,m \} \) uniformly at random
+    \item Resample its label according to 
+      \begin{equation*}
+        \mathbb{P}(z_i=c) =  \frac{f(z_1,\ldots ,z_{i-1}, c, z_{i+1}, \ldots , z_m)}{\sum_{j=1}^k f(z_1,\ldots ,z_{j-1}, c, z_{j+1}, \ldots , z_m)}
+      \end{equation*}
+      Basically, we try to identify the probabiliy that a vertex's label should be \( z_k \) given its neighbors have the labels they do. 
+  \end{enumerate}
+\end{theorem}
+
+
+\end{document}
+
